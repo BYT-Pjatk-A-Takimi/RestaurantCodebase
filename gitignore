@@ -1,0 +1,14 @@
+.gitignore
+gitignore
+_gitignore
+RestaurantApp/bin
+RestaurantApp/obj
+.idea
+.cursor
+.vscode
+Program.cs
+RestaurantApp/Models/Order.cs
+RestaurantApp/Models/Payment.cs
+RestaurantApp/Models/Reservation.cs
+RestaurantApp/Models/Restaurant.cs
+RestaurantApp/Models/Table.cs
