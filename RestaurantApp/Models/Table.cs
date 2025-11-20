@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace RestaurantApp.Models;
 
 public class Table
 {
+    [JsonInclude]
     private readonly List<Reservation> _reservations = new();
 
+    [JsonConstructor]
     public Table(int tableNumber, int numberOfChairs, string tableType)
     {
         TableNumber = tableNumber;

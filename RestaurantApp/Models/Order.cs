@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace RestaurantApp.Models;
 
 public class Order
 {
+    [JsonInclude]
     private readonly List<OrderDish> _orderDishes = new();
 
     public Order(Customer customer, Table table)
