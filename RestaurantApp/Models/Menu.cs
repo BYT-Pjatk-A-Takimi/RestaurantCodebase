@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace RestaurantApp.Models;
 
 public class Menu
 {
+    [JsonInclude]
     private readonly List<Dish> _dishes = new();
 
+    [JsonConstructor]
     public Menu(string name, string menuType, IEnumerable<string> availableLanguages)
     {
         Name = name;
