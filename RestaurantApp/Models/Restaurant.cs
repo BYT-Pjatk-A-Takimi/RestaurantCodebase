@@ -1,13 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace RestaurantApp.Models;
 
 public class Restaurant
 {
+    [JsonInclude]
     private readonly List<Table> _tables = new();
+    
+    [JsonInclude]
     private readonly List<Menu> _menus = new();
 
+    [JsonConstructor]
     public Restaurant(string name, int maxCapacity)
     {
         Name = name;

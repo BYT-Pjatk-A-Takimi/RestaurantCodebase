@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace RestaurantApp.Models;
 
@@ -17,6 +18,7 @@ public abstract class Customer : Person
         _reservations = new List<Reservation>();
     }
 
+    [JsonInclude]
     private readonly List<Reservation> _reservations;
 
     public string Email { get; }
