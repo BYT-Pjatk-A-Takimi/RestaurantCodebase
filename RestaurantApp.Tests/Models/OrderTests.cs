@@ -2,83 +2,100 @@ using System;
 using NUnit.Framework;
 using RestaurantApp.Models;
 
-namespace TestProject1.Models
+namespace RestaurantApp.Tests.Models;
+
+[TestFixture]
+public class OrderTests
 {
-    public class OrderTests
+    private static NonMember CreateCustomer()
     {
-        private Dish CreateDish(decimal price)
+        // NonMember sınıfın projede zaten var
+        return new NonMember("Test", "User", new DateOnly(2000, 1, 1), "123456789", "test@example.com");
+    }
+
+    [Test]
+    public void Constructor_ShouldSetInitialStatusAndTimestamp()
+    {
+        var customer = CreateCustomer();
+        var table = new Table(1, 4, "Standard");
+
+        var before = DateTime.UtcNow.AddSeconds(-1);
+        var order = new Order(customer, table);
+        var after = DateTime.UtcNow.AddSeconds(1);
+
+        Assert.Multiple(() =>
         {
-            return new Dish(
-                "TestDish",
-                "International",
-                false,
-                price,
-                new[] { "salt", "oil" }
-            );
-        }
+            Assert.That(order.Status, Is.EqualTo(OrderStatus.Pending));
+            Assert.That(order.TimeStamp, Is.InRange(before, after));
+        });
+    }
 
-        private OrderDish CreateOrderDish(decimal price, int quantity)
+    [Test]
+    public void AddDish_ShouldIncreaseDishCount()
+    {
+        var customer = CreateCustomer();
+        var table = new Table(1, 4, "Standard");
+        var order = new Order(customer, table);
+
+        var dish = new Dish("Pizza", "Italian", false, 20m, Array.Empty<string>());
+        order.AddDish(new OrderDish("Pizza", dish, 2));
+
+        Assert.That(order.Dishes.Count, Is.EqualTo(1));
+    }
+
+    [Test]
+    public void AddDishes_ShouldIncreaseDishCount_ByCollectionSize()
+    {
+        var customer = CreateCustomer();
+        var table = new Table(1, 4, "Standard");
+        var order = new Order(customer, table);
+
+        var dish = new Dish("Burger", "FastFood", false, 15m, Array.Empty<string>());
+
+        var dishes = new[]
         {
-            return new OrderDish("TestDish", CreateDish(price), quantity);
-        }
+            new OrderDish("Burger", dish, 1),
+            new OrderDish("Burger", dish, 2)
+        };
 
-        [Test]
-        public void AddDish_AddsSingleDish()
-        {
-            var customer = new NonMember("Beril", "Yavuz", new DateOnly(2000, 1, 1), "555", "test@mail.com");
-            var table = new Table(1, 4, "Indoor");
-            var order = new Order(customer, table);
+        order.AddDishes(dishes);
 
-            var dish = CreateOrderDish(10m, 2);
+        Assert.That(order.Dishes.Count, Is.EqualTo(2));
+    }
 
-            order.AddDish(dish);
+    [Test]
+    public void CalculateTotal_ShouldReturnSumOfOrderDishPrices()
+    {
+        var customer = CreateCustomer();
+        var table = new Table(1, 4, "Standard");
+        var order = new Order(customer, table);
 
-            Assert.AreEqual(1, order.Dishes.Count);
-        }
+        var dish = new Dish("Burger", "FastFood", false, 15m, Array.Empty<string>());
+        order.AddDish(new OrderDish("Burger", dish, 3)); // 3 * 15 = 45
 
-        [Test]
-        public void AddDishes_AddsMultipleDishes()
-        {
-            var customer = new NonMember("Beril", "Yavuz", new DateOnly(2000, 1, 1), "555", "test@mail.com");
-            var table = new Table(1, 4, "Indoor");
-            var order = new Order(customer, table);
+        Assert.That(order.CalculateTotal(), Is.EqualTo(45m));
+        Assert.That(order.TotalAmount, Is.EqualTo(45m));
+    }
 
-            var dishes = new[]
-            {
-                CreateOrderDish(10m, 1),
-                CreateOrderDish(12m, 2)
-            };
+    [Test]
+    public void CompleteOrder_ShouldChangeStatusToCompleted()
+    {
+        var customer = CreateCustomer();
+        var table = new Table(1, 4, "Standard");
+        var order = new Order(customer, table);
 
-            order.AddDishes(dishes);
+        order.CompleteOrder();
 
-            Assert.AreEqual(2, order.Dishes.Count);
-        }
+        Assert.That(order.Status, Is.EqualTo(OrderStatus.Completed));
+    }
 
-        [Test]
-        public void CalculateTotal_ReturnsCorrectSum()
-        {
-            var customer = new NonMember("Beril", "Yavuz", new DateOnly(2000, 1, 1), "555", "test@mail.com");
-            var table = new Table(1, 4, "Indoor");
-            var order = new Order(customer, table);
+    [Test]
+    public void OrderDish_ShouldValidateInputs()
+    {
+        var dish = new Dish("Soup", "Starter", false, 10m, Array.Empty<string>());
 
-            order.AddDish(CreateOrderDish(10m, 2)); // 20
-            order.AddDish(CreateOrderDish(5m, 3));  // 15
-
-            var total = order.CalculateTotal();
-
-            Assert.AreEqual(35m, total);
-        }
-
-        [Test]
-        public void CompleteOrder_ChangesStatusToCompleted()
-        {
-            var customer = new NonMember("Beril", "Yavuz", new DateOnly(2000, 1, 1), "555", "test@mail.com");
-            var table = new Table(1, 4, "Indoor");
-            var order = new Order(customer, table);
-
-            order.CompleteOrder();
-
-            Assert.AreEqual(OrderStatus.Completed, order.Status);
-        }
+        Assert.Throws<ArgumentException>(() => new OrderDish("", dish, 1));
+        Assert.Throws<ArgumentException>(() => new OrderDish("Soup", dish, 0));
+        Assert.Throws<ArgumentNullException>(() => new OrderDish("Soup", null!, 1));
     }
 }

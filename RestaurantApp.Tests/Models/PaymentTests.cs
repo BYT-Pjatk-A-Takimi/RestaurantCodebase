@@ -1,40 +1,141 @@
 using System;
+using System.IO;
 using NUnit.Framework;
 using RestaurantApp.Models;
 
-namespace TestProject1.Models
+namespace RestaurantApp.Tests.Models;
+
+[TestFixture]
+public class PaymentTests
 {
-    public class PaymentTests
+    [SetUp]
+    public void SetUp()
     {
-        [Test]
-        public void ProcessPayment_ChangesStatusToCompleted_AndSetsProcessedOn()
+        Payment.Extent.Clear();
+        // taxRate default 0.23, testlerde gerekiyorsa değiştirebiliriz
+        Payment.ChangeTaxRate(0.23m);
+    }
+
+    [Test]
+    public void Constructor_ShouldInitializeProperties()
+    {
+        var orderId = Guid.NewGuid();
+        var payment = new Payment(orderId, 100m, PaymentMethod.Card);
+
+        Assert.Multiple(() =>
         {
-            var payment = new Payment(Guid.NewGuid(), 100m, PaymentMethod.Card);
+            Assert.That(payment.Id, Is.Not.EqualTo(Guid.Empty));
+            Assert.That(payment.OrderId, Is.EqualTo(orderId));
+            Assert.That(payment.Amount, Is.EqualTo(100m));
+            Assert.That(payment.Method, Is.EqualTo(PaymentMethod.Card));
+            Assert.That(payment.Status, Is.EqualTo(PaymentStatus.Pending));
+            Assert.That(payment.ProcessedOn, Is.Null);
+        });
+    }
 
-            payment.ProcessPayment();
+    [Test]
+    public void ProcessPayment_ShouldSetStatusToCompleted_AndSetProcessedOn()
+    {
+        var payment = new Payment(Guid.NewGuid(), 50m, PaymentMethod.Cash);
 
-            Assert.AreEqual(PaymentStatus.Completed, payment.Status);
-            Assert.IsNotNull(payment.ProcessedOn);
+        payment.ProcessPayment();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(payment.Status, Is.EqualTo(PaymentStatus.Completed));
+            Assert.That(payment.ProcessedOn, Is.Not.Null);
+        });
+    }
+
+    [Test]
+    public void RefundPayment_ShouldSetStatusToRefunded_WhenCompleted()
+    {
+        var payment = new Payment(Guid.NewGuid(), 75m, PaymentMethod.Card);
+
+        payment.ProcessPayment();
+        payment.RefundPayment();
+
+        Assert.That(payment.Status, Is.EqualTo(PaymentStatus.Refunded));
+    }
+
+    [Test]
+    public void RefundPayment_ShouldThrow_IfNotCompleted()
+    {
+        var payment = new Payment(Guid.NewGuid(), 75m, PaymentMethod.Card);
+
+        Assert.Throws<InvalidOperationException>(() => payment.RefundPayment());
+    }
+
+    [Test]
+    public void AdjustAmount_ShouldChangeAmount_WhenPositive()
+    {
+        var payment = new Payment(Guid.NewGuid(), 80m, PaymentMethod.Cash);
+
+        payment.AdjustAmount(120m);
+
+        Assert.That(payment.Amount, Is.EqualTo(120m));
+    }
+
+    [Test]
+    public void AdjustAmount_ShouldThrow_WhenNonPositive()
+    {
+        var payment = new Payment(Guid.NewGuid(), 80m, PaymentMethod.Cash);
+
+        Assert.Throws<ArgumentException>(() => payment.AdjustAmount(0m));
+        Assert.Throws<ArgumentException>(() => payment.AdjustAmount(-10m));
+    }
+
+    [Test]
+    public void ChangeTaxRate_ShouldChange_WhenValid()
+    {
+        Payment.ChangeTaxRate(0.10m);
+
+        // TaxRate static property
+        // Sadece exception atmaması ve değer ataması bizim için yeterli
+        Assert.That(() => Payment.ChangeTaxRate(0.20m), Throws.Nothing);
+    }
+
+    [Test]
+    public void ChangeTaxRate_ShouldThrow_WhenInvalid()
+    {
+        Assert.Throws<ArgumentException>(() => Payment.ChangeTaxRate(-0.1m));
+        Assert.Throws<ArgumentException>(() => Payment.ChangeTaxRate(0.5m));
+    }
+
+    [Test]
+    public void AddToExtent_ShouldAddPaymentToExtent()
+    {
+        var payment = new Payment(Guid.NewGuid(), 60m, PaymentMethod.Card);
+
+        Payment.AddToExtent(payment);
+
+        Assert.That(Payment.Extent, Has.Count.EqualTo(1));
+        Assert.That(Payment.Extent[0], Is.EqualTo(payment));
+    }
+
+    [Test]
+    public void SaveAllAndLoadAll_ShouldPersistPayments()
+    {
+        var filePath = Path.Combine(TestContext.CurrentContext.WorkDirectory, "payments_test.json");
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
         }
 
-        [Test]
-        public void RefundPayment_ChangesStatusToRefunded()
-        {
-            var payment = new Payment(Guid.NewGuid(), 50m, PaymentMethod.Cash);
+        var p1 = new Payment(Guid.NewGuid(), 40m, PaymentMethod.Cash);
+        var p2 = new Payment(Guid.NewGuid(), 55m, PaymentMethod.Card);
 
-            payment.RefundPayment();
+        Payment.AddToExtent(p1);
+        Payment.AddToExtent(p2);
 
-            Assert.AreEqual(PaymentStatus.Refunded, payment.Status);
-        }
+        Payment.SaveAll(filePath);
 
-        [Test]
-        public void AdjustAmount_UpdatesPaymentAmount()
-        {
-            var payment = new Payment(Guid.NewGuid(), 70m, PaymentMethod.Card);
+        Assert.That(File.Exists(filePath), Is.True);
 
-            payment.AdjustAmount(120m);
+        Payment.Extent.Clear();
 
-            Assert.AreEqual(120m, payment.Amount);
-        }
+        Payment.LoadAll(filePath);
+
+        Assert.That(Payment.Extent, Has.Count.EqualTo(2));
     }
 }
