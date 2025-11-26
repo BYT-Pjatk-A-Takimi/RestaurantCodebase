@@ -1,52 +1,69 @@
-namespace RestaurantApp.Models;
+using System;
 
-public abstract class EmployeeExperienceProfile
+namespace RestaurantApp.Models
 {
-    protected EmployeeExperienceProfile(string description)
+    public abstract class EmployeeExperienceProfile
     {
-        Description = description;
+        protected EmployeeExperienceProfile() { }
     }
 
-    public string Description { get; }
-}
-
-public sealed class TraineeProfile : EmployeeExperienceProfile
-{
-    public TraineeProfile(int trainingDurationWeeks)
-        : base("Trainee")
+    public sealed class TraineeProfile : EmployeeExperienceProfile
     {
-        TrainingDurationWeeks = trainingDurationWeeks;
+        public int TrainingDuration { get; private set; }
+
+        public TraineeProfile(int trainingDuration)
+        {
+            if (trainingDuration <= 0)
+                throw new ArgumentException("Training duration must be positive.");
+
+            TrainingDuration = trainingDuration;
+        }
+
+        public void CompleteTraining()
+        {
+            // UML’de davranış belirtilmemiş — boş bırakılabilir
+        }
     }
 
-    public int TrainingDurationWeeks { get; }
-
-    public bool HasCompletedTraining(int completedWeeks) => completedWeeks >= TrainingDurationWeeks;
-}
-
-public sealed class ExperiencedProfile : EmployeeExperienceProfile
-{
-    public ExperiencedProfile(int yearsOfExperience, string mentorName)
-        : base("Experienced")
+    public sealed class ExperiencedProfile : EmployeeExperienceProfile
     {
-        YearsOfExperience = yearsOfExperience;
-        MentorName = mentorName;
+        public int YearsOfExperience { get; private set; }
+        public string MentorName { get; private set; }
+
+        public ExperiencedProfile(int yearsOfExperience, string mentorName)
+        {
+            if (yearsOfExperience < 0)
+                throw new ArgumentException("Years of experience cannot be negative.");
+
+            if (string.IsNullOrWhiteSpace(mentorName))
+                throw new ArgumentException("Mentor name cannot be empty.");
+
+            YearsOfExperience = yearsOfExperience;
+            MentorName = mentorName;
+        }
+
+        public void MentorTrainee()
+        {
+            // UML method, içerik verilmemiş
+        }
     }
 
-    public int YearsOfExperience { get; }
-
-    public string MentorName { get; }
-}
-
-public sealed class SpecialistProfile : EmployeeExperienceProfile
-{
-    public SpecialistProfile(string fieldOfExpertise)
-        : base("Specialist")
+    public sealed class SpecialistProfile : EmployeeExperienceProfile
     {
-        FieldOfExpertise = fieldOfExpertise;
+        public string FieldOfExpertise { get; private set; }
+
+        public SpecialistProfile(string fieldOfExpertise)
+        {
+            if (string.IsNullOrWhiteSpace(fieldOfExpertise))
+                throw new ArgumentException("Field of expertise cannot be empty.");
+
+            FieldOfExpertise = fieldOfExpertise;
+        }
+
+        public string DesignNewRecipes()
+        {
+            // Disiyagram method, davranış belirtilmemiş
+            return $"New recipe designed in {FieldOfExpertise}";
+        }
     }
-
-    public string FieldOfExpertise { get; }
-
-    public string DesignNewRecipe(string baseDish, string twist) => $"{baseDish} with {twist}";
 }
-

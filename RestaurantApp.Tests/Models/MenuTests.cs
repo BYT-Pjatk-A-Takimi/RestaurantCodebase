@@ -1,92 +1,162 @@
 using NUnit.Framework;
 using RestaurantApp.Models;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RestaurantApp.Tests.Models
 {
+    [TestFixture]
     public class MenuTests
     {
+        // ----------------------------------------------------
+        // CONSTRUCTOR TESTS
+        // ----------------------------------------------------
+
         [Test]
-        public void Constructor_ShouldSetPropertiesCorrectly()
+        public void Constructor_ShouldSetAllPropertiesCorrectly()
         {
-            // Arrange
-            var languages = new List<string> { "EN", "PL" };
+            var langs = new List<string> { "EN", "PL" };
 
-            // Act
-            var menu = new Menu("Main Menu", "Dinner", languages);
+            var menu = new Menu("Main Menu", "Dinner", langs);
 
-            // Assert
-            Assert.AreEqual("Main Menu", menu.Name);
-            Assert.AreEqual("Dinner", menu.MenuType);
-            CollectionAssert.AreEquivalent(languages, menu.AvailableLanguages);
-            Assert.AreEqual(0, menu.Dishes.Count);
+            Assert.That(menu.Name, Is.EqualTo("Main Menu"));
+            Assert.That(menu.MenuType, Is.EqualTo("Dinner"));
+            CollectionAssert.AreEqual(langs, menu.AvailableLanguages);
+            Assert.That(menu.Dishes.Count, Is.EqualTo(0));
         }
 
         [Test]
-        public void AddDish_ShouldAddDish_WhenNameIsUnique()
+        public void Constructor_ShouldThrow_WhenNameInvalid()
         {
-            // Arrange
-            var menu = new Menu("Main", "Lunch", new List<string> { "EN" });
-            var dish = new Dish("Pasta", "Italian", true, 25m, new List<string> { "Salt" });
+            Assert.Throws<ArgumentException>(() =>
+                new Menu("", "Dinner", new List<string> { "EN" })
+            );
+        }
 
-            // Act
+        [Test]
+        public void Constructor_ShouldThrow_WhenMenuTypeInvalid()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                new Menu("Main Menu", "", new List<string> { "EN" })
+            );
+        }
+
+        [Test]
+        public void Constructor_ShouldThrow_WhenLanguagesNull()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                new Menu("Menu", "Lunch", null!)
+            );
+        }
+
+        [Test]
+        public void Constructor_ShouldThrow_WhenLanguagesEmpty()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                new Menu("Menu", "Lunch", new List<string>())
+            );
+        }
+
+        [Test]
+        public void Constructor_ShouldThrow_WhenLanguageContainsEmptyString()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                new Menu("Menu", "Lunch", new List<string> { "EN", "" })
+            );
+        }
+
+        // ----------------------------------------------------
+        // ADD DISH
+        // ----------------------------------------------------
+
+        [Test]
+        public void AddDish_ShouldAddDishToList()
+        {
+            var menu = new Menu("Main", "Dinner", new List<string> { "EN" });
+            var dish = new Dish("Pasta", "Italian", true, false, 20m, new List<string> { "Salt" });
+
             menu.AddDish(dish);
 
-            // Assert
-            Assert.AreEqual(1, menu.Dishes.Count);
-            Assert.AreEqual("Pasta", menu.Dishes.First().Name);
+            Assert.That(menu.Dishes.Count, Is.EqualTo(1));
+            Assert.That(menu.Dishes, Contains.Item(dish));
         }
 
         [Test]
-        public void AddDish_ShouldNotAdd_WhenNameAlreadyExists()
+        public void AddDish_ShouldThrow_WhenDishIsNull()
         {
-            // Arrange
-            var menu = new Menu("Main", "Lunch", new List<string> { "EN" });
-            var dish1 = new Dish("Pasta", "Italian", true, 25m, new List<string> { "Salt" });
-            var dish2 = new Dish("Pasta", "Italian", false, 30m, new List<string> { "Cheese" });
+            var menu = new Menu("Main", "Dinner", new List<string> { "EN" });
 
-            // Act
-            menu.AddDish(dish1);
-            menu.AddDish(dish2);
-
-            // Assert
-            Assert.AreEqual(1, menu.Dishes.Count);
+            Assert.Throws<ArgumentException>(() =>
+                menu.AddDish(null!)
+            );
         }
 
+        // ----------------------------------------------------
+        // REMOVE DISH
+        // ----------------------------------------------------
+
         [Test]
-        public void RemoveDish_ShouldReturnTrue_WhenDishExists()
+        public void RemoveDish_ShouldRemoveDishFromList()
         {
-            // Arrange
-            var menu = new Menu("Main", "Lunch", new List<string> { "EN" });
-            var dish = new Dish("Pasta", "Italian", true, 25m, new List<string> { "Salt" });
+            var menu = new Menu("Main", "Dinner", new List<string> { "EN" });
+            var dish = new Dish("Soup", "Turkish", true, false, 10m, new List<string> { "Water" });
+
             menu.AddDish(dish);
-
-            // Act
             var result = menu.RemoveDish(dish);
 
-            // Assert
-            Assert.IsTrue(result);
-            Assert.AreEqual(0, menu.Dishes.Count);
+            Assert.That(result, Is.True);
+            Assert.That(menu.Dishes.Count, Is.EqualTo(0));
         }
 
         [Test]
-        public void UpdateDish_ShouldReplaceExistingDish()
+        public void RemoveDish_ShouldThrow_WhenDishIsNull()
         {
-            // Arrange
-            var menu = new Menu("Main", "Lunch", new List<string> { "EN" });
-            var oldDish = new Dish("Pasta", "Italian", true, 25m, new List<string> { "Salt" });
-            var newDish = new Dish("Pasta", "Italian", false, 30m, new List<string> { "Salt", "Cheese" });
+            var menu = new Menu("Main", "Dinner", new List<string> { "EN" });
 
-            menu.AddDish(oldDish);
+            Assert.Throws<ArgumentException>(() =>
+                menu.RemoveDish(null!)
+            );
+        }
 
-            // Act
-            menu.UpdateDish(oldDish, newDish);
+        // ----------------------------------------------------
+        // CHANGE MENU
+        // ----------------------------------------------------
 
-            // Assert
-            Assert.AreEqual(1, menu.Dishes.Count);
-            Assert.AreEqual(30m, menu.Dishes.First().Price);
-            Assert.IsFalse(menu.Dishes.First().IsVegetarian);
+        [Test]
+        public void ChangeMenu_ShouldUpdateOnlyProvidedFields()
+        {
+            var menu = new Menu("Main", "Dinner", new List<string> { "EN" });
+
+            menu.ChangeMenu(newName: "Lunch Menu");
+
+            Assert.That(menu.Name, Is.EqualTo("Lunch Menu"));
+            Assert.That(menu.MenuType, Is.EqualTo("Dinner")); // unchanged
+        }
+
+        [Test]
+        public void ChangeMenu_ShouldUpdateBothFields()
+        {
+            var menu = new Menu("Main", "Dinner", new List<string> { "EN" });
+
+            menu.ChangeMenu(newName: "Special Menu", newType: "Brunch");
+
+            Assert.That(menu.Name, Is.EqualTo("Special Menu"));
+            Assert.That(menu.MenuType, Is.EqualTo("Brunch"));
+        }
+
+        // ----------------------------------------------------
+        // GET NUMBER OF POSITIONS
+        // ----------------------------------------------------
+
+        [Test]
+        public void GetNumberOfPositions_ShouldReturnDishCount()
+        {
+            var menu = new Menu("Main", "Dinner", new List<string> { "EN" });
+
+            menu.AddDish(new Dish("A", "Type", true, false, 10m, new List<string> { "X" }));
+            menu.AddDish(new Dish("B", "Type", false, false, 15m, new List<string> { "Y" }));
+
+            Assert.That(menu.GetNumberOfPositions(), Is.EqualTo(2));
         }
     }
 }
