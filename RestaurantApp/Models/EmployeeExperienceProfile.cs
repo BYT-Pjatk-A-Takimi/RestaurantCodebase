@@ -1,9 +1,15 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace RestaurantApp.Models
 {
+    [JsonPolymorphic]
+    [JsonDerivedType(typeof(TraineeProfile), typeDiscriminator: "TraineeProfile")]
+    [JsonDerivedType(typeof(ExperiencedProfile), typeDiscriminator: "ExperiencedProfile")]
+    [JsonDerivedType(typeof(SpecialistProfile), typeDiscriminator: "SpecialistProfile")]
     public abstract class EmployeeExperienceProfile
     {
+        [JsonConstructor]
         protected EmployeeExperienceProfile() { }
     }
 
@@ -11,6 +17,7 @@ namespace RestaurantApp.Models
     {
         public int TrainingDuration { get; private set; }
 
+        [JsonConstructor]
         public TraineeProfile(int trainingDuration)
         {
             if (trainingDuration <= 0)
@@ -30,6 +37,7 @@ namespace RestaurantApp.Models
         public int YearsOfExperience { get; private set; }
         public string MentorName { get; private set; }
 
+        [JsonConstructor]
         public ExperiencedProfile(int yearsOfExperience, string mentorName)
         {
             if (yearsOfExperience < 0)
@@ -52,6 +60,7 @@ namespace RestaurantApp.Models
     {
         public string FieldOfExpertise { get; private set; }
 
+        [JsonConstructor]
         public SpecialistProfile(string fieldOfExpertise)
         {
             if (string.IsNullOrWhiteSpace(fieldOfExpertise))

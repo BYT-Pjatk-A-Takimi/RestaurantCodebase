@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace RestaurantApp.Models;
 
 public class Manager : Employee
 {
+    [JsonConstructor]
     public Manager(
         string firstName,
         string lastName,
@@ -23,8 +25,13 @@ public class Manager : Employee
     public bool AssignTable(Waiter waiter, Table table) => waiter.AssignTable(table);
 }
 
+[JsonPolymorphic]
+[JsonDerivedType(typeof(HeadChef), typeDiscriminator: "HeadChef")]
+[JsonDerivedType(typeof(SousChef), typeDiscriminator: "SousChef")]
+[JsonDerivedType(typeof(LineChef), typeDiscriminator: "LineChef")]
 public class Chef : Employee
 {
+    [JsonConstructor]
     public Chef(
         string firstName,
         string lastName,
@@ -53,6 +60,7 @@ public class Chef : Employee
 
 public class HeadChef : Chef
 {
+    [JsonConstructor]
     public HeadChef(
         string firstName,
         string lastName,
@@ -76,6 +84,10 @@ public class HeadChef : Chef
 
 public class SousChef : Chef
 {
+    [JsonInclude]
+    private readonly List<string> _supervisedSections;
+
+    [JsonConstructor]
     public SousChef(
         string firstName,
         string lastName,
@@ -89,12 +101,12 @@ public class SousChef : Chef
         : base(firstName, lastName, birthDate, phoneNumber, workDetails, experienceProfile, cuisineType)
     {
         DayShift = dayShift;
-        SupervisedSections = new List<string>(supervisedSections);
+        _supervisedSections = new List<string>(supervisedSections);
     }
 
     public bool DayShift { get; }
 
-    public IReadOnlyCollection<string> SupervisedSections { get; }
+    public IReadOnlyCollection<string> SupervisedSections => _supervisedSections.AsReadOnly();
 
     public void prepareSpecialists(Dish dish) { }
 
@@ -103,6 +115,10 @@ public class SousChef : Chef
 
 public class LineChef : Chef
 {
+    [JsonInclude]
+    private readonly List<string> _tasksAssigned;
+
+    [JsonConstructor]
     public LineChef(
         string firstName,
         string lastName,
@@ -116,12 +132,12 @@ public class LineChef : Chef
         : base(firstName, lastName, birthDate, phoneNumber, workDetails, experienceProfile, cuisineType)
     {
         Specialization = specialization;
-        TasksAssigned = new List<string>(tasksAssigned);
+        _tasksAssigned = new List<string>(tasksAssigned);
     }
 
     public string Specialization { get; }
 
-    public IReadOnlyCollection<string> TasksAssigned { get; }
+    public IReadOnlyCollection<string> TasksAssigned => _tasksAssigned.AsReadOnly();
 
     public void CookSpecialtyDish(Dish dish) { }
 
@@ -130,8 +146,10 @@ public class LineChef : Chef
 
 public class Waiter : Employee
 {
+    [JsonInclude]
     private readonly List<Table> _assignedTables = new();
 
+    [JsonConstructor]
     public Waiter(
         string firstName,
         string lastName,
@@ -159,6 +177,7 @@ public class Waiter : Employee
 
 public class Valet : Employee
 {
+    [JsonConstructor]
     public Valet(
         string firstName,
         string lastName,

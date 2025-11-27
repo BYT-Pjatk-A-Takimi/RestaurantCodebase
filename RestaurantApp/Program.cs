@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
+using RestaurantApp;
 using RestaurantApp.Models;
 
 try
@@ -48,7 +48,7 @@ try
     var filePath = "restaurant_data.json";
     try
     {
-        var options = new JsonSerializerOptions { WriteIndented = true, Converters = { new DateOnlyJsonConverter() } };
+        var options = JsonSerialization.GetDefaultOptions();
         File.WriteAllText(filePath, JsonSerializer.Serialize(restaurant, options));
         Console.WriteLine($"Restaurant data saved to {filePath}");
     }
@@ -59,7 +59,7 @@ try
 
     try
     {
-        var options = new JsonSerializerOptions { Converters = { new DateOnlyJsonConverter() } };
+        var options = JsonSerialization.GetDefaultOptions();
         var json = File.ReadAllText(filePath);
         var loadedRestaurant = JsonSerializer.Deserialize<Restaurant>(json, options);
         Console.WriteLine($"Restaurant loaded: {loadedRestaurant?.Name} with {loadedRestaurant?.GetNumberOfTables()} tables");
@@ -73,13 +73,4 @@ catch (Exception ex)
 {
     Console.WriteLine($"Error: {ex.Message}");
     Environment.ExitCode = 1;
-}
-
-public class DateOnlyJsonConverter : JsonConverter<DateOnly>
-{
-    public override DateOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
-        DateOnly.Parse(reader.GetString()!);
-
-    public override void Write(Utf8JsonWriter writer, DateOnly value, JsonSerializerOptions options) =>
-        writer.WriteStringValue(value.ToString("yyyy-MM-dd"));
 }

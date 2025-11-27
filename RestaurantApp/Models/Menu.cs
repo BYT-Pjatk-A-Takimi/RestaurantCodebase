@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace RestaurantApp.Models
 {
@@ -36,6 +37,7 @@ namespace RestaurantApp.Models
         // -------------------------
         // MULTI-VALUE ATTRIBUTE
         // -------------------------
+        [JsonInclude]
         private List<string> _availableLanguages = new List<string>();
         public IReadOnlyCollection<string> AvailableLanguages => _availableLanguages.AsReadOnly();
 
@@ -61,6 +63,7 @@ namespace RestaurantApp.Models
         // -------------------------
         // ASSOCIATION (Menu → Dish)
         // -------------------------
+        [JsonInclude]
         private List<Dish> _dishes = new List<Dish>();
         public IReadOnlyCollection<Dish> Dishes => _dishes.AsReadOnly();
 
@@ -112,6 +115,7 @@ namespace RestaurantApp.Models
         // -------------------------
         // CONSTRUCTOR
         // -------------------------
+        [JsonConstructor]
         public Menu(string name, string menuType, IEnumerable<string> availableLanguages)
         {
             Name = name;

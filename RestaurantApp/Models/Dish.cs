@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace RestaurantApp.Models
 {
@@ -49,6 +50,7 @@ namespace RestaurantApp.Models
         }
 
         // ingredients [1..*]
+        [JsonInclude]
         private List<string> _ingredients = new List<string>();
         public IReadOnlyCollection<string> Ingredients => _ingredients.AsReadOnly();
 
@@ -75,6 +77,7 @@ namespace RestaurantApp.Models
         // -------------------------
         // CONSTRUCTOR
         // -------------------------
+        [JsonConstructor]
         public Dish(string name, string cuisine, bool isVegetarian, bool isVegan, decimal price, IEnumerable<string> ingredients)
         {
             Name = name;

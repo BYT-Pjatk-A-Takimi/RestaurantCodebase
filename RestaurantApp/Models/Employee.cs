@@ -1,9 +1,16 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace RestaurantApp.Models;
 
+[JsonPolymorphic]
+[JsonDerivedType(typeof(Manager), typeDiscriminator: "Manager")]
+[JsonDerivedType(typeof(Chef), typeDiscriminator: "Chef")]
+[JsonDerivedType(typeof(Waiter), typeDiscriminator: "Waiter")]
+[JsonDerivedType(typeof(Valet), typeDiscriminator: "Valet")]
 public abstract class Employee : Person
 {
+    [JsonConstructor]
     protected Employee(
         string firstName,
         string lastName,
@@ -29,6 +36,7 @@ public abstract class Employee : Person
 
 public sealed class WorkDetails
 {
+    [JsonConstructor]
     public WorkDetails(string department, string shiftSchedule, DateOnly dateOfHiring)
     {
         Department = department;

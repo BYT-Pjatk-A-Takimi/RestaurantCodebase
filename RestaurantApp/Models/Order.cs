@@ -10,14 +10,15 @@ public class Order
     [JsonInclude]
     private readonly List<OrderDish> _orderDishes = new();
 
-    public Order(Customer customer, Table table)
+    [JsonConstructor]
+    public Order(Customer customer, Table table, Guid? id = null, DateTime? timeStamp = null, OrderStatus? status = null)
     {
         Customer = customer ?? throw new ArgumentNullException(nameof(customer));
         Table = table ?? throw new ArgumentNullException(nameof(table));
 
-        Id = Guid.NewGuid();
-        Status = OrderStatus.Pending;
-        TimeStamp = DateTime.UtcNow;
+        Id = id ?? Guid.NewGuid();
+        Status = status ?? OrderStatus.Pending;
+        TimeStamp = timeStamp ?? DateTime.UtcNow;
     }
 
     // BASIC ATTRIBUTES
@@ -73,6 +74,7 @@ public class Order
 
 public class OrderDish
 {
+    [JsonConstructor]
     public OrderDish(string name, Dish dish, int quantity)
     {
         if (string.IsNullOrWhiteSpace(name))

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using RestaurantApp;
 
 namespace RestaurantApp.Models;
 
@@ -12,9 +13,12 @@ public class Restaurant
     private static List<Restaurant> _extent = new();
     public static IReadOnlyCollection<Restaurant> Extent => _extent.AsReadOnly();
 
+    [JsonInclude]
     private readonly List<Table> _tables = new();
+    [JsonInclude]
     private readonly List<Menu> _menus = new();
 
+    [JsonConstructor]
     private Restaurant()
     {
         _tables = new List<Table>();
@@ -54,12 +58,7 @@ public class Restaurant
 
     public static void Save(string path = "restaurants_extent.json")
     {
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles
-        };
-
+        var options = JsonSerialization.GetDefaultOptions();
         var json = JsonSerializer.Serialize(_extent, options);
         File.WriteAllText(path, json);
     }
@@ -75,7 +74,8 @@ public class Restaurant
         try
         {
             var json = File.ReadAllText(path);
-            var loaded = JsonSerializer.Deserialize<List<Restaurant>>(json);
+            var options = JsonSerialization.GetDefaultOptions();
+            var loaded = JsonSerializer.Deserialize<List<Restaurant>>(json, options);
 
             if (loaded is null)
             {

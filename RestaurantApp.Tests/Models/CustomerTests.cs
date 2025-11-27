@@ -32,7 +32,7 @@ public class CustomerTests
         var nonMember = new NonMember(firstName, lastName, birthDate, phoneNumber, email);
         var initialCreditRate = 3.0m;
 
-        var member = nonMember.PromoteToMember(initialCreditRate);
+        var member = nonMember.beMember(initialCreditRate);
 
         Assert.That(member, Is.Not.Null);
         Assert.That(member, Is.InstanceOf<Member>());

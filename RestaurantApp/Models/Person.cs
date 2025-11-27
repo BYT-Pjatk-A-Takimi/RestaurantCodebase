@@ -1,9 +1,14 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace RestaurantApp.Models;
 
+[JsonPolymorphic]
+[JsonDerivedType(typeof(Customer), typeDiscriminator: "Customer")]
+[JsonDerivedType(typeof(Employee), typeDiscriminator: "Employee")]
 public abstract class Person
 {
+    [JsonConstructor]
     protected Person(string firstName, string lastName, DateOnly birthDate, string phoneNumber)
     {
         FirstName = firstName;

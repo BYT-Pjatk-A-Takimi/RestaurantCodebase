@@ -4,8 +4,12 @@ using System.Text.Json.Serialization;
 
 namespace RestaurantApp.Models;
 
+[JsonPolymorphic]
+[JsonDerivedType(typeof(Member), typeDiscriminator: "Member")]
+[JsonDerivedType(typeof(NonMember), typeDiscriminator: "NonMember")]
 public abstract class Customer : Person
 {
+    [JsonConstructor]
     protected Customer(
         string firstName,
         string lastName,
@@ -54,6 +58,7 @@ public sealed class Member : Customer
 {
     private const int CreditsPerOrder = 1;
 
+    [JsonConstructor]
     public Member(
         string firstName,
         string lastName,
@@ -94,6 +99,7 @@ public sealed class Member : Customer
 
 public sealed class NonMember : Customer
 {
+    [JsonConstructor]
     public NonMember(
         string firstName,
         string lastName,

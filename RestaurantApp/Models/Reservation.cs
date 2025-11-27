@@ -1,9 +1,11 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace RestaurantApp.Models;
 
 public class Reservation
 {
+    [JsonConstructor]
     public Reservation(Guid id, DateOnly dateOfReservation, int partySize, Table table)
     {
         if (id == Guid.Empty)

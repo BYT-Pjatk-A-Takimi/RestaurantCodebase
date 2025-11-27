@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using RestaurantApp;
 
 namespace RestaurantApp.Models;
 
 public class Payment
 {
+    [JsonConstructor]
     public Payment(Guid orderId, decimal amount, PaymentMethod method)
     {
         if (orderId == Guid.Empty)
@@ -88,8 +91,8 @@ public class Payment
 
     public static void SaveAll(string filePath)
     {
-        var json = JsonSerializer.Serialize(Extent,
-            new JsonSerializerOptions { WriteIndented = true });
+        var options = JsonSerialization.GetDefaultOptions();
+        var json = JsonSerializer.Serialize(Extent, options);
         File.WriteAllText(filePath, json);
     }
 
@@ -101,7 +104,8 @@ public class Payment
             return;
 
         var json = File.ReadAllText(filePath);
-        var loaded = JsonSerializer.Deserialize<List<Payment>>(json);
+        var options = JsonSerialization.GetDefaultOptions();
+        var loaded = JsonSerializer.Deserialize<List<Payment>>(json, options);
 
         if (loaded != null)
             Extent.AddRange(loaded);

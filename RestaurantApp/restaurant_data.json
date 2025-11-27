@@ -1,0 +1,126 @@
+{
+  "Name": "BYT Bistro",
+  "MaxCapacity": 120,
+  "_tables": [
+    {
+      "TableNumber": 1,
+      "NumberOfChairs": 4,
+      "TableType": "Standard",
+      "Reservations": [
+        {
+          "Id": "9aa21a9a-71c2-4617-9d88-fd718a77ee03",
+          "DateOfReservation": "2025-11-28",
+          "PartySize": 2,
+          "Table": null,
+          "Status": 1
+        }
+      ],
+      "_reservations": [
+        {
+          "Id": "9aa21a9a-71c2-4617-9d88-fd718a77ee03",
+          "DateOfReservation": "2025-11-28",
+          "PartySize": 2,
+          "Table": null,
+          "Status": 1
+        }
+      ]
+    },
+    {
+      "TableNumber": 2,
+      "NumberOfChairs": 2,
+      "TableType": "Window",
+      "Reservations": [],
+      "_reservations": []
+    }
+  ],
+  "_menus": [
+    {
+      "Name": "Main Menu",
+      "MenuType": "Dinner",
+      "AvailableLanguages": [
+        "English",
+        "Turkish"
+      ],
+      "Dishes": [
+        {
+          "Name": "Margherita Pizza",
+          "Cuisine": "Italian",
+          "IsVegetarian": true,
+          "IsVegan": false,
+          "Price": 14.50,
+          "Ingredients": [
+            "Dough",
+            "Tomato",
+            "Mozzarella",
+            "Basil"
+          ],
+          "_ingredients": [
+            "Dough",
+            "Tomato",
+            "Mozzarella",
+            "Basil"
+          ]
+        },
+        {
+          "Name": "Grilled Steak",
+          "Cuisine": "American",
+          "IsVegetarian": false,
+          "IsVegan": false,
+          "Price": 28.00,
+          "Ingredients": [
+            "Beef",
+            "Salt",
+            "Pepper"
+          ],
+          "_ingredients": [
+            "Beef",
+            "Salt",
+            "Pepper"
+          ]
+        }
+      ],
+      "_availableLanguages": [
+        "English",
+        "Turkish"
+      ],
+      "_dishes": [
+        {
+          "Name": "Margherita Pizza",
+          "Cuisine": "Italian",
+          "IsVegetarian": true,
+          "IsVegan": false,
+          "Price": 14.50,
+          "Ingredients": [
+            "Dough",
+            "Tomato",
+            "Mozzarella",
+            "Basil"
+          ],
+          "_ingredients": [
+            "Dough",
+            "Tomato",
+            "Mozzarella",
+            "Basil"
+          ]
+        },
+        {
+          "Name": "Grilled Steak",
+          "Cuisine": "American",
+          "IsVegetarian": false,
+          "IsVegan": false,
+          "Price": 28.00,
+          "Ingredients": [
+            "Beef",
+            "Salt",
+            "Pepper"
+          ],
+          "_ingredients": [
+            "Beef",
+            "Salt",
+            "Pepper"
+          ]
+        }
+      ]
+    }
+  ]
+}
