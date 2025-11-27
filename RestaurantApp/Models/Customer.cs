@@ -11,7 +11,7 @@ public abstract class Customer : Person
         string lastName,
         DateOnly birthDate,
         string phoneNumber,
-        string email)
+        string? email)
         : base(firstName, lastName, birthDate, phoneNumber)
     {
         Email = email;
@@ -21,9 +21,11 @@ public abstract class Customer : Person
     [JsonInclude]
     private readonly List<Reservation> _reservations;
 
-    public string Email { get; }
+    public string? Email { get; }
 
     public IReadOnlyCollection<Reservation> Reservations => _reservations;
+
+    public Restaurant ViewRestaurant(Restaurant restaurant) => restaurant;
 
     public Reservation MakeReservation(Reservation reservation)
     {
@@ -62,6 +64,11 @@ public sealed class Member : Customer
         decimal creditPointsRate)
         : base(firstName, lastName, birthDate, phoneNumber, email)
     {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            throw new ArgumentException("Member email cannot be null or empty.", nameof(email));
+        }
+
         Credits = credits;
         CreditPointsRate = creditPointsRate;
     }
@@ -82,7 +89,7 @@ public sealed class Member : Customer
         return amount - discount;
     }
 
-    public void AddOrderCredit() => Credits += CreditsPerOrder;
+    public void AddCredits() => Credits += CreditsPerOrder;
 }
 
 public sealed class NonMember : Customer
@@ -97,7 +104,14 @@ public sealed class NonMember : Customer
     {
     }
 
-    public Member PromoteToMember(decimal initialCreditRate) =>
-        new(FirstName, LastName, BirthDate, PhoneNumber, Email, 0, initialCreditRate);
+    public Member beMember(decimal initialCreditRate)
+    {
+        if (string.IsNullOrWhiteSpace(Email))
+        {
+            throw new InvalidOperationException("Cannot promote to member without an email address.");
+        }
+
+        return new Member(FirstName, LastName, BirthDate, PhoneNumber, Email, 0, initialCreditRate);
+    }
 }
 

@@ -40,7 +40,11 @@ public class Chef : Employee
 
     public string CuisineType { get; }
 
+    public void assignTask() {}
+
     public void AddDish(Menu menu, Dish dish) => menu.AddDish(dish);
+
+    public void viewOrders() {}
 
     public IReadOnlyCollection<Dish> ViewMenu(Menu menu) => menu.Dishes;
 
@@ -92,7 +96,7 @@ public class SousChef : Chef
 
     public IReadOnlyCollection<string> SupervisedSections { get; }
 
-    public void PrepareSpecialDish(Dish dish) { }
+    public void prepareSpecialists(Dish dish) { }
 
     public void AssistExecutiveChef() { }
 }

@@ -1,25 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "/Users/berilyavuz/Desktop/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj": {}
+    "/home/berkay/Documents/Projects/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj": {}
   },
   "projects": {
-    "/Users/berilyavuz/Desktop/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj": {
+    "/home/berkay/Documents/Projects/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/berilyavuz/Desktop/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj",
+        "projectUniqueName": "/home/berkay/Documents/Projects/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj",
         "projectName": "RestaurantApp",
-        "projectPath": "/Users/berilyavuz/Desktop/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj",
-        "packagesPath": "/Users/berilyavuz/.nuget/packages/",
-        "outputPath": "/Users/berilyavuz/Desktop/RestaurantCodebase/RestaurantApp/obj/",
+        "projectPath": "/home/berkay/Documents/Projects/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj",
+        "packagesPath": "/home/berkay/.nuget/packages/",
+        "outputPath": "/home/berkay/Documents/Projects/RestaurantCodebase/RestaurantApp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/berilyavuz/.nuget/NuGet/NuGet.Config"
+          "/home/berkay/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
+          "/nix/store/gb747c8spw95j9q7minsk9mh7pwl9lrq-dotnet-sdk-10.0.100/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -59,7 +60,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/nix/store/gb747c8spw95j9q7minsk9mh7pwl9lrq-dotnet-sdk-10.0.100/share/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

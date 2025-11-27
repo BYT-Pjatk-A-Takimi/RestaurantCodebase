@@ -24,7 +24,7 @@ namespace RestaurantApp.Tests.Models
             Assert.That(dish.IsVegetarian, Is.True);
             Assert.That(dish.IsVegan, Is.False);
             Assert.That(dish.Price, Is.EqualTo(25.5m));
-            CollectionAssert.AreEqual(ing, dish.Ingredients);
+            Assert.That(dish.Ingredients, Is.EqualTo(ing));
         }
 
         [Test]
@@ -83,7 +83,7 @@ namespace RestaurantApp.Tests.Models
             Assert.That(dish.IsVegetarian, Is.True);
             Assert.That(dish.IsVegan, Is.False);
             Assert.That(dish.Price, Is.EqualTo(15m));
-            CollectionAssert.AreEqual(ing, dish.Ingredients);
+            Assert.That(dish.Ingredients, Is.EqualTo(ing));
         }
 
         // ----------------------------------------------------
@@ -127,7 +127,7 @@ namespace RestaurantApp.Tests.Models
             Assert.That(dish.IsVegetarian, Is.True);
             Assert.That(dish.IsVegan, Is.True);
             Assert.That(dish.Price, Is.EqualTo(40m));
-            CollectionAssert.AreEqual(newIngredients, dish.Ingredients);
+            Assert.That(dish.Ingredients, Is.EqualTo(newIngredients));
         }
 
         // ----------------------------------------------------

@@ -35,7 +35,7 @@ public class EmployeeRoleTests
         var chef = new Chef("Berkay", "Bayar", DateOnly.Parse("1999-03-12"), "111-1111", workDetails, experienceProfile, "Italian");
         
         var menu = new Menu("Dinner Menu", "Dinner", new[] { "English", "Spanish" });
-        var dish = new Dish("Pasta Carbonara", "Italian", false, 18.50m, new[] { "Pasta", "Eggs", "Bacon", "Parmesan" });
+        var dish = new Dish("Pasta Carbonara", "Italian", false, false, 18.50m, new[] { "Pasta", "Eggs", "Bacon", "Parmesan" });
 
         chef.AddDish(menu, dish);
 

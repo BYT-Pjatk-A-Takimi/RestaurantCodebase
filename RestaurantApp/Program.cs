@@ -12,8 +12,8 @@ try
 
     var restaurant = new Restaurant("BYT Bistro", 120);
     var mainMenu = new Menu("Main Menu", "Dinner", new[] { "English", "Turkish" });
-    var margherita = new Dish("Margherita Pizza", "Italian", true, 14.50m, new[] { "Dough", "Tomato", "Mozzarella", "Basil" });
-    var steak = new Dish("Grilled Steak", "American", false, 28.00m, new[] { "Beef", "Salt", "Pepper" });
+    var margherita = new Dish("Margherita Pizza", "Italian", true, false, 14.50m, new[] { "Dough", "Tomato", "Mozzarella", "Basil" });
+    var steak = new Dish("Grilled Steak", "American", false, false, 28.00m, new[] { "Beef", "Salt", "Pepper" });
     mainMenu.AddDish(margherita);
     mainMenu.AddDish(steak);
     restaurant.AddMenu(mainMenu);
@@ -36,7 +36,7 @@ try
 
     var order = customer.PlaceOrder(table1, orderDishes);
     order.CompleteOrder();
-    customer.AddOrderCredit();
+    customer.AddCredits();
 
     var total = order.CalculateTotal();
     var discountedTotal = customer.UseCredits(total);

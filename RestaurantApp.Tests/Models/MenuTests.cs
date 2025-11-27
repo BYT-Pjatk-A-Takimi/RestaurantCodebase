@@ -21,7 +21,7 @@ namespace RestaurantApp.Tests.Models
 
             Assert.That(menu.Name, Is.EqualTo("Main Menu"));
             Assert.That(menu.MenuType, Is.EqualTo("Dinner"));
-            CollectionAssert.AreEqual(langs, menu.AvailableLanguages);
+            Assert.That(menu.AvailableLanguages, Is.EqualTo(langs));
             Assert.That(menu.Dishes.Count, Is.EqualTo(0));
         }
 

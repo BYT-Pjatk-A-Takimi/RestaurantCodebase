@@ -9,7 +9,7 @@ namespace RestaurantApp.Models
         // -------------------------
         // BASIC ATTRIBUTES (UML)
         // -------------------------
-        private string _name;
+        private string _name = string.Empty;
         public string Name
         {
             get => _name;
@@ -21,7 +21,7 @@ namespace RestaurantApp.Models
             }
         }
 
-        private string _menuType;
+        private string _menuType = string.Empty;
         public string MenuType
         {
             get => _menuType;
@@ -78,6 +78,21 @@ namespace RestaurantApp.Models
                 throw new ArgumentException("Dish cannot be null.");
 
             return _dishes.Remove(dish);
+        }
+
+        public void UpdateDish(Dish existingDish, Dish updatedDish)
+        {
+            if (existingDish == null)
+                throw new ArgumentException("Existing dish cannot be null.", nameof(existingDish));
+
+            if (updatedDish == null)
+                throw new ArgumentException("Updated dish cannot be null.", nameof(updatedDish));
+
+            var index = _dishes.IndexOf(existingDish);
+            if (index < 0)
+                throw new InvalidOperationException("Dish to update was not found in this menu.");
+
+            _dishes[index] = updatedDish;
         }
 
         // -------------------------

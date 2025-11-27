@@ -8,7 +8,7 @@ namespace RestaurantApp.Models
         // -------------------------
         // BASIC UML ATTRIBUTES
         // -------------------------
-        private string _name;
+        private string _name = string.Empty;
         public string Name
         {
             get => _name;
@@ -20,7 +20,7 @@ namespace RestaurantApp.Models
             }
         }
 
-        private string _cuisine;
+        private string _cuisine = string.Empty;
         public string Cuisine
         {
             get => _cuisine;

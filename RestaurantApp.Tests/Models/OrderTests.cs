@@ -37,7 +37,7 @@ public class OrderTests
         var table = new Table(1, 4, "Standard");
         var order = new Order(customer, table);
 
-        var dish = new Dish("Pizza", "Italian", false, 20m, Array.Empty<string>());
+        var dish = new Dish("Pizza", "Italian", false, false, 20m, new[] { "Cheese" });
         order.AddDish(new OrderDish("Pizza", dish, 2));
 
         Assert.That(order.Dishes.Count, Is.EqualTo(1));
@@ -50,7 +50,7 @@ public class OrderTests
         var table = new Table(1, 4, "Standard");
         var order = new Order(customer, table);
 
-        var dish = new Dish("Burger", "FastFood", false, 15m, Array.Empty<string>());
+        var dish = new Dish("Burger", "FastFood", false, false, 15m, new[] { "Bun" });
 
         var dishes = new[]
         {
@@ -70,7 +70,7 @@ public class OrderTests
         var table = new Table(1, 4, "Standard");
         var order = new Order(customer, table);
 
-        var dish = new Dish("Burger", "FastFood", false, 15m, Array.Empty<string>());
+        var dish = new Dish("Burger", "FastFood", false, false, 15m, new[] { "Bun" });
         order.AddDish(new OrderDish("Burger", dish, 3)); // 3 * 15 = 45
 
         Assert.That(order.CalculateTotal(), Is.EqualTo(45m));
@@ -92,7 +92,7 @@ public class OrderTests
     [Test]
     public void OrderDish_ShouldValidateInputs()
     {
-        var dish = new Dish("Soup", "Starter", false, 10m, Array.Empty<string>());
+        var dish = new Dish("Soup", "Starter", true, false, 10m, new[] { "Water" });
 
         Assert.Throws<ArgumentException>(() => new OrderDish("", dish, 1));
         Assert.Throws<ArgumentException>(() => new OrderDish("Soup", dish, 0));

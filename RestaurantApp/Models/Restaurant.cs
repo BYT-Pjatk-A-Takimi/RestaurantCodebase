@@ -35,7 +35,7 @@ public class Restaurant
         AddToExtent(this);
     }
 
-    public string Name { get; private set; }
+    public string Name { get; private set; } = string.Empty;
     public int MaxCapacity { get; private set; }
 
     [JsonIgnore]

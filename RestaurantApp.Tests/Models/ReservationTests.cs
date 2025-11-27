@@ -73,7 +73,7 @@ public class ReservationTests
     {
         var reservation = new Reservation(
             Guid.NewGuid(),
-            new DateOfReservation: new DateOnly(2025, 5, 10),
+            dateOfReservation: new DateOnly(2025, 5, 10),
             partySize: 2,
             table: CreateTable(1, 4));
 
