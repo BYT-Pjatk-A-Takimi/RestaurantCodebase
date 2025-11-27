@@ -29,9 +29,9 @@ public class Table
     // BASIC ATTRIBUTES
     public int TableNumber { get; }
 
-    public int NumberOfChairs { get; }   // BASIC: numberOfChairs
+    public int NumberOfChairs { get; }
 
-    public string TableType { get; }     // BASIC: tableType
+    public string TableType { get; }
 
     public IReadOnlyCollection<Reservation> Reservations => _reservations;
 

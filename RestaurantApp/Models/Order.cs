@@ -17,7 +17,7 @@ public class Order
 
         Id = Guid.NewGuid();
         Status = OrderStatus.Pending;
-        TimeStamp = DateTime.UtcNow; // BASIC (timeStamp)
+        TimeStamp = DateTime.UtcNow;
     }
 
     // BASIC ATTRIBUTES
@@ -27,9 +27,9 @@ public class Order
 
     public Table Table { get; }
 
-    public DateTime TimeStamp { get; }   // BASIC: timeStamp
+    public DateTime TimeStamp { get; }
 
-    public OrderStatus Status { get; private set; }  // BASIC: status
+    public OrderStatus Status { get; private set; }
 
     // MULTI-VALUE (liste) – sistem için lazım
     public IReadOnlyCollection<OrderDish> Dishes => _orderDishes;

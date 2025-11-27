@@ -28,11 +28,11 @@ public class Payment
 
     public Guid OrderId { get; }
 
-    public decimal Amount { get; private set; }       // BASIC: amount
+    public decimal Amount { get; private set; }
 
-    public PaymentMethod Method { get; }              // BASIC: method
+    public PaymentMethod Method { get; }
 
-    public PaymentStatus Status { get; private set; } // BASIC: status
+    public PaymentStatus Status { get; private set; }
 
     // OPTIONAL ATTRIBUTE (iyi bir örnek): ödeme işlenene kadar null
     public DateTime? ProcessedOn { get; private set; }

@@ -6,7 +6,7 @@ namespace RestaurantApp.Models
     public class Dish
     {
         // -------------------------
-        // BASIC UML ATTRIBUTES
+        // BASIC ATTRIBUTES
         // -------------------------
         private string _name = string.Empty;
         public string Name
@@ -86,7 +86,7 @@ namespace RestaurantApp.Models
         }
 
         // -------------------------
-        // UML METHODS
+        // Class METHODS
         // -------------------------
 
         // createDish()

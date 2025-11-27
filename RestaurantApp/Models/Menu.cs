@@ -7,7 +7,7 @@ namespace RestaurantApp.Models
     public class Menu
     {
         // -------------------------
-        // BASIC ATTRIBUTES (UML)
+        // BASIC ATTRIBUTES
         // -------------------------
         private string _name = string.Empty;
         public string Name
@@ -34,7 +34,7 @@ namespace RestaurantApp.Models
         }
 
         // -------------------------
-        // MULTI-VALUE ATTRIBUTE (UML)
+        // MULTI-VALUE ATTRIBUTE
         // -------------------------
         private List<string> _availableLanguages = new List<string>();
         public IReadOnlyCollection<string> AvailableLanguages => _availableLanguages.AsReadOnly();
@@ -96,7 +96,7 @@ namespace RestaurantApp.Models
         }
 
         // -------------------------
-        // UML METHODS
+        // Class METHODS
         // -------------------------
         public void ChangeMenu(string? newName = null, string? newType = null)
         {
