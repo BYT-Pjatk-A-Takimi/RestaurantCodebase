@@ -341,5 +341,249 @@ public class AssociationTests
             Assert.That(menu.Dishes.Count, Is.EqualTo(0));
         });
     }
+     // Test 8: Order ↔ OrderDish Association
+    [Test]
+    public void Order_AddDish_OrderDishBelongsToOrder()
+    {
+        // Arrange
+        var customer = CreateCustomer();
+        var table = CreateTable();
+        var order = new Order(customer, table);
+        var dish = CreateDish();
+        var orderDish = new OrderDish("Pizza", dish, 2);
+
+        // Act
+        order.AddDish(orderDish);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(order.Dishes, Contains.Item(orderDish), 
+                "OrderDish should be in order's dishes");
+            Assert.That(order.Dishes.Count, Is.EqualTo(1), 
+                "Order should have one dish");
+            Assert.That(order.TotalAmount, Is.EqualTo(40m), 
+                "Total amount should be calculated correctly (2 * 20)");
+        });
+    }
+
+    [Test]
+    public void Order_AddDish_ThrowsWhenOrderDishIsNull()
+    {
+        // Arrange
+        var customer = CreateCustomer();
+        var table = CreateTable();
+        var order = new Order(customer, table);
+
+        // Act & Assert
+        Assert.Throws<ArgumentNullException>(() => order.AddDish(null!));
+    }
+
+    [Test]
+    public void Order_AddDishes_AddsMultipleOrderDishes()
+    {
+        // Arrange
+        var customer = CreateCustomer();
+        var table = CreateTable();
+        var order = new Order(customer, table);
+        var dish1 = CreateDish("Pizza", 20m);
+        var dish2 = CreateDish("Burger", 15m);
+        var orderDishes = new[]
+        {
+            new OrderDish("Pizza", dish1, 1),
+            new OrderDish("Burger", dish2, 2)
+        };
+
+        // Act
+        order.AddDishes(orderDishes);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(order.Dishes.Count, Is.EqualTo(2), 
+                "Order should have two dishes");
+            Assert.That(order.TotalAmount, Is.EqualTo(50m), 
+                "Total should be 20 + (15 * 2) = 50");
+        });
+    }
+
+    [Test]
+    public void Order_AddDishes_ThrowsWhenCollectionIsNull()
+    {
+        // Arrange
+        var customer = CreateCustomer();
+        var table = CreateTable();
+        var order = new Order(customer, table);
+
+        // Act & Assert
+        Assert.Throws<ArgumentNullException>(() => order.AddDishes(null!));
+    }
+
+    [Test]
+    public void Order_AddDishes_ThrowsWhenCollectionContainsNull()
+    {
+        // Arrange
+        var customer = CreateCustomer();
+        var table = CreateTable();
+        var order = new Order(customer, table);
+        var dish = CreateDish();
+        var orderDishes = new OrderDish[]
+        {
+            new OrderDish("Pizza", dish, 1),
+            null!
+        };
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => order.AddDishes(orderDishes));
+    }
+
+    // Test 9: OrderDish ↔ Dish Association
+    [Test]
+    public void OrderDish_ReferencesDish_DishPriceUsedInCalculation()
+    {
+        // Arrange
+        var dish = CreateDish("Pasta", 30m);
+        var quantity = 3;
+
+        // Act
+        var orderDish = new OrderDish("Pasta", dish, quantity);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(orderDish.Dish, Is.EqualTo(dish), 
+                "OrderDish should reference the correct dish");
+            Assert.That(orderDish.Quantity, Is.EqualTo(quantity), 
+                "OrderDish should have correct quantity");
+            Assert.That(orderDish.TotalPrice, Is.EqualTo(90m), 
+                "TotalPrice should be dish price * quantity (30 * 3)");
+            Assert.That(orderDish.Dish.Price, Is.EqualTo(30m), 
+                "Dish price should be accessible through OrderDish");
+        });
+    }
+
+    [Test]
+    public void OrderDish_Constructor_ThrowsWhenDishIsNull()
+    {
+        // Act & Assert
+        Assert.Throws<ArgumentNullException>(() => new OrderDish("Pizza", null!, 1));
+    }
+
+    [Test]
+    public void OrderDish_Constructor_ThrowsWhenNameIsEmpty()
+    {
+        // Arrange
+        var dish = CreateDish();
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => new OrderDish("", dish, 1));
+    }
+
+    [Test]
+    public void OrderDish_Constructor_ThrowsWhenQuantityIsNotPositive()
+    {
+        // Arrange
+        var dish = CreateDish();
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => new OrderDish("Pizza", dish, 0));
+        Assert.Throws<ArgumentException>(() => new OrderDish("Pizza", dish, -1));
+    }
+
+    // Test 10: Customer ↔ Payment Association (Through Order)
+    [Test]
+    public void Customer_MakePayment_CreatesPaymentWithOrderReference()
+    {
+        // Arrange
+        var customer = CreateCustomer();
+        var table = CreateTable();
+        var dish = CreateDish();
+        var orderDishes = new[] { new OrderDish("Pizza", dish, 2) };
+        var order = customer.PlaceOrder(table, orderDishes);
+        var paymentMethod = PaymentMethod.Card;
+        var amount = 50m;
+
+        // Act
+        var payment = customer.MakePayment(order, paymentMethod, amount);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(payment.OrderId, Is.EqualTo(order.Id), 
+                "Payment should reference the correct order ID");
+            Assert.That(payment.Amount, Is.EqualTo(amount), 
+                "Payment amount should be correct");
+            Assert.That(payment.Method, Is.EqualTo(paymentMethod), 
+                "Payment method should be correct");
+        });
+    }
+
+    [Test]
+    public void Payment_Constructor_ThrowsWhenOrderIdIsEmpty()
+    {
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => new Payment(Guid.Empty, 50m, PaymentMethod.Card));
+    }
+
+    [Test]
+    public void Payment_Constructor_ThrowsWhenAmountIsNotPositive()
+    {
+        // Arrange
+        var orderId = Guid.NewGuid();
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => new Payment(orderId, 0m, PaymentMethod.Card));
+        Assert.Throws<ArgumentException>(() => new Payment(orderId, -10m, PaymentMethod.Card));
+    }
+
+    // Test 11: Waiter ↔ Table Association (Bidirectional)
+    [Test]
+    public void Waiter_AssignTable_TableIsInWaiterAssignedTables()
+    {
+        // Arrange
+        var workDetails = CreateWorkDetails();
+        var experienceProfile = CreateExperienceProfile();
+        var waiter = new Waiter("John", "Doe", new DateOnly(1990, 1, 1), "123456789", 
+            workDetails, experienceProfile);
+        var table = CreateTable(5, 6);
+
+        // Act
+        var result = waiter.AssignTable(table);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.True, "AssignTable should return true");
+            Assert.That(waiter.AssignedTables, Contains.Item(table), 
+                "Table should be in waiter's assigned tables");
+            Assert.That(waiter.AssignedTables.Count, Is.EqualTo(1), 
+                "Waiter should have one assigned table");
+        });
+    }
+
+    [Test]
+    public void Waiter_AssignTable_ReturnsFalseWhenTableAlreadyAssigned()
+    {
+        // Arrange
+        var workDetails = CreateWorkDetails();
+        var experienceProfile = CreateExperienceProfile();
+        var waiter = new Waiter("John", "Doe", new DateOnly(1990, 1, 1), "123456789", 
+            workDetails, experienceProfile);
+        var table = CreateTable();
+
+        // Act
+        waiter.AssignTable(table);
+        var result = waiter.AssignTable(table); // Try to assign same table again
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.False, "Assigning same table twice should return false");
+            Assert.That(waiter.AssignedTables.Count, Is.EqualTo(1), 
+                "Table should only be assigned once");
+        });
+    }
 }
+
+
 
