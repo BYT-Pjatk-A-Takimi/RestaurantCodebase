@@ -582,8 +582,202 @@ public class AssociationTests
             Assert.That(waiter.AssignedTables.Count, Is.EqualTo(1), 
                 "Table should only be assigned once");
         });
+     [Test]
+    public void Manager_AssignTableToWaiter_TableAppearsInWaiterAssignedTables()
+    {
+        // Arrange
+        var workDetails = CreateWorkDetails();
+        var experienceProfile = CreateExperienceProfile();
+        var manager = new Manager("Manager", "Boss", new DateOnly(1980, 1, 1), "111111111", 
+            workDetails, experienceProfile, level: 5);
+        var waiter = new Waiter("John", "Doe", new DateOnly(1990, 1, 1), "123456789", 
+            workDetails, experienceProfile);
+        var table = CreateTable(10, 8);
+
+        // Act
+        var result = manager.AssignTable(waiter, table);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.True, "Manager.AssignTable should return true");
+            Assert.That(waiter.AssignedTables, Contains.Item(table), 
+                "Table should be in waiter's assigned tables");
+            Assert.That(waiter.AssignedTables.Count, Is.EqualTo(1), 
+                "Waiter should have one assigned table");
+        });
+    }
+
+    [Test]
+    public void Manager_AssignTableToWaiter_ThrowsWhenWaiterIsNull()
+    {
+        // Arrange
+        var workDetails = CreateWorkDetails();
+        var experienceProfile = CreateExperienceProfile();
+        var manager = new Manager("Manager", "Boss", new DateOnly(1980, 1, 1), "111111111", 
+            workDetails, experienceProfile, level: 5);
+        var table = CreateTable();
+
+        // Act & Assert
+        // Manager.AssignTable calls waiter.AssignTable directly, so null waiter causes NullReferenceException
+        Assert.Throws<NullReferenceException>(() => manager.AssignTable(null!, table));
+    }
+
+    // Test 13: Chef ↔ Menu Association (Through Dish Operations)
+    [Test]
+    public void Chef_AddDishToMenu_DishAppearsInMenu()
+    {
+        // Arrange
+        var workDetails = CreateWorkDetails();
+        var experienceProfile = CreateExperienceProfile();
+        var chef = new HeadChef("Chef", "Cook", new DateOnly(1985, 1, 1), "222222222", 
+            workDetails, experienceProfile, "Italian", kitchenExperienceYears: 10);
+        var menu = CreateMenu();
+        var dish = CreateDish("Risotto", 35m);
+
+        // Act
+        chef.AddDish(menu, dish);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(menu.Dishes, Contains.Item(dish), 
+                "Dish should be in menu after chef adds it");
+            Assert.That(menu.Dishes.Count, Is.EqualTo(1), 
+                "Menu should have one dish");
+        });
+    }
+
+    [Test]
+    public void Chef_ViewMenu_ReturnsMenuDishes()
+    {
+        // Arrange
+        var workDetails = CreateWorkDetails();
+        var experienceProfile = CreateExperienceProfile();
+        var chef = new HeadChef("Chef", "Cook", new DateOnly(1985, 1, 1), "222222222", 
+            workDetails, experienceProfile, "Italian", kitchenExperienceYears: 10);
+        var menu = CreateMenu();
+        var dish1 = CreateDish("Pasta", 25m);
+        var dish2 = CreateDish("Pizza", 20m);
+        menu.AddDish(dish1);
+        menu.AddDish(dish2);
+
+        // Act
+        var dishes = chef.ViewMenu(menu);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(dishes, Contains.Item(dish1), 
+                "Chef should be able to view dish1");
+            Assert.That(dishes, Contains.Item(dish2), 
+                "Chef should be able to view dish2");
+            Assert.That(dishes.Count, Is.EqualTo(2), 
+                "Chef should see both dishes");
+        });
+    }
+
+    [Test]
+    public void Chef_UpdateMenu_UpdatesDishInMenu()
+    {
+        // Arrange
+        var workDetails = CreateWorkDetails();
+        var experienceProfile = CreateExperienceProfile();
+        var chef = new HeadChef("Chef", "Cook", new DateOnly(1985, 1, 1), "222222222", 
+            workDetails, experienceProfile, "Italian", kitchenExperienceYears: 10);
+        var menu = CreateMenu();
+        var existingDish = CreateDish("Old Dish", 20m);
+        var updatedDish = CreateDish("New Dish", 25m);
+        menu.AddDish(existingDish);
+
+        // Act
+        chef.UpdateMenu(menu, existingDish, updatedDish);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(menu.Dishes, Contains.Item(updatedDish), 
+                "Menu should contain the updated dish");
+            Assert.That(menu.Dishes, Does.Not.Contain(existingDish), 
+                "Menu should not contain the old dish");
+            Assert.That(menu.Dishes.Count, Is.EqualTo(1), 
+                "Menu should still have one dish");
+        });
+    }
+
+    // Test 14: Employee ↔ WorkDetails Association (Composition)
+    [Test]
+    public void Employee_HasWorkDetails_WorkDetailsAreCorrectlyAssociated()
+    {
+        // Arrange
+        var workDetails = CreateWorkDetails();
+        var experienceProfile = CreateExperienceProfile();
+        var waiter = new Waiter("John", "Doe", new DateOnly(1990, 1, 1), "123456789", 
+            workDetails, experienceProfile);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(waiter.WorkDetails, Is.EqualTo(workDetails), 
+                "Employee should reference the correct WorkDetails");
+            Assert.That(waiter.WorkDetails.Department, Is.EqualTo("Kitchen"), 
+                "WorkDetails department should be accessible");
+            Assert.That(waiter.WorkDetails.ShiftSchedule, Is.EqualTo("Day Shift"), 
+                "WorkDetails shift schedule should be accessible");
+            Assert.That(waiter.WorkDetails.DateOfHiring, Is.EqualTo(new DateOnly(2020, 1, 1)), 
+                "WorkDetails date of hiring should be accessible");
+        });
+    }
+
+    // Test 15: Employee ↔ EmployeeExperienceProfile Association
+    [Test]
+    public void Employee_UpdateExperienceProfile_ProfileIsUpdated()
+    {
+        // Arrange
+        var workDetails = CreateWorkDetails();
+        var initialProfile = CreateExperienceProfile();
+        var waiter = new Waiter("John", "Doe", new DateOnly(1990, 1, 1), "123456789", 
+            workDetails, initialProfile);
+        var newProfile = new SpecialistProfile("Fine Dining");
+
+        // Act
+        waiter.UpdateExperienceProfile(newProfile);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(waiter.ExperienceProfile, Is.EqualTo(newProfile), 
+                "Employee experience profile should be updated");
+            Assert.That(waiter.ExperienceProfile, Is.InstanceOf<SpecialistProfile>(), 
+                "Profile should be of type SpecialistProfile");
+            Assert.That(((SpecialistProfile)waiter.ExperienceProfile).FieldOfExpertise, 
+                Is.EqualTo("Fine Dining"), 
+                "Specialist profile should have correct field of expertise");
+        });
+    }
+
+    [Test]
+    public void Employee_UpdateExperienceProfile_AllowsMultipleUpdates()
+    {
+        // Arrange
+        var workDetails = CreateWorkDetails();
+        var initialProfile = new TraineeProfile(6);
+        var waiter = new Waiter("John", "Doe", new DateOnly(1990, 1, 1), "123456789", 
+            workDetails, initialProfile);
+        var experiencedProfile = new ExperiencedProfile(3, "Mentor Name");
+        var specialistProfile = new SpecialistProfile("Beverage Service");
+
+        // Act
+        waiter.UpdateExperienceProfile(experiencedProfile);
+        waiter.UpdateExperienceProfile(specialistProfile);
+
+        // Assert
+        Assert.That(waiter.ExperienceProfile, Is.EqualTo(specialistProfile), 
+            "Final profile should be the last one set");
     }
 }
+ }
+
 
 
 
