@@ -99,13 +99,26 @@ namespace RestaurantApp.Tests.Models
         public void RemoveDish_ShouldRemoveDishFromList()
         {
             var menu = new Menu("Main", "Dinner", new List<string> { "EN" });
+            var dish1 = new Dish("Soup", "Turkish", true, false, 10m, new List<string> { "Water" });
+            var dish2 = new Dish("Salad", "Turkish", true, true, 8m, new List<string> { "Lettuce" });
+
+            menu.AddDish(dish1);
+            menu.AddDish(dish2);
+            var result = menu.RemoveDish(dish1);
+
+            Assert.That(result, Is.True);
+            Assert.That(menu.Dishes.Count, Is.EqualTo(1));
+            Assert.That(menu.Dishes, Contains.Item(dish2));
+        }
+
+        [Test]
+        public void RemoveDish_ShouldThrowWhenLastDish()
+        {
+            var menu = new Menu("Main", "Dinner", new List<string> { "EN" });
             var dish = new Dish("Soup", "Turkish", true, false, 10m, new List<string> { "Water" });
 
             menu.AddDish(dish);
-            var result = menu.RemoveDish(dish);
-
-            Assert.That(result, Is.True);
-            Assert.That(menu.Dishes.Count, Is.EqualTo(0));
+            Assert.Throws<InvalidOperationException>(() => menu.RemoveDish(dish), "Cannot remove last dish");
         }
 
         [Test]

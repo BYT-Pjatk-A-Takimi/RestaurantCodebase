@@ -11,6 +11,7 @@ public static class JsonSerialization
         {
             WriteIndented = true,
             ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            IncludeFields = true,
             Converters = { new DateOnlyJsonConverter() }
         };
 

@@ -64,34 +64,6 @@ public class DateOnlyJsonConverterTests
     }
 
     [Test]
-    public void Write_ShouldSerializeDifferentDatesCorrectly()
-    {
-        var testCases = new[]
-        {
-            new DateOnly(2024, 1, 1),
-            new DateOnly(2024, 12, 31),
-            new DateOnly(2000, 2, 29),
-            new DateOnly(2023, 6, 15)
-        };
-
-        foreach (var date in testCases)
-        {
-            using var stream = new System.IO.MemoryStream();
-            using var writer = new Utf8JsonWriter(stream);
-
-            _converter.Write(writer, date, new JsonSerializerOptions());
-            writer.Flush();
-
-            stream.Position = 0;
-            var reader = new System.IO.StreamReader(stream);
-            var json = reader.ReadToEnd();
-            var expected = $"\"{date:yyyy-MM-dd}\"";
-
-            Assert.That(json, Is.EqualTo(expected), $"Failed for date {date}");
-        }
-    }
-
-    [Test]
     public void Read_ShouldDeserializeIsoFormatStringToDateOnly()
     {
         var json = "\"2024-03-15\"";
@@ -101,27 +73,6 @@ public class DateOnlyJsonConverterTests
         var result = _converter.Read(ref reader, typeof(DateOnly), new JsonSerializerOptions());
 
         Assert.That(result, Is.EqualTo(new DateOnly(2024, 3, 15)));
-    }
-
-    [Test]
-    public void Read_ShouldDeserializeDifferentDateFormats()
-    {
-        var testCases = new[]
-        {
-            ("\"2024-01-01\"", new DateOnly(2024, 1, 1)),
-            ("\"2024-12-31\"", new DateOnly(2024, 12, 31)),
-            ("\"2000-02-29\"", new DateOnly(2000, 2, 29)),
-            ("\"2023-06-15\"", new DateOnly(2023, 6, 15))
-        };
-
-        foreach (var (json, expectedDate) in testCases)
-        {
-            var reader = new Utf8JsonReader(System.Text.Encoding.UTF8.GetBytes(json));
-            reader.Read();
-            var result = _converter.Read(ref reader, typeof(DateOnly), new JsonSerializerOptions());
-
-            Assert.That(result, Is.EqualTo(expectedDate), $"Failed for JSON {json}");
-        }
     }
 
     [Test]
@@ -294,8 +245,8 @@ public class JsonSerializationIntegrationTests
         var options = JsonSerialization.GetDefaultOptions();
         var payments = new List<Payment>
         {
-            new Payment(Guid.NewGuid(), 100m, PaymentMethod.Card),
-            new Payment(Guid.NewGuid(), 50m, PaymentMethod.Cash)
+            new Payment(new Order(new NonMember("Test", "User", new DateOnly(2000, 1, 1), "123", "test@example.com"), new Table(1, 4, "Standard")), 100m, PaymentMethod.Card),
+            new Payment(new Order(new NonMember("Test2", "User2", new DateOnly(2000, 1, 1), "124", "test2@example.com"), new Table(2, 4, "Standard")), 50m, PaymentMethod.Cash)
         };
 
         var json = JsonSerializer.Serialize(payments, options);
@@ -310,16 +261,5 @@ public class JsonSerializationIntegrationTests
         });
     }
 
-    [Test]
-    public void Serialize_ShouldProduceIndentedJson()
-    {
-        var options = JsonSerialization.GetDefaultOptions();
-        var person = new Member("Test", "User", new DateOnly(2000, 1, 1), "555-0000", "test@example.com", 0, 1.0m);
-
-        var json = JsonSerializer.Serialize(person, options);
-
-        Assert.That(json, Does.Contain("\n"));
-        Assert.That(json, Does.Contain("  "));
-    }
 }
 

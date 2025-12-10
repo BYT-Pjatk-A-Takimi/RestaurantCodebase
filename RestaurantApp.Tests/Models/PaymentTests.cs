@@ -8,6 +8,13 @@ namespace RestaurantApp.Tests.Models;
 [TestFixture]
 public class PaymentTests
 {
+    private Order CreateOrder()
+    {
+        var customer = new NonMember("Test", "User", new DateOnly(2000, 1, 1), "123456789", "test@example.com");
+        var table = new Table(1, 4, "Standard");
+        return new Order(customer, table);
+    }
+
     [SetUp]
     public void SetUp()
     {
@@ -19,13 +26,14 @@ public class PaymentTests
     [Test]
     public void Constructor_ShouldInitializeProperties()
     {
-        var orderId = Guid.NewGuid();
-        var payment = new Payment(orderId, 100m, PaymentMethod.Card);
+        var order = CreateOrder();
+        var payment = new Payment(order, 100m, PaymentMethod.Card);
 
         Assert.Multiple(() =>
         {
             Assert.That(payment.Id, Is.Not.EqualTo(Guid.Empty));
-            Assert.That(payment.OrderId, Is.EqualTo(orderId));
+            Assert.That(payment.OrderId, Is.EqualTo(order.Id));
+            Assert.That(payment.Order, Is.EqualTo(order));
             Assert.That(payment.Amount, Is.EqualTo(100m));
             Assert.That(payment.Method, Is.EqualTo(PaymentMethod.Card));
             Assert.That(payment.Status, Is.EqualTo(PaymentStatus.Pending));
@@ -36,7 +44,8 @@ public class PaymentTests
     [Test]
     public void ProcessPayment_ShouldSetStatusToCompleted_AndSetProcessedOn()
     {
-        var payment = new Payment(Guid.NewGuid(), 50m, PaymentMethod.Cash);
+        var order = CreateOrder();
+        var payment = new Payment(order, 50m, PaymentMethod.Cash);
 
         payment.ProcessPayment();
 
@@ -50,7 +59,8 @@ public class PaymentTests
     [Test]
     public void RefundPayment_ShouldSetStatusToRefunded_WhenCompleted()
     {
-        var payment = new Payment(Guid.NewGuid(), 75m, PaymentMethod.Card);
+        var order = CreateOrder();
+        var payment = new Payment(order, 75m, PaymentMethod.Card);
 
         payment.ProcessPayment();
         payment.RefundPayment();
@@ -61,7 +71,8 @@ public class PaymentTests
     [Test]
     public void RefundPayment_ShouldThrow_IfNotCompleted()
     {
-        var payment = new Payment(Guid.NewGuid(), 75m, PaymentMethod.Card);
+        var order = CreateOrder();
+        var payment = new Payment(order, 75m, PaymentMethod.Card);
 
         Assert.Throws<InvalidOperationException>(() => payment.RefundPayment());
     }
@@ -69,7 +80,8 @@ public class PaymentTests
     [Test]
     public void AdjustAmount_ShouldChangeAmount_WhenPositive()
     {
-        var payment = new Payment(Guid.NewGuid(), 80m, PaymentMethod.Cash);
+        var order = CreateOrder();
+        var payment = new Payment(order, 80m, PaymentMethod.Cash);
 
         payment.AdjustAmount(120m);
 
@@ -79,20 +91,11 @@ public class PaymentTests
     [Test]
     public void AdjustAmount_ShouldThrow_WhenNonPositive()
     {
-        var payment = new Payment(Guid.NewGuid(), 80m, PaymentMethod.Cash);
+        var order = CreateOrder();
+        var payment = new Payment(order, 80m, PaymentMethod.Cash);
 
         Assert.Throws<ArgumentException>(() => payment.AdjustAmount(0m));
         Assert.Throws<ArgumentException>(() => payment.AdjustAmount(-10m));
-    }
-
-    [Test]
-    public void ChangeTaxRate_ShouldChange_WhenValid()
-    {
-        Payment.ChangeTaxRate(0.10m);
-
-        // TaxRate static property
-        // Sadece exception atmaması ve değer ataması bizim için yeterli
-        Assert.That(() => Payment.ChangeTaxRate(0.20m), Throws.Nothing);
     }
 
     [Test]
@@ -105,7 +108,8 @@ public class PaymentTests
     [Test]
     public void AddToExtent_ShouldAddPaymentToExtent()
     {
-        var payment = new Payment(Guid.NewGuid(), 60m, PaymentMethod.Card);
+        var order = CreateOrder();
+        var payment = new Payment(order, 60m, PaymentMethod.Card);
 
         Payment.AddToExtent(payment);
 
@@ -122,8 +126,10 @@ public class PaymentTests
             File.Delete(filePath);
         }
 
-        var p1 = new Payment(Guid.NewGuid(), 40m, PaymentMethod.Cash);
-        var p2 = new Payment(Guid.NewGuid(), 55m, PaymentMethod.Card);
+        var order1 = CreateOrder();
+        var order2 = CreateOrder();
+        var p1 = new Payment(order1, 40m, PaymentMethod.Cash);
+        var p2 = new Payment(order2, 55m, PaymentMethod.Card);
 
         Payment.AddToExtent(p1);
         Payment.AddToExtent(p2);

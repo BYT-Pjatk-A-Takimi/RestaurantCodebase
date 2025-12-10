@@ -17,14 +17,17 @@ public class Restaurant
     private readonly List<Table> _tables = new();
     [JsonInclude]
     private readonly List<Menu> _menus = new();
+    [JsonInclude]
+    private readonly List<Chef> _chefs = new();
 
-    [JsonConstructor]
-    private Restaurant()
+    public Restaurant()
     {
         _tables = new List<Table>();
         _menus = new List<Menu>();
+        _chefs = new List<Chef>();
     }
 
+    [JsonConstructor]
     public Restaurant(string name, int maxCapacity)
     {
         if (string.IsNullOrWhiteSpace(name))
@@ -47,6 +50,9 @@ public class Restaurant
 
     [JsonIgnore]
     public IReadOnlyCollection<Menu> Menus => _menus;
+
+    [JsonIgnore]
+    public IReadOnlyCollection<Chef> Chefs => _chefs;
 
     private static void AddToExtent(Restaurant restaurant)
     {
@@ -103,7 +109,11 @@ public class Restaurant
                 $"Table with number {table.TableNumber} already exists in this restaurant.",
                 nameof(table));
 
+        if (table.Restaurant != null && table.Restaurant != this)
+            throw new ArgumentException("Table already belongs to another restaurant.", nameof(table));
+
         _tables.Add(table);
+        table.SetRestaurant(this);
     }
 
     public void RemoveTable(Table table)
@@ -111,7 +121,11 @@ public class Restaurant
         if (table is null)
             throw new ArgumentNullException(nameof(table));
 
+        if (!_tables.Contains(table))
+            throw new ArgumentException("Table does not belong to this restaurant.", nameof(table));
+
         _tables.Remove(table);
+        table.SetRestaurant(null);
     }
 
     public int GetNumberOfTables() => _tables.Count;
@@ -127,6 +141,7 @@ public class Restaurant
                 nameof(menu));
 
         _menus.Add(menu);
+        menu.SetRestaurant(this);
     }
 
     public bool RemoveMenu(Menu menu)
@@ -134,6 +149,37 @@ public class Restaurant
         if (menu is null)
             throw new ArgumentNullException(nameof(menu));
 
-        return _menus.Remove(menu);
+        if (!_menus.Contains(menu))
+            return false;
+
+        if (_menus.Count <= 1)
+            throw new InvalidOperationException("Cannot remove the last menu. A restaurant must have at least one menu.");
+
+        var removed = _menus.Remove(menu);
+        if (removed && menu.Restaurant == this)
+        {
+            menu.SetRestaurant(null);
+        }
+
+        return removed;
+    }
+
+    internal void AddChef(Chef chef)
+    {
+        if (chef is null)
+            throw new ArgumentNullException(nameof(chef));
+
+        if (!_chefs.Contains(chef))
+        {
+            _chefs.Add(chef);
+        }
+    }
+
+    internal void RemoveChef(Chef chef)
+    {
+        if (chef is null)
+            throw new ArgumentNullException(nameof(chef));
+
+        _chefs.Remove(chef);
     }
 }

@@ -54,6 +54,15 @@ namespace RestaurantApp.Models
         private List<string> _ingredients = new List<string>();
         public IReadOnlyCollection<string> Ingredients => _ingredients.AsReadOnly();
 
+        // ASSOCIATIONS
+        [JsonInclude]
+        private Menu? _menu;
+        [JsonInclude]
+        private readonly List<OrderDish> _orderDishes = new();
+
+        public Menu? Menu => _menu;
+        public IReadOnlyCollection<OrderDish> OrderDishes => _orderDishes;
+
         private void SetIngredients(IEnumerable<string> list)
         {
             if (list == null)
@@ -118,6 +127,30 @@ namespace RestaurantApp.Models
         public void RemoveDish(ref List<Dish> collection)
         {
             collection?.Remove(this);
+        }
+
+        internal void SetMenu(Menu? menu)
+        {
+            _menu = menu;
+        }
+
+        internal void AddOrderDish(OrderDish orderDish)
+        {
+            if (orderDish is null)
+                throw new ArgumentNullException(nameof(orderDish));
+
+            if (!_orderDishes.Contains(orderDish))
+            {
+                _orderDishes.Add(orderDish);
+            }
+        }
+
+        internal void RemoveOrderDish(OrderDish orderDish)
+        {
+            if (orderDish is null)
+                throw new ArgumentNullException(nameof(orderDish));
+
+            _orderDishes.Remove(orderDish);
         }
     }
 }

@@ -8,9 +8,13 @@ public class Table
 {
     [JsonInclude]
     private readonly List<Reservation> _reservations = new();
+    [JsonInclude]
+    private Restaurant? _restaurant;
+    [JsonInclude]
+    private Waiter? _waiter;
 
     [JsonConstructor]
-    public Table(int tableNumber, int numberOfChairs, string tableType)
+    public Table(int tableNumber, int numberOfChairs, string tableType, Restaurant? restaurant = null)
     {
         if (tableNumber <= 0)
             throw new ArgumentException("Table number must be positive.", nameof(tableNumber));
@@ -24,6 +28,11 @@ public class Table
         TableNumber = tableNumber;
         NumberOfChairs = numberOfChairs;
         TableType = tableType;
+
+        if (restaurant != null)
+        {
+            restaurant.AddTable(this);
+        }
     }
 
     // BASIC ATTRIBUTES
@@ -32,6 +41,10 @@ public class Table
     public int NumberOfChairs { get; }
 
     public string TableType { get; }
+
+    public Restaurant? Restaurant => _restaurant;
+
+    public Waiter? Waiter => _waiter;
 
     public IReadOnlyCollection<Reservation> Reservations => _reservations;
 
@@ -66,5 +79,15 @@ public class Table
         {
             _reservations.Add(reservation);
         }
+    }
+
+    internal void SetRestaurant(Restaurant? restaurant)
+    {
+        _restaurant = restaurant;
+    }
+
+    internal void SetWaiter(Waiter? waiter)
+    {
+        _waiter = waiter;
     }
 }

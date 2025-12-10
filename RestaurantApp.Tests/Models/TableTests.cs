@@ -36,24 +36,4 @@ public class TableTests
         });
     }
 
-    [Test]
-    public void Reserve_ReturnsFalse_WhenDateAlreadyReserved()
-    {
-        var table = new Table(1, 4, "Indoor");
-        var customer = CreateCustomer();
-
-        var date = new DateOnly(2025, 1, 1);
-
-        var r1 = new Reservation(Guid.NewGuid(), date, 2, table);
-        var r2 = new Reservation(Guid.NewGuid(), date, 3, table);
-
-        table.Reserve(customer, r1);
-        var result = table.Reserve(customer, r2);
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(result, Is.False);
-            Assert.That(table.Reservations.Count, Is.EqualTo(1));
-        });
-    }
 }

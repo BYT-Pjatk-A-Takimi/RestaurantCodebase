@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "nFG19TyjqOs=",
+=======
+  "dgSpecHash": "PVPNlWgTfrs=",
+>>>>>>> a518afb (bi-directional fixes)
   "success": true,
   "projectFilePath": "/Users/incioldac/Desktop/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj",
   "expectedPackageFiles": [],

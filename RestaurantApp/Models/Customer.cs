@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace RestaurantApp.Models;
@@ -33,20 +34,80 @@ public abstract class Customer : Person
 
     public Reservation MakeReservation(Reservation reservation)
     {
+        if (reservation is null)
+            throw new ArgumentNullException(nameof(reservation));
+
+        if (_reservations.Contains(reservation))
+            throw new ArgumentException("This reservation already exists for this customer.", nameof(reservation));
+
         _reservations.Add(reservation);
         return reservation;
     }
 
+    public Reservation? GetReservation(DateOnly dateOfReservation)
+    {
+        return _reservations.FirstOrDefault(r => r.DateOfReservation == dateOfReservation);
+    }
+
+    public bool RemoveReservation(Reservation reservation)
+    {
+        if (reservation is null)
+            throw new ArgumentNullException(nameof(reservation));
+
+        return _reservations.Remove(reservation);
+    }
+
+    public virtual Order PlaceOrder(Table table, IEnumerable<(string name, Dish dish, int quantity)> dishItems)
+    {
+        if (table is null)
+            throw new ArgumentNullException(nameof(table));
+
+        if (dishItems is null)
+            throw new ArgumentNullException(nameof(dishItems));
+
+        var order = new Order(this, table);
+        
+        foreach (var item in dishItems)
+        {
+            if (item.dish is null)
+                throw new ArgumentException("Dish cannot be null.", nameof(dishItems));
+
+            new OrderDish(order, item.name, item.dish, item.quantity);
+        }
+
+        return order;
+    }
+
     public virtual Order PlaceOrder(Table table, IEnumerable<OrderDish> dishes)
     {
+        if (table is null)
+            throw new ArgumentNullException(nameof(table));
+
+        if (dishes is null)
+            throw new ArgumentNullException(nameof(dishes));
+
         var order = new Order(this, table);
-        order.AddDishes(dishes);
+        
+        foreach (var dish in dishes)
+        {
+            if (dish is null)
+                throw new ArgumentException("OrderDish cannot be null.", nameof(dishes));
+
+            if (dish.Order != order)
+                throw new ArgumentException("OrderDish belongs to a different order.", nameof(dishes));
+
+            order.AddDish(dish);
+        }
+
         return order;
     }
 
     public Payment MakePayment(Order order, PaymentMethod method, decimal amount)
     {
-        var payment = new Payment(order.Id, amount, method);
+        if (order is null)
+            throw new ArgumentNullException(nameof(order));
+
+        var payment = new Payment(order, amount, method);
         payment.ProcessPayment();
         return payment;
     }

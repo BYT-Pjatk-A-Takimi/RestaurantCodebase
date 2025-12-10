@@ -10,24 +10,29 @@ namespace RestaurantApp.Models;
 public class Payment
 {
     [JsonConstructor]
-    public Payment(Guid orderId, decimal amount, PaymentMethod method)
+    public Payment(Order order, decimal amount, PaymentMethod method)
     {
-        if (orderId == Guid.Empty)
-            throw new ArgumentException("Order id cannot be empty.", nameof(orderId));
+        if (order is null)
+            throw new ArgumentNullException(nameof(order), "Payment cannot exist without an Order (composition).");
 
         if (amount <= 0)
             throw new ArgumentException("Amount must be positive.", nameof(amount));
 
         Id = Guid.NewGuid();
-        OrderId = orderId;
+        Order = order;
+        OrderId = order.Id;
         Amount = amount;
         Method = method;
         Status = PaymentStatus.Pending;
         ProcessedOn = null;
+
+        order.AddPayment(this);
     }
 
     // BASIC ATTRIBUTES
     public Guid Id { get; }
+
+    public Order Order { get; }
 
     public Guid OrderId { get; }
 

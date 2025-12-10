@@ -8,9 +8,10 @@ namespace RestaurantApp.Models;
 public class Order
 {
     [JsonInclude]
-    private readonly List<OrderDish> _orderDishes = new();
+    internal readonly List<OrderDish> _orderDishes = new();
+    [JsonInclude]
+    private readonly List<Payment> _payments = new();
 
-    [JsonConstructor]
     public Order(Customer customer, Table table, Guid? id = null, DateTime? timeStamp = null, OrderStatus? status = null)
     {
         Customer = customer ?? throw new ArgumentNullException(nameof(customer));
@@ -21,19 +22,29 @@ public class Order
         TimeStamp = timeStamp ?? DateTime.UtcNow;
     }
 
+    [JsonConstructor]
+    private Order()
+    {
+        Id = Guid.NewGuid();
+        Status = OrderStatus.Pending;
+        TimeStamp = DateTime.UtcNow;
+    }
+
     // BASIC ATTRIBUTES
-    public Guid Id { get; }
+    public Guid Id { get; private set; }
 
-    public Customer Customer { get; }
+    public Customer Customer { get; private set; } = null!;
 
-    public Table Table { get; }
+    public Table Table { get; private set; } = null!;
 
-    public DateTime TimeStamp { get; }
+    public DateTime TimeStamp { get; private set; }
 
     public OrderStatus Status { get; private set; }
 
     // MULTI-VALUE (liste) – sistem için lazım
     public IReadOnlyCollection<OrderDish> Dishes => _orderDishes;
+
+    public IReadOnlyCollection<Payment> Payments => _payments;
 
     // DERIVED ATTRIBUTE: /totalAmount
     public decimal TotalAmount => _orderDishes.Sum(d => d.TotalPrice);
@@ -42,6 +53,12 @@ public class Order
     {
         if (orderDish is null)
             throw new ArgumentNullException(nameof(orderDish));
+
+        if (orderDish.Order != this)
+            throw new ArgumentException("OrderDish belongs to a different order.", nameof(orderDish));
+
+        if (_orderDishes.Contains(orderDish))
+            throw new ArgumentException("This OrderDish is already in the order.", nameof(orderDish));
 
         _orderDishes.Add(orderDish);
     }
@@ -60,6 +77,12 @@ public class Order
         _orderDishes.AddRange(dishes);
     }
 
+    // Factory method to create OrderDish
+    public OrderDish CreateOrderDish(string name, Dish dish, int quantity)
+    {
+        return new OrderDish(this, name, dish, quantity);
+    }
+
     // Program.cs'deki eski çağrıları desteklemek için:
     public decimal CalculateTotal() => TotalAmount;
 
@@ -70,33 +93,49 @@ public class Order
 
         Status = OrderStatus.Completed;
     }
-}
 
-public class OrderDish
-{
-    [JsonConstructor]
-    public OrderDish(string name, Dish dish, int quantity)
+    // Qualified Association: Get Dish by Dish Name
+    public Dish? GetDishByName(string dishName)
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name cannot be empty.", nameof(name));
+        if (string.IsNullOrWhiteSpace(dishName))
+            throw new ArgumentException("Dish name cannot be null or empty.", nameof(dishName));
 
-        if (quantity <= 0)
-            throw new ArgumentException("Quantity must be positive.", nameof(quantity));
-
-        Dish = dish ?? throw new ArgumentNullException(nameof(dish));
-
-        Name = name;
-        Quantity = quantity;
+        var orderDish = _orderDishes.FirstOrDefault(od => od.Dish.Name.Equals(dishName, StringComparison.OrdinalIgnoreCase));
+        return orderDish?.Dish;
     }
 
-    public string Name { get; }
+    public bool RemoveDish(OrderDish orderDish)
+    {
+        if (orderDish is null)
+            throw new ArgumentNullException(nameof(orderDish));
 
-    public Dish Dish { get; }
+        return _orderDishes.Remove(orderDish);
+    }
 
-    public int Quantity { get; }
+    internal void AddPayment(Payment payment)
+    {
+        if (payment is null)
+            throw new ArgumentNullException(nameof(payment));
 
-    // DERIVED (OrderDish seviyesinde de derived örneği)
-    public decimal TotalPrice => Dish.Price * Quantity;
+        if (payment.Order != this)
+            throw new ArgumentException("Payment belongs to a different order.", nameof(payment));
+
+        if (_payments.Contains(payment))
+            throw new ArgumentException("This payment is already in the order.", nameof(payment));
+
+        _payments.Add(payment);
+    }
+
+    public bool RemovePayment(Payment payment)
+    {
+        if (payment is null)
+            throw new ArgumentNullException(nameof(payment));
+
+        if (_payments.Count <= 1)
+            throw new InvalidOperationException("Cannot remove the last payment. An order must have at least one payment.");
+
+        return _payments.Remove(payment);
+    }
 }
 
 public enum OrderStatus

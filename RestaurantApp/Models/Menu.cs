@@ -61,10 +61,14 @@ namespace RestaurantApp.Models
         }
 
         // -------------------------
-        // ASSOCIATION (Menu → Dish)
+        // ASSOCIATIONS
         // -------------------------
         [JsonInclude]
+        private Restaurant? _restaurant;
+        [JsonInclude]
         private List<Dish> _dishes = new List<Dish>();
+
+        public Restaurant? Restaurant => _restaurant;
         public IReadOnlyCollection<Dish> Dishes => _dishes.AsReadOnly();
 
         public void AddDish(Dish dish)
@@ -72,7 +76,11 @@ namespace RestaurantApp.Models
             if (dish == null)
                 throw new ArgumentException("Dish cannot be null.");
 
+            if (_dishes.Contains(dish))
+                throw new ArgumentException("Dish is already in this menu.", nameof(dish));
+
             _dishes.Add(dish);
+            dish.SetMenu(this);
         }
 
         public bool RemoveDish(Dish dish)
@@ -80,7 +88,16 @@ namespace RestaurantApp.Models
             if (dish == null)
                 throw new ArgumentException("Dish cannot be null.");
 
-            return _dishes.Remove(dish);
+            if (_dishes.Count <= 1)
+                throw new InvalidOperationException("Cannot remove the last dish. A menu must have at least one dish.");
+
+            var removed = _dishes.Remove(dish);
+            if (removed && dish.Menu == this)
+            {
+                dish.SetMenu(null);
+            }
+
+            return removed;
         }
 
         public void UpdateDish(Dish existingDish, Dish updatedDish)
@@ -121,6 +138,11 @@ namespace RestaurantApp.Models
             Name = name;
             MenuType = menuType;
             SetLanguages(availableLanguages);
+        }
+
+        internal void SetRestaurant(Restaurant? restaurant)
+        {
+            _restaurant = restaurant;
         }
     }
 }

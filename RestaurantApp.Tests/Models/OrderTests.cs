@@ -38,7 +38,8 @@ public class OrderTests
         var order = new Order(customer, table);
 
         var dish = new Dish("Pizza", "Italian", false, false, 20m, new[] { "Cheese" });
-        order.AddDish(new OrderDish("Pizza", dish, 2));
+        var orderDish = new OrderDish(order, "Pizza", dish, 2);
+        // OrderDish constructor automatically adds to order, so count should be 1
 
         Assert.That(order.Dishes.Count, Is.EqualTo(1));
     }
@@ -52,13 +53,9 @@ public class OrderTests
 
         var dish = new Dish("Burger", "FastFood", false, false, 15m, new[] { "Bun" });
 
-        var dishes = new[]
-        {
-            new OrderDish("Burger", dish, 1),
-            new OrderDish("Burger", dish, 2)
-        };
-
-        order.AddDishes(dishes);
+        // OrderDish constructor automatically adds to order
+        var dish1 = new OrderDish(order, "Burger", dish, 1);
+        var dish2 = new OrderDish(order, "Burger", dish, 2);
 
         Assert.That(order.Dishes.Count, Is.EqualTo(2));
     }
@@ -71,7 +68,8 @@ public class OrderTests
         var order = new Order(customer, table);
 
         var dish = new Dish("Burger", "FastFood", false, false, 15m, new[] { "Bun" });
-        order.AddDish(new OrderDish("Burger", dish, 3)); // 3 * 15 = 45
+        var orderDish = new OrderDish(order, "Burger", dish, 3); // 3 * 15 = 45
+        // OrderDish constructor automatically adds to order
 
         Assert.That(order.CalculateTotal(), Is.EqualTo(45m));
         Assert.That(order.TotalAmount, Is.EqualTo(45m));
@@ -92,10 +90,14 @@ public class OrderTests
     [Test]
     public void OrderDish_ShouldValidateInputs()
     {
+        var customer = CreateCustomer();
+        var table = new Table(1, 4, "Standard");
+        var order = new Order(customer, table);
         var dish = new Dish("Soup", "Starter", true, false, 10m, new[] { "Water" });
 
-        Assert.Throws<ArgumentException>(() => new OrderDish("", dish, 1));
-        Assert.Throws<ArgumentException>(() => new OrderDish("Soup", dish, 0));
-        Assert.Throws<ArgumentNullException>(() => new OrderDish("Soup", null!, 1));
+        Assert.Throws<ArgumentException>(() => new OrderDish(order, "", dish, 1));
+        Assert.Throws<ArgumentException>(() => new OrderDish(order, "Soup", dish, 0));
+        Assert.Throws<ArgumentNullException>(() => new OrderDish(order, "Soup", null!, 1));
+        Assert.Throws<ArgumentNullException>(() => new OrderDish(null!, "Soup", dish, 1));
     }
 }

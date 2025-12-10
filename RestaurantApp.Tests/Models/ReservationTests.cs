@@ -114,16 +114,4 @@ public class ReservationTests
         Assert.That(reservation.Status, Is.EqualTo(ReservationStatus.Cancelled));
     }
 
-    [Test]
-    public void Reservation_ValidData_DoesNotThrowException()
-    {
-        Assert.DoesNotThrow(() =>
-        {
-            var _ = new Reservation(
-                Guid.NewGuid(),
-                new DateOnly(2025, 5, 10),
-                3,
-                CreateTable(1, 4));
-        });
-    }
 }

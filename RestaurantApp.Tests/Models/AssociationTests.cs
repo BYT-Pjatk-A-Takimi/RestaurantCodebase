@@ -43,6 +43,27 @@ public class AssociationTests
         return new ExperiencedProfile(5, "John Mentor");
     }
 
+    private static Manager CreateManager(string firstName = "John", int level = 1)
+    {
+        var workDetails = CreateWorkDetails();
+        var experienceProfile = CreateExperienceProfile();
+        return new Manager(firstName, "Doe", new DateOnly(1980, 1, 1), "555-0001", workDetails, experienceProfile, level);
+    }
+
+    private static Chef CreateChef(string firstName = "Chef")
+    {
+        var workDetails = CreateWorkDetails();
+        var experienceProfile = CreateExperienceProfile();
+        return new Chef(firstName, "Cook", new DateOnly(1985, 1, 1), "555-0002", workDetails, experienceProfile, "Italian");
+    }
+
+    private static Waiter CreateWaiter()
+    {
+        var workDetails = CreateWorkDetails();
+        var experienceProfile = CreateExperienceProfile();
+        return new Waiter("Waiter", "Service", new DateOnly(1990, 1, 1), "555-0003", workDetails, experienceProfile);
+    }
+
     // Customer ↔ Reservation Association (Bidirectional)
     [Test]
     public void Customer_MakeReservation_AddsToBothCustomerAndTableReservations()
@@ -73,9 +94,8 @@ public class AssociationTests
         var customer = CreateCustomer();
         var table = CreateTable();
         var dish = CreateDish();
-        var orderDishes = new[] { new OrderDish("Pizza", dish, 2) };
 
-        var order = customer.PlaceOrder(table, orderDishes);
+        var order = customer.PlaceOrder(table, new[] { ("Pizza Order", dish, 2) });
 
         Assert.Multiple(() =>
         {
@@ -164,6 +184,7 @@ public class AssociationTests
         Assert.Throws<ArgumentNullException>(() => table.Reserve(customer, null!));
     }
 
+<<<<<<< HEAD
 
     //Table ↔ Order Association
     [Test]
@@ -202,10 +223,146 @@ public class AssociationTests
                 "Restaurant should have one table");
             Assert.That(restaurant.GetNumberOfTables(), Is.EqualTo(1),
                 "GetNumberOfTables should return correct count");
+=======
+    // Manager Reflex Association Tests
+    [Test]
+    public void Manager_SetSupervisor_EstablishesBidirectionalRelationship()
+    {
+        var manager1 = CreateManager("Manager1", 1);
+        var manager2 = CreateManager("Manager2", 2);
+
+        manager2.SetSupervisor(manager1);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(manager2.Supervisor, Is.EqualTo(manager1), "Manager2 should have Manager1 as supervisor");
+            Assert.That(manager1.Subordinates, Contains.Item(manager2), "Manager1 should have Manager2 as subordinate");
         });
     }
 
     [Test]
+    public void Manager_SetSupervisor_ThrowsWhenSelfSupervisor()
+    {
+        var manager = CreateManager();
+
+        Assert.Throws<ArgumentException>(() => manager.SetSupervisor(manager), "Manager cannot supervise themselves");
+    }
+
+    [Test]
+    public void Manager_AddSubordinate_EstablishesBidirectionalRelationship()
+    {
+        var manager1 = CreateManager("Manager1", 1);
+        var manager2 = CreateManager("Manager2", 2);
+
+        manager1.AddSubordinate(manager2);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(manager1.Subordinates, Contains.Item(manager2));
+            Assert.That(manager2.Supervisor, Is.EqualTo(manager1));
+        });
+    }
+
+    [Test]
+    public void Manager_RemoveSubordinate_RemovesBidirectionalRelationship()
+    {
+        var manager1 = CreateManager("Manager1", 1);
+        var manager2 = CreateManager("Manager2", 2);
+
+        manager1.AddSubordinate(manager2);
+        var removed = manager1.RemoveSubordinate(manager2);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(removed, Is.True);
+            Assert.That(manager1.Subordinates, Does.Not.Contain(manager2));
+            Assert.That(manager2.Supervisor, Is.Null);
+        });
+    }
+
+    [Test]
+    public void Manager_SetSupervisor_ThrowsWhenCircularReference()
+    {
+        var manager1 = CreateManager("Manager1", 1);
+        var manager2 = CreateManager("Manager2", 2);
+        var manager3 = CreateManager("Manager3", 3);
+
+        manager1.AddSubordinate(manager2);
+        manager2.AddSubordinate(manager3);
+
+        Assert.Throws<InvalidOperationException>(() => manager3.SetSupervisor(manager1), "Should prevent circular reference");
+    }
+
+    // Chef ↔ Restaurant Association Tests
+    [Test]
+    public void Chef_AddRestaurant_EstablishesBidirectionalRelationship()
+    {
+        var chef = CreateChef();
+        var restaurant = CreateRestaurant();
+
+        chef.AddRestaurant(restaurant);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(chef.Restaurants, Contains.Item(restaurant));
+            Assert.That(restaurant.Chefs, Contains.Item(chef));
+        });
+    }
+
+    [Test]
+    public void Chef_RemoveRestaurant_RemovesBidirectionalRelationship()
+    {
+        var chef = CreateChef();
+        var restaurant = CreateRestaurant();
+
+        chef.AddRestaurant(restaurant);
+        var removed = chef.RemoveRestaurant(restaurant);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(removed, Is.True);
+            Assert.That(chef.Restaurants, Does.Not.Contain(restaurant));
+            Assert.That(restaurant.Chefs, Does.Not.Contain(chef));
+        });
+    }
+
+    [Test]
+    public void Chef_AddRestaurant_ThrowsWhenDuplicate()
+    {
+        var chef = CreateChef();
+        var restaurant = CreateRestaurant();
+
+        chef.AddRestaurant(restaurant);
+        Assert.Throws<ArgumentException>(() => chef.AddRestaurant(restaurant), "Should prevent duplicate association");
+    }
+
+    // Qualified Association Tests
+    [Test]
+    public void Customer_GetReservation_ReturnsReservationByDate()
+    {
+        var customer = CreateCustomer();
+        var table = CreateTable();
+        var date1 = new DateOnly(2025, 6, 15);
+        var date2 = new DateOnly(2025, 6, 16);
+        var reservation1 = new Reservation(Guid.NewGuid(), date1, 2, table);
+        var reservation2 = new Reservation(Guid.NewGuid(), date2, 3, table);
+
+        table.Reserve(customer, reservation1);
+        table.Reserve(customer, reservation2);
+
+        var found = customer.GetReservation(date1);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(found, Is.EqualTo(reservation1));
+            Assert.That(customer.GetReservation(date2), Is.EqualTo(reservation2));
+            Assert.That(customer.GetReservation(new DateOnly(2025, 6, 17)), Is.Null);
+>>>>>>> a518afb (bi-directional fixes)
+        });
+    }
+
+    [Test]
+<<<<<<< HEAD
     public void Restaurant_AddTable_ThrowsWhenTableIsNull()
     {
         var restaurant = CreateRestaurant();
@@ -558,10 +715,50 @@ public class AssociationTests
                 "Table should be in waiter's assigned tables");
             Assert.That(waiter.AssignedTables.Count, Is.EqualTo(1), 
                 "Waiter should have one assigned table");
+=======
+    public void Order_GetDishByName_ReturnsDishByQualifiedName()
+    {
+        var customer = CreateCustomer();
+        var table = CreateTable();
+        var dish1 = CreateDish("Pizza", 20m);
+        var dish2 = CreateDish("Burger", 15m);
+
+        var order = customer.PlaceOrder(table, new[]
+        {
+            ("Pizza Order", dish1, 2),
+            ("Burger Order", dish2, 1)
+        });
+
+        var foundDish = order.GetDishByName("Pizza");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(foundDish, Is.EqualTo(dish1));
+            Assert.That(order.GetDishByName("Burger"), Is.EqualTo(dish2));
+            Assert.That(order.GetDishByName("Soup"), Is.Null);
+        });
+    }
+
+    // Waiter ↔ Table Reverse Connection Tests
+    [Test]
+    public void Waiter_AssignTable_EstablishesBidirectionalRelationship()
+    {
+        var waiter = CreateWaiter();
+        var table = CreateTable();
+
+        var result = waiter.AssignTable(table);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.True);
+            Assert.That(waiter.AssignedTables, Contains.Item(table));
+            Assert.That(table.Waiter, Is.EqualTo(waiter));
+>>>>>>> a518afb (bi-directional fixes)
         });
     }
 
     [Test]
+<<<<<<< HEAD
     public void Waiter_AssignTable_ReturnsFalseWhenTableAlreadyAssigned()
     {
         // Arrange
@@ -605,10 +802,43 @@ public class AssociationTests
                 "Table should be in waiter's assigned tables");
             Assert.That(waiter.AssignedTables.Count, Is.EqualTo(1), 
                 "Waiter should have one assigned table");
+=======
+    public void Waiter_RemoveTable_RemovesBidirectionalRelationship()
+    {
+        var waiter = CreateWaiter();
+        var table = CreateTable();
+
+        waiter.AssignTable(table);
+        var removed = waiter.RemoveTable(table);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(removed, Is.True);
+            Assert.That(waiter.AssignedTables, Does.Not.Contain(table));
+            Assert.That(table.Waiter, Is.Null);
+        });
+    }
+
+    // Order ↔ Payment Composition Tests
+    [Test]
+    public void Payment_Constructor_RequiresOrder()
+    {
+        var customer = CreateCustomer();
+        var table = CreateTable();
+        var order = new Order(customer, table);
+
+        var payment = new Payment(order, 100m, PaymentMethod.Card);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(payment.Order, Is.EqualTo(order));
+            Assert.That(order.Payments, Contains.Item(payment));
+>>>>>>> a518afb (bi-directional fixes)
         });
     }
 
     [Test]
+<<<<<<< HEAD
     public void Manager_AssignTableToWaiter_ThrowsWhenWaiterIsNull()
     {
         // Arrange
@@ -645,10 +875,87 @@ public class AssociationTests
                 "Dish should be in menu after chef adds it");
             Assert.That(menu.Dishes.Count, Is.EqualTo(1), 
                 "Menu should have one dish");
+=======
+    public void Payment_Constructor_ThrowsWhenOrderIsNull()
+    {
+        Assert.Throws<ArgumentNullException>(() => new Payment(null!, 100m, PaymentMethod.Card), "Payment requires Order");
+    }
+
+    [Test]
+    public void Order_RemovePayment_ThrowsWhenLastPayment()
+    {
+        var customer = CreateCustomer();
+        var table = CreateTable();
+        var order = new Order(customer, table);
+        var payment = new Payment(order, 100m, PaymentMethod.Card);
+
+        Assert.Throws<InvalidOperationException>(() => order.RemovePayment(payment), "Cannot remove last payment");
+    }
+
+    // Restaurant ↔ Table Composition Tests
+    [Test]
+    public void Table_Constructor_CanAcceptRestaurant()
+    {
+        var restaurant = CreateRestaurant();
+        var table = new Table(1, 4, "Standard", restaurant);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(table.Restaurant, Is.EqualTo(restaurant));
+            Assert.That(restaurant.Tables, Contains.Item(table));
         });
     }
 
     [Test]
+    public void Restaurant_AddTable_EstablishesBidirectionalRelationship()
+    {
+        var restaurant = CreateRestaurant();
+        var table = CreateTable();
+
+        restaurant.AddTable(table);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(restaurant.Tables, Contains.Item(table));
+            Assert.That(table.Restaurant, Is.EqualTo(restaurant));
+        });
+    }
+
+    [Test]
+    public void Restaurant_RemoveTable_RemovesBidirectionalRelationship()
+    {
+        var restaurant = CreateRestaurant();
+        var table = CreateTable();
+
+        restaurant.AddTable(table);
+        restaurant.RemoveTable(table);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(restaurant.Tables, Does.Not.Contain(table));
+            Assert.That(table.Restaurant, Is.Null);
+        });
+    }
+
+    // Restaurant ↔ Menu Aggregation Tests
+    [Test]
+    public void Restaurant_AddMenu_EstablishesBidirectionalRelationship()
+    {
+        var restaurant = CreateRestaurant();
+        var menu = CreateMenu();
+
+        restaurant.AddMenu(menu);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(restaurant.Menus, Contains.Item(menu));
+            Assert.That(menu.Restaurant, Is.EqualTo(restaurant));
+>>>>>>> a518afb (bi-directional fixes)
+        });
+    }
+
+    [Test]
+<<<<<<< HEAD
     public void Chef_ViewMenu_ReturnsMenuDishes()
     {
         // Arrange
@@ -753,10 +1060,36 @@ public class AssociationTests
             Assert.That(((SpecialistProfile)waiter.ExperienceProfile).FieldOfExpertise, 
                 Is.EqualTo("Fine Dining"), 
                 "Specialist profile should have correct field of expertise");
+=======
+    public void Restaurant_RemoveMenu_ThrowsWhenLastMenu()
+    {
+        var restaurant = CreateRestaurant();
+        var menu = CreateMenu();
+
+        restaurant.AddMenu(menu);
+
+        Assert.Throws<InvalidOperationException>(() => restaurant.RemoveMenu(menu), "Cannot remove last menu");
+    }
+
+    // Menu ↔ Dish Aggregation Tests
+    [Test]
+    public void Menu_AddDish_EstablishesBidirectionalRelationship()
+    {
+        var menu = CreateMenu();
+        var dish = CreateDish();
+
+        menu.AddDish(dish);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(menu.Dishes, Contains.Item(dish));
+            Assert.That(dish.Menu, Is.EqualTo(menu));
+>>>>>>> a518afb (bi-directional fixes)
         });
     }
 
     [Test]
+<<<<<<< HEAD
     public void Employee_UpdateExperienceProfile_AllowsMultipleUpdates()
     {
         // Arrange
@@ -780,4 +1113,67 @@ public class AssociationTests
 
 
 
+=======
+    public void Menu_RemoveDish_ThrowsWhenLastDish()
+    {
+        var menu = CreateMenu();
+        var dish = CreateDish();
+
+        menu.AddDish(dish);
+
+        Assert.Throws<InvalidOperationException>(() => menu.RemoveDish(dish), "Cannot remove last dish");
+    }
+
+    // Order ↔ OrderDish Composition Tests
+    [Test]
+    public void OrderDish_Constructor_RequiresOrder()
+    {
+        var customer = CreateCustomer();
+        var table = CreateTable();
+        var order = new Order(customer, table);
+        var dish = CreateDish();
+
+        var orderDish = new OrderDish(order, "Pizza Order", dish, 2);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(orderDish.Order, Is.EqualTo(order));
+            Assert.That(order.Dishes, Contains.Item(orderDish));
+            Assert.That(dish.OrderDishes, Contains.Item(orderDish));
+        });
+    }
+
+    [Test]
+    public void OrderDish_Constructor_ThrowsWhenOrderIsNull()
+    {
+        var dish = CreateDish();
+
+        Assert.Throws<ArgumentNullException>(() => new OrderDish(null!, "Pizza", dish, 2), "OrderDish requires Order");
+    }
+
+    // Duplication Prevention Tests
+    [Test]
+    public void Customer_MakeReservation_ThrowsWhenDuplicate()
+    {
+        var customer = CreateCustomer();
+        var table = CreateTable();
+        var reservation = new Reservation(Guid.NewGuid(), new DateOnly(2025, 6, 15), 2, table);
+
+        table.Reserve(customer, reservation);
+        Assert.Throws<ArgumentException>(() => customer.MakeReservation(reservation), "Should prevent duplicate reservation");
+    }
+
+    [Test]
+    public void Waiter_AssignTable_ReturnsFalseWhenDuplicate()
+    {
+        var waiter = CreateWaiter();
+        var table = CreateTable();
+
+        waiter.AssignTable(table);
+        var result = waiter.AssignTable(table);
+
+        Assert.That(result, Is.False, "Should return false for duplicate assignment");
+    }
+}
+>>>>>>> a518afb (bi-directional fixes)
 

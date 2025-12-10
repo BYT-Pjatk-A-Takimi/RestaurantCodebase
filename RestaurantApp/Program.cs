@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using RestaurantApp;
@@ -28,10 +28,10 @@ try
     table1.Reserve(customer, reservation);
     reservation.Confirm();
 
-    var orderDishes = new List<OrderDish>
+    var orderDishes = new List<(string name, Dish dish, int quantity)>
     {
-        new("Margherita Order", margherita, 2),
-        new("Steak Order", steak, 1)
+        ("Margherita Order", margherita, 2),
+        ("Steak Order", steak, 1)
     };
 
     var order = customer.PlaceOrder(table1, orderDishes);
