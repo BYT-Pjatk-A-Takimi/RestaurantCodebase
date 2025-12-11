@@ -8,10 +8,16 @@ namespace RestaurantApp.Tests.Models;
 [TestFixture]
 public class PaymentTests
 {
+    private Restaurant CreateRestaurant()
+    {
+        return new Restaurant("Test Restaurant", 100);
+    }
+
     private Order CreateOrder()
     {
         var customer = new NonMember("Test", "User", new DateOnly(2000, 1, 1), "123456789", "test@example.com");
-        var table = new Table(1, 4, "Standard");
+        var restaurant = CreateRestaurant();
+        var table = new Table(1, 4, "Standard", restaurant);
         return new Order(customer, table);
     }
 

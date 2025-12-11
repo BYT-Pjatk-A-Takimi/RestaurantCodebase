@@ -9,6 +9,8 @@ public class Manager : Employee
 {
     [JsonInclude]
     private readonly List<Manager> _subordinates = new();
+    [JsonInclude]
+    private Restaurant? _restaurant;
 
     [JsonConstructor]
     public Manager(
@@ -34,6 +36,8 @@ public class Manager : Employee
     public Manager? Supervisor { get; private set; }
 
     public IReadOnlyCollection<Manager> Subordinates => _subordinates;
+
+    public Restaurant? Restaurant => _restaurant;
 
     public bool AssignTable(Waiter waiter, Table table) => waiter.AssignTable(table);
 
@@ -137,6 +141,35 @@ public class Manager : Employee
         
         return false;
     }
+
+    public void SetRestaurant(Restaurant restaurant)
+    {
+        if (restaurant is null)
+            throw new ArgumentNullException(nameof(restaurant));
+        if (_restaurant == restaurant)
+            throw new ArgumentException("This manager already works at this restaurant.", nameof(restaurant));
+        if (_restaurant != null)
+            throw new InvalidOperationException("Manager already works at a restaurant. Remove the current restaurant first.");
+
+        _restaurant = restaurant;
+        restaurant.AddManager(this);
+    }
+
+    internal void SetRestaurantInternal(Restaurant restaurant)
+    {
+        if (restaurant is null)
+            throw new ArgumentNullException(nameof(restaurant));
+        _restaurant = restaurant;
+    }
+
+    public void RemoveRestaurant()
+    {
+        if (_restaurant is null)
+            return;
+        var restaurant = _restaurant;
+        _restaurant = null;
+        restaurant.RemoveManager(this);
+    }
 }
 
 [JsonPolymorphic]
@@ -146,7 +179,7 @@ public class Manager : Employee
 public class Chef : Employee
 {
     [JsonInclude]
-    private readonly List<Restaurant> _restaurants = new();
+    private Restaurant? _restaurant;
 
     [JsonConstructor]
     public Chef(
@@ -164,7 +197,7 @@ public class Chef : Employee
 
     public string CuisineType { get; }
 
-    public IReadOnlyCollection<Restaurant> Restaurants => _restaurants;
+    public Restaurant? Restaurant => _restaurant;
 
     public void assignTask() {}
 
@@ -176,29 +209,36 @@ public class Chef : Employee
 
     public void UpdateMenu(Menu menu, Dish existingDish, Dish updatedDish) => menu.UpdateDish(existingDish, updatedDish);
 
-    public void AddRestaurant(Restaurant restaurant)
+    public void SetRestaurant(Restaurant restaurant)
     {
         if (restaurant is null)
             throw new ArgumentNullException(nameof(restaurant));
 
-        if (_restaurants.Contains(restaurant))
+        if (_restaurant == restaurant)
             throw new ArgumentException("This chef already works at this restaurant.", nameof(restaurant));
 
-        _restaurants.Add(restaurant);
+        if (_restaurant != null)
+            throw new InvalidOperationException("Chef already works at a restaurant. Remove the current restaurant first.");
+
+        _restaurant = restaurant;
         restaurant.AddChef(this);
     }
 
-    public bool RemoveRestaurant(Restaurant restaurant)
+    internal void SetRestaurantInternal(Restaurant restaurant)
     {
         if (restaurant is null)
             throw new ArgumentNullException(nameof(restaurant));
+        _restaurant = restaurant;
+    }
 
-        if (!_restaurants.Contains(restaurant))
-            return false;
+    public void RemoveRestaurant()
+    {
+        if (_restaurant is null)
+            return;
 
-        _restaurants.Remove(restaurant);
+        var restaurant = _restaurant;
+        _restaurant = null;
         restaurant.RemoveChef(this);
-        return true;
     }
 }
 

@@ -8,28 +8,25 @@
     "net10.0": []
   },
   "packageFolders": {
-    "/Users/incioldac/.nuget/packages/": {}
+    "/home/berkay/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/incioldac/Desktop/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj",
+      "projectUniqueName": "/home/berkay/Documents/Projects/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj",
       "projectName": "RestaurantApp",
-      "projectPath": "/Users/incioldac/Desktop/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj",
-      "packagesPath": "/Users/incioldac/.nuget/packages/",
-      "outputPath": "/Users/incioldac/Desktop/RestaurantCodebase/RestaurantApp/obj/",
+      "projectPath": "/home/berkay/Documents/Projects/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj",
+      "packagesPath": "/home/berkay/.nuget/packages/",
+      "outputPath": "/home/berkay/Documents/Projects/RestaurantCodebase/RestaurantApp/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/incioldac/.nuget/NuGet/NuGet.Config"
+        "/home/berkay/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
-<<<<<<< HEAD
-=======
         "/nix/store/jl3858nslcfn094yhs51hgq7sg6ksv6r-dotnet-sdk-10.0.100/share/dotnet/library-packs": {},
->>>>>>> a518afb (bi-directional fixes)
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -69,9 +66,6 @@
             "privateAssets": "all"
           }
         },
-<<<<<<< HEAD
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json"
-=======
         "runtimeIdentifierGraphPath": "/nix/store/jl3858nslcfn094yhs51hgq7sg6ksv6r-dotnet-sdk-10.0.100/share/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
@@ -347,8 +341,15 @@
           "System.Xml.XPath": "(,4.3.32767]",
           "System.Xml.XPath.XDocument": "(,5.0.32767]"
         }
->>>>>>> a518afb (bi-directional fixes)
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file /home/berkay/Documents/Projects/RestaurantCodebase/RestaurantApp/obj/project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0."
+    }
+  ]
 }

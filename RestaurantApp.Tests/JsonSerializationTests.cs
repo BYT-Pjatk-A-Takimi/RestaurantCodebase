@@ -161,11 +161,10 @@ public class JsonSerializationIntegrationTests
     {
         var options = JsonSerialization.GetDefaultOptions();
         var restaurant = new Restaurant("Test Restaurant", 100);
-        var table = new Table(1, 4, "Standard");
-        restaurant.AddTable(table);
+        var table = new Table(1, 4, "Standard", restaurant);
 
         var customer = new Member("Jane", "Smith", new DateOnly(1985, 8, 20), "555-5678", "jane@example.com", 5, 1.5m);
-        var reservation = new Reservation(Guid.NewGuid(), new DateOnly(2024, 12, 25), 2, table);
+        var reservation = new Reservation(Guid.NewGuid(), new DateOnly(2024, 12, 25), new TimeOnly(19, 0), 2, table);
         table.Reserve(customer, reservation);
 
         // Test that serialization doesn't throw and produces valid JSON
@@ -206,11 +205,10 @@ public class JsonSerializationIntegrationTests
     {
         var options = JsonSerialization.GetDefaultOptions();
         var restaurant = new Restaurant("Circular Test", 50);
-        var table = new Table(1, 4, "Standard");
-        restaurant.AddTable(table);
+        var table = new Table(1, 4, "Standard", restaurant);
 
         var customer = new Member("Bob", "Wilson", new DateOnly(1992, 11, 5), "555-0000", "bob@example.com", 0, 1.0m);
-        var reservation = new Reservation(Guid.NewGuid(), new DateOnly(2024, 6, 1), 2, table);
+        var reservation = new Reservation(Guid.NewGuid(), new DateOnly(2024, 6, 1), new TimeOnly(20, 0), 2, table);
         table.Reserve(customer, reservation);
 
         // This should not throw due to circular references
@@ -245,8 +243,8 @@ public class JsonSerializationIntegrationTests
         var options = JsonSerialization.GetDefaultOptions();
         var payments = new List<Payment>
         {
-            new Payment(new Order(new NonMember("Test", "User", new DateOnly(2000, 1, 1), "123", "test@example.com"), new Table(1, 4, "Standard")), 100m, PaymentMethod.Card),
-            new Payment(new Order(new NonMember("Test2", "User2", new DateOnly(2000, 1, 1), "124", "test2@example.com"), new Table(2, 4, "Standard")), 50m, PaymentMethod.Cash)
+            new Payment(new Order(new NonMember("Test", "User", new DateOnly(2000, 1, 1), "123", "test@example.com"), new Table(1, 4, "Standard", new Restaurant("Restaurant 1", 100))), 100m, PaymentMethod.Card),
+            new Payment(new Order(new NonMember("Test2", "User2", new DateOnly(2000, 1, 1), "124", "test2@example.com"), new Table(2, 4, "Standard", new Restaurant("Restaurant 2", 100))), 50m, PaymentMethod.Cash)
         };
 
         var json = JsonSerializer.Serialize(payments, options);

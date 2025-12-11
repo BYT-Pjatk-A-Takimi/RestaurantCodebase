@@ -9,7 +9,6 @@ namespace RestaurantApp.Models;
 
 public class Payment
 {
-    [JsonConstructor]
     public Payment(Order order, decimal amount, PaymentMethod method)
     {
         if (order is null)
@@ -29,10 +28,27 @@ public class Payment
         order.AddPayment(this);
     }
 
+    [JsonConstructor]
+    private Payment(Order order, decimal amount, PaymentMethod method, Guid id, PaymentStatus status, DateTime? processedOn)
+    {
+        if (order is null)
+            throw new ArgumentNullException(nameof(order), "Payment cannot exist without an Order (composition).");
+
+        Id = id;
+        Order = order;
+        OrderId = order.Id;
+        Amount = amount;
+        Method = method;
+        Status = status;
+        ProcessedOn = processedOn;
+
+        order.AddPayment(this);
+    }
+
     // BASIC ATTRIBUTES
     public Guid Id { get; }
 
-    public Order Order { get; }
+    public Order Order { get; private set; }
 
     public Guid OrderId { get; }
 
@@ -79,6 +95,17 @@ public class Payment
             throw new ArgumentException("Amount must be positive.", nameof(newAmount));
 
         Amount = newAmount;
+    }
+
+    internal void SetOrder(Order order)
+    {
+        if (order is null)
+            throw new ArgumentNullException(nameof(order), "Payment cannot exist without an Order (composition).");
+        
+        if (Order != null && Order != order)
+            throw new InvalidOperationException("Payment cannot be reassigned to a different Order (composition).");
+        
+        Order = order;
     }
 
     // ---------- CLASS EXTENT & PERSISTENCE (hocanın istediği kısım) ----------

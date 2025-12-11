@@ -9,12 +9,14 @@ public class Table
     [JsonInclude]
     private readonly List<Reservation> _reservations = new();
     [JsonInclude]
-    private Restaurant? _restaurant;
+    private readonly List<Order> _orders = new();
+    [JsonInclude]
+    private Restaurant _restaurant;
     [JsonInclude]
     private Waiter? _waiter;
 
     [JsonConstructor]
-    public Table(int tableNumber, int numberOfChairs, string tableType, Restaurant? restaurant = null)
+    public Table(int tableNumber, int numberOfChairs, string tableType, Restaurant restaurant, bool skipAutoAdd = false)
     {
         if (tableNumber <= 0)
             throw new ArgumentException("Table number must be positive.", nameof(tableNumber));
@@ -25,11 +27,15 @@ public class Table
         if (string.IsNullOrWhiteSpace(tableType))
             throw new ArgumentException("Table type cannot be empty.", nameof(tableType));
 
+        if (restaurant is null)
+            throw new ArgumentNullException(nameof(restaurant), "Table cannot exist without a Restaurant (composition).");
+
         TableNumber = tableNumber;
         NumberOfChairs = numberOfChairs;
         TableType = tableType;
+        _restaurant = restaurant;
 
-        if (restaurant != null)
+        if (!skipAutoAdd)
         {
             restaurant.AddTable(this);
         }
@@ -42,11 +48,16 @@ public class Table
 
     public string TableType { get; }
 
-    public Restaurant? Restaurant => _restaurant;
+    public Restaurant Restaurant => _restaurant;
 
     public Waiter? Waiter => _waiter;
 
     public IReadOnlyCollection<Reservation> Reservations => _reservations;
+
+    public IReadOnlyCollection<Order> Orders => _orders;
+
+    public Reservation? GetReservation(DateOnly date, TimeOnly time) =>
+        _reservations.Find(r => r.DateOfReservation == date && r.TimeOfReservation == time);
 
     public Reservation? GetReservation(DateOnly date) =>
         _reservations.Find(r => r.DateOfReservation == date);
@@ -59,13 +70,25 @@ public class Table
         if (reservation is null)
             throw new ArgumentNullException(nameof(reservation));
 
-        if (GetReservation(reservation.DateOfReservation) is not null)
+        if (_reservations.Contains(reservation))
         {
-            // aynı tarihte zaten rezervasyon varsa reddet
+            try
+            {
+                customer.MakeReservation(reservation);
+            }
+            catch (ArgumentException)
+            {
+            }
+            return true;
+        }
+
+        if (GetReservation(reservation.DateOfReservation, reservation.TimeOfReservation) is not null)
+        {
+            // aynı tarih ve saatte zaten rezervasyon varsa reddet
             return false;
         }
 
-        _reservations.Add(reservation);
+        AddReservation(reservation);
         customer.MakeReservation(reservation);
         return true;
     }
@@ -75,19 +98,57 @@ public class Table
         if (reservation is null)
             throw new ArgumentNullException(nameof(reservation));
 
-        if (GetReservation(reservation.DateOfReservation) is null)
-        {
-            _reservations.Add(reservation);
-        }
+        if (reservation.Table != this && reservation.Table != null)
+            throw new ArgumentException("Reservation belongs to a different table.", nameof(reservation));
+
+        if (_reservations.Contains(reservation))
+            return;
+
+        _reservations.Add(reservation);
+        reservation.SetTable(this);
     }
 
-    internal void SetRestaurant(Restaurant? restaurant)
+    internal void RemoveReservation(Reservation reservation)
     {
+        if (reservation is null)
+            throw new ArgumentNullException(nameof(reservation));
+
+        _reservations.Remove(reservation);
+        reservation.SetTable(null);
+    }
+
+    internal void SetRestaurant(Restaurant restaurant)
+    {
+        if (restaurant is null)
+            throw new ArgumentNullException(nameof(restaurant), "Table cannot exist without a Restaurant (composition).");
         _restaurant = restaurant;
     }
 
     internal void SetWaiter(Waiter? waiter)
     {
         _waiter = waiter;
+    }
+
+    internal void AddOrder(Order order)
+    {
+        if (order is null)
+            throw new ArgumentNullException(nameof(order));
+
+        if (order.Table != this && order.Table != null)
+            throw new ArgumentException("Order belongs to a different table.", nameof(order));
+
+        if (_orders.Contains(order))
+            return;
+
+        _orders.Add(order);
+        order.SetTable(this);
+    }
+
+    internal void RemoveOrder(Order order)
+    {
+        if (order is null)
+            throw new ArgumentNullException(nameof(order));
+
+        _orders.Remove(order);
     }
 }

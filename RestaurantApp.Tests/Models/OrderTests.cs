@@ -13,11 +13,17 @@ public class OrderTests
         return new NonMember("Test", "User", new DateOnly(2000, 1, 1), "123456789", "test@example.com");
     }
 
+    private static Restaurant CreateRestaurant()
+    {
+        return new Restaurant("Test Restaurant", 100);
+    }
+
     [Test]
     public void Constructor_ShouldSetInitialStatusAndTimestamp()
     {
         var customer = CreateCustomer();
-        var table = new Table(1, 4, "Standard");
+        var restaurant = CreateRestaurant();
+        var table = new Table(1, 4, "Standard", restaurant);
 
         var before = DateTime.UtcNow.AddSeconds(-1);
         var order = new Order(customer, table);
@@ -34,7 +40,8 @@ public class OrderTests
     public void AddDish_ShouldIncreaseDishCount()
     {
         var customer = CreateCustomer();
-        var table = new Table(1, 4, "Standard");
+        var restaurant = CreateRestaurant();
+        var table = new Table(1, 4, "Standard", restaurant);
         var order = new Order(customer, table);
 
         var dish = new Dish("Pizza", "Italian", false, false, 20m, new[] { "Cheese" });
@@ -48,7 +55,8 @@ public class OrderTests
     public void AddDishes_ShouldIncreaseDishCount_ByCollectionSize()
     {
         var customer = CreateCustomer();
-        var table = new Table(1, 4, "Standard");
+        var restaurant = CreateRestaurant();
+        var table = new Table(1, 4, "Standard", restaurant);
         var order = new Order(customer, table);
 
         var dish = new Dish("Burger", "FastFood", false, false, 15m, new[] { "Bun" });
@@ -64,7 +72,8 @@ public class OrderTests
     public void CalculateTotal_ShouldReturnSumOfOrderDishPrices()
     {
         var customer = CreateCustomer();
-        var table = new Table(1, 4, "Standard");
+        var restaurant = CreateRestaurant();
+        var table = new Table(1, 4, "Standard", restaurant);
         var order = new Order(customer, table);
 
         var dish = new Dish("Burger", "FastFood", false, false, 15m, new[] { "Bun" });
@@ -79,7 +88,8 @@ public class OrderTests
     public void CompleteOrder_ShouldChangeStatusToCompleted()
     {
         var customer = CreateCustomer();
-        var table = new Table(1, 4, "Standard");
+        var restaurant = CreateRestaurant();
+        var table = new Table(1, 4, "Standard", restaurant);
         var order = new Order(customer, table);
 
         order.CompleteOrder();
@@ -91,7 +101,8 @@ public class OrderTests
     public void OrderDish_ShouldValidateInputs()
     {
         var customer = CreateCustomer();
-        var table = new Table(1, 4, "Standard");
+        var restaurant = CreateRestaurant();
+        var table = new Table(1, 4, "Standard", restaurant);
         var order = new Order(customer, table);
         var dish = new Dish("Soup", "Starter", true, false, 10m, new[] { "Water" });
 

@@ -18,13 +18,11 @@ try
     mainMenu.AddDish(steak);
     restaurant.AddMenu(mainMenu);
 
-    var table1 = new Table(1, 4, "Standard");
-    var table2 = new Table(2, 2, "Window");
-    restaurant.AddTable(table1);
-    restaurant.AddTable(table2);
+    var table1 = new Table(1, 4, "Standard", restaurant);
+    var table2 = new Table(2, 2, "Window", restaurant);
 
     var customer = new Member("Berkay", "Bayar", DateOnly.Parse("1999-03-12"), "555-2222", "berkay@example.com", 5, 2.5m);
-    var reservation = new Reservation(Guid.NewGuid(), DateOnly.FromDateTime(DateTime.Today.AddDays(1)), 2, table1);
+    var reservation = new Reservation(Guid.NewGuid(), DateOnly.FromDateTime(DateTime.Today.AddDays(1)), new TimeOnly(19, 0), 2, table1);
     table1.Reserve(customer, reservation);
     reservation.Confirm();
 

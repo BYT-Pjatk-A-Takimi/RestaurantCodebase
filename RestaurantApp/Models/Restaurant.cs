@@ -19,12 +19,15 @@ public class Restaurant
     private readonly List<Menu> _menus = new();
     [JsonInclude]
     private readonly List<Chef> _chefs = new();
+    [JsonInclude]
+    private readonly List<Manager> _managers = new();
 
     public Restaurant()
     {
         _tables = new List<Table>();
         _menus = new List<Menu>();
         _chefs = new List<Chef>();
+        _managers = new List<Manager>();
     }
 
     [JsonConstructor]
@@ -53,6 +56,9 @@ public class Restaurant
 
     [JsonIgnore]
     public IReadOnlyCollection<Chef> Chefs => _chefs;
+
+    [JsonIgnore]
+    public IReadOnlyCollection<Manager> Managers => _managers;
 
     private static void AddToExtent(Restaurant restaurant)
     {
@@ -104,16 +110,18 @@ public class Restaurant
         if (table is null)
             throw new ArgumentNullException(nameof(table));
 
+        if (table.Restaurant != this)
+            throw new ArgumentException("Table already belongs to another restaurant.", nameof(table));
+
+        if (_tables.Contains(table))
+            return;
+
         if (_tables.Any(t => t.TableNumber == table.TableNumber))
             throw new ArgumentException(
                 $"Table with number {table.TableNumber} already exists in this restaurant.",
                 nameof(table));
 
-        if (table.Restaurant != null && table.Restaurant != this)
-            throw new ArgumentException("Table already belongs to another restaurant.", nameof(table));
-
         _tables.Add(table);
-        table.SetRestaurant(this);
     }
 
     public void RemoveTable(Table table)
@@ -125,7 +133,6 @@ public class Restaurant
             throw new ArgumentException("Table does not belong to this restaurant.", nameof(table));
 
         _tables.Remove(table);
-        table.SetRestaurant(null);
     }
 
     public int GetNumberOfTables() => _tables.Count;
@@ -169,9 +176,13 @@ public class Restaurant
         if (chef is null)
             throw new ArgumentNullException(nameof(chef));
 
+        if (chef.Restaurant != this && chef.Restaurant != null)
+            throw new ArgumentException("Chef already belongs to another restaurant.", nameof(chef));
+
         if (!_chefs.Contains(chef))
         {
             _chefs.Add(chef);
+            chef.SetRestaurantInternal(this);
         }
     }
 
@@ -181,5 +192,28 @@ public class Restaurant
             throw new ArgumentNullException(nameof(chef));
 
         _chefs.Remove(chef);
+    }
+
+    internal void AddManager(Manager manager)
+    {
+        if (manager is null)
+            throw new ArgumentNullException(nameof(manager));
+
+        if (manager.Restaurant != this && manager.Restaurant != null)
+            throw new ArgumentException("Manager already belongs to another restaurant.", nameof(manager));
+
+        if (!_managers.Contains(manager))
+        {
+            _managers.Add(manager);
+            manager.SetRestaurantInternal(this);
+        }
+    }
+
+    internal void RemoveManager(Manager manager)
+    {
+        if (manager is null)
+            throw new ArgumentNullException(nameof(manager));
+
+        _managers.Remove(manager);
     }
 }

@@ -41,6 +41,7 @@ public abstract class Customer : Person
             throw new ArgumentException("This reservation already exists for this customer.", nameof(reservation));
 
         _reservations.Add(reservation);
+        reservation.SetCustomer(this);
         return reservation;
     }
 
@@ -54,7 +55,12 @@ public abstract class Customer : Person
         if (reservation is null)
             throw new ArgumentNullException(nameof(reservation));
 
-        return _reservations.Remove(reservation);
+        var removed = _reservations.Remove(reservation);
+        if (removed && reservation.Customer == this)
+        {
+            reservation.SetCustomer(null);
+        }
+        return removed;
     }
 
     public virtual Order PlaceOrder(Table table, IEnumerable<(string name, Dish dish, int quantity)> dishItems)

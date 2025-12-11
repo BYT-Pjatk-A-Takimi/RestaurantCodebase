@@ -20,6 +20,8 @@ public class Order
         Id = id ?? Guid.NewGuid();
         Status = status ?? OrderStatus.Pending;
         TimeStamp = timeStamp ?? DateTime.UtcNow;
+
+        table.AddOrder(this);
     }
 
     [JsonConstructor]
@@ -36,6 +38,13 @@ public class Order
     public Customer Customer { get; private set; } = null!;
 
     public Table Table { get; private set; } = null!;
+
+    internal void SetTable(Table table)
+    {
+        if (table is null)
+            throw new ArgumentNullException(nameof(table));
+        Table = table;
+    }
 
     public DateTime TimeStamp { get; private set; }
 
@@ -117,13 +126,14 @@ public class Order
         if (payment is null)
             throw new ArgumentNullException(nameof(payment));
 
-        if (payment.Order != this)
+        if (payment.Order != this && payment.Order != null)
             throw new ArgumentException("Payment belongs to a different order.", nameof(payment));
 
         if (_payments.Contains(payment))
-            throw new ArgumentException("This payment is already in the order.", nameof(payment));
+            return;
 
         _payments.Add(payment);
+        payment.SetOrder(this);
     }
 
     public bool RemovePayment(Payment payment)

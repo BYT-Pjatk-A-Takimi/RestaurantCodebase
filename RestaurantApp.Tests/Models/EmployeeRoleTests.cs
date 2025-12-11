@@ -19,7 +19,8 @@ public class EmployeeRoleTests
         var waiterExperienceProfile = new TraineeProfile(6);
         var waiter = new Waiter("Berkay", "Bayar", DateOnly.Parse("1999-03-12"), "111-1111", waiterWorkDetails, waiterExperienceProfile);
         
-        var table = new Table(1, 4, "Standard");
+        var restaurant = new Restaurant("Test Restaurant", 100);
+        var table = new Table(1, 4, "Standard", restaurant);
 
         var result = manager.AssignTable(waiter, table);
 
@@ -49,7 +50,8 @@ public class EmployeeRoleTests
         var workDetails = new WorkDetails("Service", "Evening", DateOnly.FromDateTime(DateTime.Today));
         var experienceProfile = new ExperiencedProfile(3, "Head Waiter");
         var waiter = new Waiter("Berkay", "Bayar", DateOnly.Parse("1999-03-12"), "111-1111", workDetails, experienceProfile);
-        var table = new Table(1, 4, "Standard");
+        var restaurant = new Restaurant("Test Restaurant", 100);
+        var table = new Table(1, 4, "Standard", restaurant);
 
         var result = waiter.AssignTable(table);
 
