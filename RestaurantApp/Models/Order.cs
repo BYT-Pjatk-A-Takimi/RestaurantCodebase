@@ -147,9 +147,3 @@ public class Order
         return _payments.Remove(payment);
     }
 }
-
-public enum OrderStatus
-{
-    Pending,
-    Completed
-}

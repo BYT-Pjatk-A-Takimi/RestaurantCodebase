@@ -143,16 +143,3 @@ public class Payment
             Extent.AddRange(loaded);
     }
 }
-
-public enum PaymentMethod
-{
-    Card,
-    Cash
-}
-
-public enum PaymentStatus
-{
-    Pending,
-    Completed,
-    Refunded
-}

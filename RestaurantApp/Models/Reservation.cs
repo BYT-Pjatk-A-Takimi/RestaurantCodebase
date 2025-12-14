@@ -56,10 +56,3 @@ public class Reservation
 
     public void Cancel() => Status = ReservationStatus.Cancelled;
 }
-
-public enum ReservationStatus
-{
-    Pending,
-    Confirmed,
-    Cancelled
-}

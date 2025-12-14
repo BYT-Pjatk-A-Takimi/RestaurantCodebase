@@ -6,31 +6,2027 @@
       "TableNumber": 1,
       "NumberOfChairs": 4,
       "TableType": "Standard",
+      "Restaurant": null,
+      "Waiter": null,
       "Reservations": [
         {
-          "Id": "9aa21a9a-71c2-4617-9d88-fd718a77ee03",
-          "DateOfReservation": "2025-11-28",
+          "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+          "DateOfReservation": "2025-12-15",
+          "TimeOfReservation": "19:00:00",
           "PartySize": 2,
           "Table": null,
-          "Status": 1
+          "Customer": {
+            "$type": "Member",
+            "Credits": 0,
+            "CreditPointsRate": 2.5,
+            "Email": "berkay@example.com",
+            "Reservations": [
+              null
+            ],
+            "_reservations": [
+              null
+            ],
+            "FirstName": "Berkay",
+            "LastName": "Bayar",
+            "BirthDate": "1999-03-12",
+            "PhoneNumber": "555-2222"
+          },
+          "Status": 1,
+          "_table": null,
+          "_customer": {
+            "$type": "Member",
+            "Credits": 0,
+            "CreditPointsRate": 2.5,
+            "Email": "berkay@example.com",
+            "Reservations": [
+              null
+            ],
+            "_reservations": [
+              null
+            ],
+            "FirstName": "Berkay",
+            "LastName": "Bayar",
+            "BirthDate": "1999-03-12",
+            "PhoneNumber": "555-2222"
+          }
+        }
+      ],
+      "Orders": [
+        {
+          "Id": "a0e3c965-97e5-49b7-af32-c0746913b251",
+          "Customer": {
+            "$type": "Member",
+            "Credits": 0,
+            "CreditPointsRate": 2.5,
+            "Email": "berkay@example.com",
+            "Reservations": [
+              {
+                "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                "DateOfReservation": "2025-12-15",
+                "TimeOfReservation": "19:00:00",
+                "PartySize": 2,
+                "Table": null,
+                "Customer": null,
+                "Status": 1,
+                "_table": null,
+                "_customer": null
+              }
+            ],
+            "_reservations": [
+              {
+                "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                "DateOfReservation": "2025-12-15",
+                "TimeOfReservation": "19:00:00",
+                "PartySize": 2,
+                "Table": null,
+                "Customer": null,
+                "Status": 1,
+                "_table": null,
+                "_customer": null
+              }
+            ],
+            "FirstName": "Berkay",
+            "LastName": "Bayar",
+            "BirthDate": "1999-03-12",
+            "PhoneNumber": "555-2222"
+          },
+          "Table": null,
+          "TimeStamp": "2025-12-14T16:46:29.3283624Z",
+          "Status": 1,
+          "Dishes": [
+            {
+              "Order": null,
+              "Name": "Margherita Order",
+              "Dish": {
+                "Name": "Margherita Pizza",
+                "Cuisine": "Italian",
+                "IsVegetarian": true,
+                "IsVegan": false,
+                "Price": 14.50,
+                "Ingredients": [
+                  "Dough",
+                  "Tomato",
+                  "Mozzarella",
+                  "Basil"
+                ],
+                "Menu": {
+                  "Name": "Main Menu",
+                  "MenuType": "Dinner",
+                  "AvailableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "Restaurant": null,
+                  "Dishes": [
+                    null,
+                    {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ]
+                    }
+                  ],
+                  "_availableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "_restaurant": null,
+                  "_dishes": [
+                    null,
+                    {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "OrderDishes": [
+                  null
+                ],
+                "_ingredients": [
+                  "Dough",
+                  "Tomato",
+                  "Mozzarella",
+                  "Basil"
+                ],
+                "_menu": {
+                  "Name": "Main Menu",
+                  "MenuType": "Dinner",
+                  "AvailableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "Restaurant": null,
+                  "Dishes": [
+                    null,
+                    {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ]
+                    }
+                  ],
+                  "_availableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "_restaurant": null,
+                  "_dishes": [
+                    null,
+                    {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "_orderDishes": [
+                  null
+                ]
+              },
+              "Quantity": 2,
+              "TotalPrice": 29.00
+            },
+            {
+              "Order": null,
+              "Name": "Steak Order",
+              "Dish": {
+                "Name": "Grilled Steak",
+                "Cuisine": "American",
+                "IsVegetarian": false,
+                "IsVegan": false,
+                "Price": 28.00,
+                "Ingredients": [
+                  "Beef",
+                  "Salt",
+                  "Pepper"
+                ],
+                "Menu": {
+                  "Name": "Main Menu",
+                  "MenuType": "Dinner",
+                  "AvailableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "Restaurant": null,
+                  "Dishes": [
+                    {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ]
+                    },
+                    null
+                  ],
+                  "_availableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "_restaurant": null,
+                  "_dishes": [
+                    {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ]
+                    },
+                    null
+                  ]
+                },
+                "OrderDishes": [
+                  null
+                ],
+                "_ingredients": [
+                  "Beef",
+                  "Salt",
+                  "Pepper"
+                ],
+                "_menu": {
+                  "Name": "Main Menu",
+                  "MenuType": "Dinner",
+                  "AvailableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "Restaurant": null,
+                  "Dishes": [
+                    {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ]
+                    },
+                    null
+                  ],
+                  "_availableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "_restaurant": null,
+                  "_dishes": [
+                    {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ]
+                    },
+                    null
+                  ]
+                },
+                "_orderDishes": [
+                  null
+                ]
+              },
+              "Quantity": 1,
+              "TotalPrice": 28.00
+            }
+          ],
+          "Payments": [
+            {
+              "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+              "Order": null,
+              "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+              "Amount": 42.00,
+              "Method": 0,
+              "Status": 1,
+              "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+            }
+          ],
+          "TotalAmount": 57.00,
+          "_orderDishes": [
+            {
+              "Order": null,
+              "Name": "Margherita Order",
+              "Dish": {
+                "Name": "Margherita Pizza",
+                "Cuisine": "Italian",
+                "IsVegetarian": true,
+                "IsVegan": false,
+                "Price": 14.50,
+                "Ingredients": [
+                  "Dough",
+                  "Tomato",
+                  "Mozzarella",
+                  "Basil"
+                ],
+                "Menu": {
+                  "Name": "Main Menu",
+                  "MenuType": "Dinner",
+                  "AvailableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "Restaurant": null,
+                  "Dishes": [
+                    null,
+                    {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ]
+                    }
+                  ],
+                  "_availableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "_restaurant": null,
+                  "_dishes": [
+                    null,
+                    {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "OrderDishes": [
+                  null
+                ],
+                "_ingredients": [
+                  "Dough",
+                  "Tomato",
+                  "Mozzarella",
+                  "Basil"
+                ],
+                "_menu": {
+                  "Name": "Main Menu",
+                  "MenuType": "Dinner",
+                  "AvailableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "Restaurant": null,
+                  "Dishes": [
+                    null,
+                    {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ]
+                    }
+                  ],
+                  "_availableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "_restaurant": null,
+                  "_dishes": [
+                    null,
+                    {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "_orderDishes": [
+                  null
+                ]
+              },
+              "Quantity": 2,
+              "TotalPrice": 29.00
+            },
+            {
+              "Order": null,
+              "Name": "Steak Order",
+              "Dish": {
+                "Name": "Grilled Steak",
+                "Cuisine": "American",
+                "IsVegetarian": false,
+                "IsVegan": false,
+                "Price": 28.00,
+                "Ingredients": [
+                  "Beef",
+                  "Salt",
+                  "Pepper"
+                ],
+                "Menu": {
+                  "Name": "Main Menu",
+                  "MenuType": "Dinner",
+                  "AvailableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "Restaurant": null,
+                  "Dishes": [
+                    {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ]
+                    },
+                    null
+                  ],
+                  "_availableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "_restaurant": null,
+                  "_dishes": [
+                    {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ]
+                    },
+                    null
+                  ]
+                },
+                "OrderDishes": [
+                  null
+                ],
+                "_ingredients": [
+                  "Beef",
+                  "Salt",
+                  "Pepper"
+                ],
+                "_menu": {
+                  "Name": "Main Menu",
+                  "MenuType": "Dinner",
+                  "AvailableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "Restaurant": null,
+                  "Dishes": [
+                    {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ]
+                    },
+                    null
+                  ],
+                  "_availableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "_restaurant": null,
+                  "_dishes": [
+                    {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ]
+                    },
+                    null
+                  ]
+                },
+                "_orderDishes": [
+                  null
+                ]
+              },
+              "Quantity": 1,
+              "TotalPrice": 28.00
+            }
+          ],
+          "_payments": [
+            {
+              "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+              "Order": null,
+              "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+              "Amount": 42.00,
+              "Method": 0,
+              "Status": 1,
+              "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+            }
+          ]
         }
       ],
       "_reservations": [
         {
-          "Id": "9aa21a9a-71c2-4617-9d88-fd718a77ee03",
-          "DateOfReservation": "2025-11-28",
+          "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+          "DateOfReservation": "2025-12-15",
+          "TimeOfReservation": "19:00:00",
           "PartySize": 2,
           "Table": null,
-          "Status": 1
+          "Customer": {
+            "$type": "Member",
+            "Credits": 0,
+            "CreditPointsRate": 2.5,
+            "Email": "berkay@example.com",
+            "Reservations": [
+              null
+            ],
+            "_reservations": [
+              null
+            ],
+            "FirstName": "Berkay",
+            "LastName": "Bayar",
+            "BirthDate": "1999-03-12",
+            "PhoneNumber": "555-2222"
+          },
+          "Status": 1,
+          "_table": null,
+          "_customer": {
+            "$type": "Member",
+            "Credits": 0,
+            "CreditPointsRate": 2.5,
+            "Email": "berkay@example.com",
+            "Reservations": [
+              null
+            ],
+            "_reservations": [
+              null
+            ],
+            "FirstName": "Berkay",
+            "LastName": "Bayar",
+            "BirthDate": "1999-03-12",
+            "PhoneNumber": "555-2222"
+          }
         }
-      ]
+      ],
+      "_orders": [
+        {
+          "Id": "a0e3c965-97e5-49b7-af32-c0746913b251",
+          "Customer": {
+            "$type": "Member",
+            "Credits": 0,
+            "CreditPointsRate": 2.5,
+            "Email": "berkay@example.com",
+            "Reservations": [
+              {
+                "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                "DateOfReservation": "2025-12-15",
+                "TimeOfReservation": "19:00:00",
+                "PartySize": 2,
+                "Table": null,
+                "Customer": null,
+                "Status": 1,
+                "_table": null,
+                "_customer": null
+              }
+            ],
+            "_reservations": [
+              {
+                "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                "DateOfReservation": "2025-12-15",
+                "TimeOfReservation": "19:00:00",
+                "PartySize": 2,
+                "Table": null,
+                "Customer": null,
+                "Status": 1,
+                "_table": null,
+                "_customer": null
+              }
+            ],
+            "FirstName": "Berkay",
+            "LastName": "Bayar",
+            "BirthDate": "1999-03-12",
+            "PhoneNumber": "555-2222"
+          },
+          "Table": null,
+          "TimeStamp": "2025-12-14T16:46:29.3283624Z",
+          "Status": 1,
+          "Dishes": [
+            {
+              "Order": null,
+              "Name": "Margherita Order",
+              "Dish": {
+                "Name": "Margherita Pizza",
+                "Cuisine": "Italian",
+                "IsVegetarian": true,
+                "IsVegan": false,
+                "Price": 14.50,
+                "Ingredients": [
+                  "Dough",
+                  "Tomato",
+                  "Mozzarella",
+                  "Basil"
+                ],
+                "Menu": {
+                  "Name": "Main Menu",
+                  "MenuType": "Dinner",
+                  "AvailableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "Restaurant": null,
+                  "Dishes": [
+                    null,
+                    {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ]
+                    }
+                  ],
+                  "_availableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "_restaurant": null,
+                  "_dishes": [
+                    null,
+                    {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "OrderDishes": [
+                  null
+                ],
+                "_ingredients": [
+                  "Dough",
+                  "Tomato",
+                  "Mozzarella",
+                  "Basil"
+                ],
+                "_menu": {
+                  "Name": "Main Menu",
+                  "MenuType": "Dinner",
+                  "AvailableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "Restaurant": null,
+                  "Dishes": [
+                    null,
+                    {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ]
+                    }
+                  ],
+                  "_availableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "_restaurant": null,
+                  "_dishes": [
+                    null,
+                    {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "_orderDishes": [
+                  null
+                ]
+              },
+              "Quantity": 2,
+              "TotalPrice": 29.00
+            },
+            {
+              "Order": null,
+              "Name": "Steak Order",
+              "Dish": {
+                "Name": "Grilled Steak",
+                "Cuisine": "American",
+                "IsVegetarian": false,
+                "IsVegan": false,
+                "Price": 28.00,
+                "Ingredients": [
+                  "Beef",
+                  "Salt",
+                  "Pepper"
+                ],
+                "Menu": {
+                  "Name": "Main Menu",
+                  "MenuType": "Dinner",
+                  "AvailableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "Restaurant": null,
+                  "Dishes": [
+                    {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ]
+                    },
+                    null
+                  ],
+                  "_availableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "_restaurant": null,
+                  "_dishes": [
+                    {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ]
+                    },
+                    null
+                  ]
+                },
+                "OrderDishes": [
+                  null
+                ],
+                "_ingredients": [
+                  "Beef",
+                  "Salt",
+                  "Pepper"
+                ],
+                "_menu": {
+                  "Name": "Main Menu",
+                  "MenuType": "Dinner",
+                  "AvailableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "Restaurant": null,
+                  "Dishes": [
+                    {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ]
+                    },
+                    null
+                  ],
+                  "_availableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "_restaurant": null,
+                  "_dishes": [
+                    {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ]
+                    },
+                    null
+                  ]
+                },
+                "_orderDishes": [
+                  null
+                ]
+              },
+              "Quantity": 1,
+              "TotalPrice": 28.00
+            }
+          ],
+          "Payments": [
+            {
+              "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+              "Order": null,
+              "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+              "Amount": 42.00,
+              "Method": 0,
+              "Status": 1,
+              "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+            }
+          ],
+          "TotalAmount": 57.00,
+          "_orderDishes": [
+            {
+              "Order": null,
+              "Name": "Margherita Order",
+              "Dish": {
+                "Name": "Margherita Pizza",
+                "Cuisine": "Italian",
+                "IsVegetarian": true,
+                "IsVegan": false,
+                "Price": 14.50,
+                "Ingredients": [
+                  "Dough",
+                  "Tomato",
+                  "Mozzarella",
+                  "Basil"
+                ],
+                "Menu": {
+                  "Name": "Main Menu",
+                  "MenuType": "Dinner",
+                  "AvailableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "Restaurant": null,
+                  "Dishes": [
+                    null,
+                    {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ]
+                    }
+                  ],
+                  "_availableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "_restaurant": null,
+                  "_dishes": [
+                    null,
+                    {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "OrderDishes": [
+                  null
+                ],
+                "_ingredients": [
+                  "Dough",
+                  "Tomato",
+                  "Mozzarella",
+                  "Basil"
+                ],
+                "_menu": {
+                  "Name": "Main Menu",
+                  "MenuType": "Dinner",
+                  "AvailableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "Restaurant": null,
+                  "Dishes": [
+                    null,
+                    {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ]
+                    }
+                  ],
+                  "_availableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "_restaurant": null,
+                  "_dishes": [
+                    null,
+                    {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Steak Order",
+                          "Dish": null,
+                          "Quantity": 1,
+                          "TotalPrice": 28.00
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "_orderDishes": [
+                  null
+                ]
+              },
+              "Quantity": 2,
+              "TotalPrice": 29.00
+            },
+            {
+              "Order": null,
+              "Name": "Steak Order",
+              "Dish": {
+                "Name": "Grilled Steak",
+                "Cuisine": "American",
+                "IsVegetarian": false,
+                "IsVegan": false,
+                "Price": 28.00,
+                "Ingredients": [
+                  "Beef",
+                  "Salt",
+                  "Pepper"
+                ],
+                "Menu": {
+                  "Name": "Main Menu",
+                  "MenuType": "Dinner",
+                  "AvailableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "Restaurant": null,
+                  "Dishes": [
+                    {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ]
+                    },
+                    null
+                  ],
+                  "_availableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "_restaurant": null,
+                  "_dishes": [
+                    {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ]
+                    },
+                    null
+                  ]
+                },
+                "OrderDishes": [
+                  null
+                ],
+                "_ingredients": [
+                  "Beef",
+                  "Salt",
+                  "Pepper"
+                ],
+                "_menu": {
+                  "Name": "Main Menu",
+                  "MenuType": "Dinner",
+                  "AvailableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "Restaurant": null,
+                  "Dishes": [
+                    {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ]
+                    },
+                    null
+                  ],
+                  "_availableLanguages": [
+                    "English",
+                    "Turkish"
+                  ],
+                  "_restaurant": null,
+                  "_dishes": [
+                    {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        {
+                          "Order": null,
+                          "Name": "Margherita Order",
+                          "Dish": null,
+                          "Quantity": 2,
+                          "TotalPrice": 29.00
+                        }
+                      ]
+                    },
+                    null
+                  ]
+                },
+                "_orderDishes": [
+                  null
+                ]
+              },
+              "Quantity": 1,
+              "TotalPrice": 28.00
+            }
+          ],
+          "_payments": [
+            {
+              "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+              "Order": null,
+              "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+              "Amount": 42.00,
+              "Method": 0,
+              "Status": 1,
+              "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+            }
+          ]
+        }
+      ],
+      "_restaurant": null,
+      "_waiter": null
     },
     {
       "TableNumber": 2,
       "NumberOfChairs": 2,
       "TableType": "Window",
+      "Restaurant": null,
+      "Waiter": null,
       "Reservations": [],
-      "_reservations": []
+      "Orders": [],
+      "_reservations": [],
+      "_orders": [],
+      "_restaurant": null,
+      "_waiter": null
     }
   ],
   "_menus": [
@@ -41,6 +2037,7 @@
         "English",
         "Turkish"
       ],
+      "Restaurant": null,
       "Dishes": [
         {
           "Name": "Margherita Pizza",
@@ -54,11 +2051,655 @@
             "Mozzarella",
             "Basil"
           ],
+          "Menu": null,
+          "OrderDishes": [
+            {
+              "Order": {
+                "Id": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                "Customer": {
+                  "$type": "Member",
+                  "Credits": 0,
+                  "CreditPointsRate": 2.5,
+                  "Email": "berkay@example.com",
+                  "Reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "Customer": null,
+                      "Status": 1,
+                      "_table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "_customer": null
+                    }
+                  ],
+                  "_reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "Customer": null,
+                      "Status": 1,
+                      "_table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "_customer": null
+                    }
+                  ],
+                  "FirstName": "Berkay",
+                  "LastName": "Bayar",
+                  "BirthDate": "1999-03-12",
+                  "PhoneNumber": "555-2222"
+                },
+                "Table": {
+                  "TableNumber": 1,
+                  "NumberOfChairs": 4,
+                  "TableType": "Standard",
+                  "Restaurant": null,
+                  "Waiter": null,
+                  "Reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": null,
+                      "Customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      },
+                      "Status": 1,
+                      "_table": null,
+                      "_customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      }
+                    }
+                  ],
+                  "Orders": [
+                    null
+                  ],
+                  "_reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": null,
+                      "Customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      },
+                      "Status": 1,
+                      "_table": null,
+                      "_customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      }
+                    }
+                  ],
+                  "_orders": [
+                    null
+                  ],
+                  "_restaurant": null,
+                  "_waiter": null
+                },
+                "TimeStamp": "2025-12-14T16:46:29.3283624Z",
+                "Status": 1,
+                "Dishes": [
+                  null,
+                  {
+                    "Order": null,
+                    "Name": "Steak Order",
+                    "Dish": {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        null
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        null
+                      ]
+                    },
+                    "Quantity": 1,
+                    "TotalPrice": 28.00
+                  }
+                ],
+                "Payments": [
+                  {
+                    "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+                    "Order": null,
+                    "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                    "Amount": 42.00,
+                    "Method": 0,
+                    "Status": 1,
+                    "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+                  }
+                ],
+                "TotalAmount": 57.00,
+                "_orderDishes": [
+                  null,
+                  {
+                    "Order": null,
+                    "Name": "Steak Order",
+                    "Dish": {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        null
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        null
+                      ]
+                    },
+                    "Quantity": 1,
+                    "TotalPrice": 28.00
+                  }
+                ],
+                "_payments": [
+                  {
+                    "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+                    "Order": null,
+                    "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                    "Amount": 42.00,
+                    "Method": 0,
+                    "Status": 1,
+                    "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+                  }
+                ]
+              },
+              "Name": "Margherita Order",
+              "Dish": null,
+              "Quantity": 2,
+              "TotalPrice": 29.00
+            }
+          ],
           "_ingredients": [
             "Dough",
             "Tomato",
             "Mozzarella",
             "Basil"
+          ],
+          "_menu": null,
+          "_orderDishes": [
+            {
+              "Order": {
+                "Id": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                "Customer": {
+                  "$type": "Member",
+                  "Credits": 0,
+                  "CreditPointsRate": 2.5,
+                  "Email": "berkay@example.com",
+                  "Reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "Customer": null,
+                      "Status": 1,
+                      "_table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "_customer": null
+                    }
+                  ],
+                  "_reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "Customer": null,
+                      "Status": 1,
+                      "_table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "_customer": null
+                    }
+                  ],
+                  "FirstName": "Berkay",
+                  "LastName": "Bayar",
+                  "BirthDate": "1999-03-12",
+                  "PhoneNumber": "555-2222"
+                },
+                "Table": {
+                  "TableNumber": 1,
+                  "NumberOfChairs": 4,
+                  "TableType": "Standard",
+                  "Restaurant": null,
+                  "Waiter": null,
+                  "Reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": null,
+                      "Customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      },
+                      "Status": 1,
+                      "_table": null,
+                      "_customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      }
+                    }
+                  ],
+                  "Orders": [
+                    null
+                  ],
+                  "_reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": null,
+                      "Customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      },
+                      "Status": 1,
+                      "_table": null,
+                      "_customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      }
+                    }
+                  ],
+                  "_orders": [
+                    null
+                  ],
+                  "_restaurant": null,
+                  "_waiter": null
+                },
+                "TimeStamp": "2025-12-14T16:46:29.3283624Z",
+                "Status": 1,
+                "Dishes": [
+                  null,
+                  {
+                    "Order": null,
+                    "Name": "Steak Order",
+                    "Dish": {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        null
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        null
+                      ]
+                    },
+                    "Quantity": 1,
+                    "TotalPrice": 28.00
+                  }
+                ],
+                "Payments": [
+                  {
+                    "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+                    "Order": null,
+                    "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                    "Amount": 42.00,
+                    "Method": 0,
+                    "Status": 1,
+                    "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+                  }
+                ],
+                "TotalAmount": 57.00,
+                "_orderDishes": [
+                  null,
+                  {
+                    "Order": null,
+                    "Name": "Steak Order",
+                    "Dish": {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        null
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        null
+                      ]
+                    },
+                    "Quantity": 1,
+                    "TotalPrice": 28.00
+                  }
+                ],
+                "_payments": [
+                  {
+                    "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+                    "Order": null,
+                    "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                    "Amount": 42.00,
+                    "Method": 0,
+                    "Status": 1,
+                    "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+                  }
+                ]
+              },
+              "Name": "Margherita Order",
+              "Dish": null,
+              "Quantity": 2,
+              "TotalPrice": 29.00
+            }
           ]
         },
         {
@@ -72,10 +2713,662 @@
             "Salt",
             "Pepper"
           ],
+          "Menu": null,
+          "OrderDishes": [
+            {
+              "Order": {
+                "Id": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                "Customer": {
+                  "$type": "Member",
+                  "Credits": 0,
+                  "CreditPointsRate": 2.5,
+                  "Email": "berkay@example.com",
+                  "Reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "Customer": null,
+                      "Status": 1,
+                      "_table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "_customer": null
+                    }
+                  ],
+                  "_reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "Customer": null,
+                      "Status": 1,
+                      "_table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "_customer": null
+                    }
+                  ],
+                  "FirstName": "Berkay",
+                  "LastName": "Bayar",
+                  "BirthDate": "1999-03-12",
+                  "PhoneNumber": "555-2222"
+                },
+                "Table": {
+                  "TableNumber": 1,
+                  "NumberOfChairs": 4,
+                  "TableType": "Standard",
+                  "Restaurant": null,
+                  "Waiter": null,
+                  "Reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": null,
+                      "Customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      },
+                      "Status": 1,
+                      "_table": null,
+                      "_customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      }
+                    }
+                  ],
+                  "Orders": [
+                    null
+                  ],
+                  "_reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": null,
+                      "Customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      },
+                      "Status": 1,
+                      "_table": null,
+                      "_customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      }
+                    }
+                  ],
+                  "_orders": [
+                    null
+                  ],
+                  "_restaurant": null,
+                  "_waiter": null
+                },
+                "TimeStamp": "2025-12-14T16:46:29.3283624Z",
+                "Status": 1,
+                "Dishes": [
+                  {
+                    "Order": null,
+                    "Name": "Margherita Order",
+                    "Dish": {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        null
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        null
+                      ]
+                    },
+                    "Quantity": 2,
+                    "TotalPrice": 29.00
+                  },
+                  null
+                ],
+                "Payments": [
+                  {
+                    "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+                    "Order": null,
+                    "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                    "Amount": 42.00,
+                    "Method": 0,
+                    "Status": 1,
+                    "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+                  }
+                ],
+                "TotalAmount": 57.00,
+                "_orderDishes": [
+                  {
+                    "Order": null,
+                    "Name": "Margherita Order",
+                    "Dish": {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        null
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        null
+                      ]
+                    },
+                    "Quantity": 2,
+                    "TotalPrice": 29.00
+                  },
+                  null
+                ],
+                "_payments": [
+                  {
+                    "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+                    "Order": null,
+                    "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                    "Amount": 42.00,
+                    "Method": 0,
+                    "Status": 1,
+                    "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+                  }
+                ]
+              },
+              "Name": "Steak Order",
+              "Dish": null,
+              "Quantity": 1,
+              "TotalPrice": 28.00
+            }
+          ],
           "_ingredients": [
             "Beef",
             "Salt",
             "Pepper"
+          ],
+          "_menu": null,
+          "_orderDishes": [
+            {
+              "Order": {
+                "Id": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                "Customer": {
+                  "$type": "Member",
+                  "Credits": 0,
+                  "CreditPointsRate": 2.5,
+                  "Email": "berkay@example.com",
+                  "Reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "Customer": null,
+                      "Status": 1,
+                      "_table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "_customer": null
+                    }
+                  ],
+                  "_reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "Customer": null,
+                      "Status": 1,
+                      "_table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "_customer": null
+                    }
+                  ],
+                  "FirstName": "Berkay",
+                  "LastName": "Bayar",
+                  "BirthDate": "1999-03-12",
+                  "PhoneNumber": "555-2222"
+                },
+                "Table": {
+                  "TableNumber": 1,
+                  "NumberOfChairs": 4,
+                  "TableType": "Standard",
+                  "Restaurant": null,
+                  "Waiter": null,
+                  "Reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": null,
+                      "Customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      },
+                      "Status": 1,
+                      "_table": null,
+                      "_customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      }
+                    }
+                  ],
+                  "Orders": [
+                    null
+                  ],
+                  "_reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": null,
+                      "Customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      },
+                      "Status": 1,
+                      "_table": null,
+                      "_customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      }
+                    }
+                  ],
+                  "_orders": [
+                    null
+                  ],
+                  "_restaurant": null,
+                  "_waiter": null
+                },
+                "TimeStamp": "2025-12-14T16:46:29.3283624Z",
+                "Status": 1,
+                "Dishes": [
+                  {
+                    "Order": null,
+                    "Name": "Margherita Order",
+                    "Dish": {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        null
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        null
+                      ]
+                    },
+                    "Quantity": 2,
+                    "TotalPrice": 29.00
+                  },
+                  null
+                ],
+                "Payments": [
+                  {
+                    "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+                    "Order": null,
+                    "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                    "Amount": 42.00,
+                    "Method": 0,
+                    "Status": 1,
+                    "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+                  }
+                ],
+                "TotalAmount": 57.00,
+                "_orderDishes": [
+                  {
+                    "Order": null,
+                    "Name": "Margherita Order",
+                    "Dish": {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        null
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        null
+                      ]
+                    },
+                    "Quantity": 2,
+                    "TotalPrice": 29.00
+                  },
+                  null
+                ],
+                "_payments": [
+                  {
+                    "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+                    "Order": null,
+                    "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                    "Amount": 42.00,
+                    "Method": 0,
+                    "Status": 1,
+                    "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+                  }
+                ]
+              },
+              "Name": "Steak Order",
+              "Dish": null,
+              "Quantity": 1,
+              "TotalPrice": 28.00
+            }
           ]
         }
       ],
@@ -83,6 +3376,7 @@
         "English",
         "Turkish"
       ],
+      "_restaurant": null,
       "_dishes": [
         {
           "Name": "Margherita Pizza",
@@ -96,11 +3390,655 @@
             "Mozzarella",
             "Basil"
           ],
+          "Menu": null,
+          "OrderDishes": [
+            {
+              "Order": {
+                "Id": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                "Customer": {
+                  "$type": "Member",
+                  "Credits": 0,
+                  "CreditPointsRate": 2.5,
+                  "Email": "berkay@example.com",
+                  "Reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "Customer": null,
+                      "Status": 1,
+                      "_table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "_customer": null
+                    }
+                  ],
+                  "_reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "Customer": null,
+                      "Status": 1,
+                      "_table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "_customer": null
+                    }
+                  ],
+                  "FirstName": "Berkay",
+                  "LastName": "Bayar",
+                  "BirthDate": "1999-03-12",
+                  "PhoneNumber": "555-2222"
+                },
+                "Table": {
+                  "TableNumber": 1,
+                  "NumberOfChairs": 4,
+                  "TableType": "Standard",
+                  "Restaurant": null,
+                  "Waiter": null,
+                  "Reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": null,
+                      "Customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      },
+                      "Status": 1,
+                      "_table": null,
+                      "_customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      }
+                    }
+                  ],
+                  "Orders": [
+                    null
+                  ],
+                  "_reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": null,
+                      "Customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      },
+                      "Status": 1,
+                      "_table": null,
+                      "_customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      }
+                    }
+                  ],
+                  "_orders": [
+                    null
+                  ],
+                  "_restaurant": null,
+                  "_waiter": null
+                },
+                "TimeStamp": "2025-12-14T16:46:29.3283624Z",
+                "Status": 1,
+                "Dishes": [
+                  null,
+                  {
+                    "Order": null,
+                    "Name": "Steak Order",
+                    "Dish": {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        null
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        null
+                      ]
+                    },
+                    "Quantity": 1,
+                    "TotalPrice": 28.00
+                  }
+                ],
+                "Payments": [
+                  {
+                    "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+                    "Order": null,
+                    "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                    "Amount": 42.00,
+                    "Method": 0,
+                    "Status": 1,
+                    "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+                  }
+                ],
+                "TotalAmount": 57.00,
+                "_orderDishes": [
+                  null,
+                  {
+                    "Order": null,
+                    "Name": "Steak Order",
+                    "Dish": {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        null
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        null
+                      ]
+                    },
+                    "Quantity": 1,
+                    "TotalPrice": 28.00
+                  }
+                ],
+                "_payments": [
+                  {
+                    "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+                    "Order": null,
+                    "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                    "Amount": 42.00,
+                    "Method": 0,
+                    "Status": 1,
+                    "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+                  }
+                ]
+              },
+              "Name": "Margherita Order",
+              "Dish": null,
+              "Quantity": 2,
+              "TotalPrice": 29.00
+            }
+          ],
           "_ingredients": [
             "Dough",
             "Tomato",
             "Mozzarella",
             "Basil"
+          ],
+          "_menu": null,
+          "_orderDishes": [
+            {
+              "Order": {
+                "Id": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                "Customer": {
+                  "$type": "Member",
+                  "Credits": 0,
+                  "CreditPointsRate": 2.5,
+                  "Email": "berkay@example.com",
+                  "Reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "Customer": null,
+                      "Status": 1,
+                      "_table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "_customer": null
+                    }
+                  ],
+                  "_reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "Customer": null,
+                      "Status": 1,
+                      "_table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "_customer": null
+                    }
+                  ],
+                  "FirstName": "Berkay",
+                  "LastName": "Bayar",
+                  "BirthDate": "1999-03-12",
+                  "PhoneNumber": "555-2222"
+                },
+                "Table": {
+                  "TableNumber": 1,
+                  "NumberOfChairs": 4,
+                  "TableType": "Standard",
+                  "Restaurant": null,
+                  "Waiter": null,
+                  "Reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": null,
+                      "Customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      },
+                      "Status": 1,
+                      "_table": null,
+                      "_customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      }
+                    }
+                  ],
+                  "Orders": [
+                    null
+                  ],
+                  "_reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": null,
+                      "Customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      },
+                      "Status": 1,
+                      "_table": null,
+                      "_customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      }
+                    }
+                  ],
+                  "_orders": [
+                    null
+                  ],
+                  "_restaurant": null,
+                  "_waiter": null
+                },
+                "TimeStamp": "2025-12-14T16:46:29.3283624Z",
+                "Status": 1,
+                "Dishes": [
+                  null,
+                  {
+                    "Order": null,
+                    "Name": "Steak Order",
+                    "Dish": {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        null
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        null
+                      ]
+                    },
+                    "Quantity": 1,
+                    "TotalPrice": 28.00
+                  }
+                ],
+                "Payments": [
+                  {
+                    "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+                    "Order": null,
+                    "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                    "Amount": 42.00,
+                    "Method": 0,
+                    "Status": 1,
+                    "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+                  }
+                ],
+                "TotalAmount": 57.00,
+                "_orderDishes": [
+                  null,
+                  {
+                    "Order": null,
+                    "Name": "Steak Order",
+                    "Dish": {
+                      "Name": "Grilled Steak",
+                      "Cuisine": "American",
+                      "IsVegetarian": false,
+                      "IsVegan": false,
+                      "Price": 28.00,
+                      "Ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        null
+                      ],
+                      "_ingredients": [
+                        "Beef",
+                        "Salt",
+                        "Pepper"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        null
+                      ]
+                    },
+                    "Quantity": 1,
+                    "TotalPrice": 28.00
+                  }
+                ],
+                "_payments": [
+                  {
+                    "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+                    "Order": null,
+                    "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                    "Amount": 42.00,
+                    "Method": 0,
+                    "Status": 1,
+                    "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+                  }
+                ]
+              },
+              "Name": "Margherita Order",
+              "Dish": null,
+              "Quantity": 2,
+              "TotalPrice": 29.00
+            }
           ]
         },
         {
@@ -114,13 +4052,667 @@
             "Salt",
             "Pepper"
           ],
+          "Menu": null,
+          "OrderDishes": [
+            {
+              "Order": {
+                "Id": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                "Customer": {
+                  "$type": "Member",
+                  "Credits": 0,
+                  "CreditPointsRate": 2.5,
+                  "Email": "berkay@example.com",
+                  "Reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "Customer": null,
+                      "Status": 1,
+                      "_table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "_customer": null
+                    }
+                  ],
+                  "_reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "Customer": null,
+                      "Status": 1,
+                      "_table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "_customer": null
+                    }
+                  ],
+                  "FirstName": "Berkay",
+                  "LastName": "Bayar",
+                  "BirthDate": "1999-03-12",
+                  "PhoneNumber": "555-2222"
+                },
+                "Table": {
+                  "TableNumber": 1,
+                  "NumberOfChairs": 4,
+                  "TableType": "Standard",
+                  "Restaurant": null,
+                  "Waiter": null,
+                  "Reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": null,
+                      "Customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      },
+                      "Status": 1,
+                      "_table": null,
+                      "_customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      }
+                    }
+                  ],
+                  "Orders": [
+                    null
+                  ],
+                  "_reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": null,
+                      "Customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      },
+                      "Status": 1,
+                      "_table": null,
+                      "_customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      }
+                    }
+                  ],
+                  "_orders": [
+                    null
+                  ],
+                  "_restaurant": null,
+                  "_waiter": null
+                },
+                "TimeStamp": "2025-12-14T16:46:29.3283624Z",
+                "Status": 1,
+                "Dishes": [
+                  {
+                    "Order": null,
+                    "Name": "Margherita Order",
+                    "Dish": {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        null
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        null
+                      ]
+                    },
+                    "Quantity": 2,
+                    "TotalPrice": 29.00
+                  },
+                  null
+                ],
+                "Payments": [
+                  {
+                    "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+                    "Order": null,
+                    "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                    "Amount": 42.00,
+                    "Method": 0,
+                    "Status": 1,
+                    "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+                  }
+                ],
+                "TotalAmount": 57.00,
+                "_orderDishes": [
+                  {
+                    "Order": null,
+                    "Name": "Margherita Order",
+                    "Dish": {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        null
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        null
+                      ]
+                    },
+                    "Quantity": 2,
+                    "TotalPrice": 29.00
+                  },
+                  null
+                ],
+                "_payments": [
+                  {
+                    "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+                    "Order": null,
+                    "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                    "Amount": 42.00,
+                    "Method": 0,
+                    "Status": 1,
+                    "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+                  }
+                ]
+              },
+              "Name": "Steak Order",
+              "Dish": null,
+              "Quantity": 1,
+              "TotalPrice": 28.00
+            }
+          ],
           "_ingredients": [
             "Beef",
             "Salt",
             "Pepper"
+          ],
+          "_menu": null,
+          "_orderDishes": [
+            {
+              "Order": {
+                "Id": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                "Customer": {
+                  "$type": "Member",
+                  "Credits": 0,
+                  "CreditPointsRate": 2.5,
+                  "Email": "berkay@example.com",
+                  "Reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "Customer": null,
+                      "Status": 1,
+                      "_table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "_customer": null
+                    }
+                  ],
+                  "_reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "Customer": null,
+                      "Status": 1,
+                      "_table": {
+                        "TableNumber": 1,
+                        "NumberOfChairs": 4,
+                        "TableType": "Standard",
+                        "Restaurant": null,
+                        "Waiter": null,
+                        "Reservations": [
+                          null
+                        ],
+                        "Orders": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "_orders": [
+                          null
+                        ],
+                        "_restaurant": null,
+                        "_waiter": null
+                      },
+                      "_customer": null
+                    }
+                  ],
+                  "FirstName": "Berkay",
+                  "LastName": "Bayar",
+                  "BirthDate": "1999-03-12",
+                  "PhoneNumber": "555-2222"
+                },
+                "Table": {
+                  "TableNumber": 1,
+                  "NumberOfChairs": 4,
+                  "TableType": "Standard",
+                  "Restaurant": null,
+                  "Waiter": null,
+                  "Reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": null,
+                      "Customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      },
+                      "Status": 1,
+                      "_table": null,
+                      "_customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      }
+                    }
+                  ],
+                  "Orders": [
+                    null
+                  ],
+                  "_reservations": [
+                    {
+                      "Id": "30508c34-10f3-4ff2-acd0-ec00de5cc361",
+                      "DateOfReservation": "2025-12-15",
+                      "TimeOfReservation": "19:00:00",
+                      "PartySize": 2,
+                      "Table": null,
+                      "Customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      },
+                      "Status": 1,
+                      "_table": null,
+                      "_customer": {
+                        "$type": "Member",
+                        "Credits": 0,
+                        "CreditPointsRate": 2.5,
+                        "Email": "berkay@example.com",
+                        "Reservations": [
+                          null
+                        ],
+                        "_reservations": [
+                          null
+                        ],
+                        "FirstName": "Berkay",
+                        "LastName": "Bayar",
+                        "BirthDate": "1999-03-12",
+                        "PhoneNumber": "555-2222"
+                      }
+                    }
+                  ],
+                  "_orders": [
+                    null
+                  ],
+                  "_restaurant": null,
+                  "_waiter": null
+                },
+                "TimeStamp": "2025-12-14T16:46:29.3283624Z",
+                "Status": 1,
+                "Dishes": [
+                  {
+                    "Order": null,
+                    "Name": "Margherita Order",
+                    "Dish": {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        null
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        null
+                      ]
+                    },
+                    "Quantity": 2,
+                    "TotalPrice": 29.00
+                  },
+                  null
+                ],
+                "Payments": [
+                  {
+                    "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+                    "Order": null,
+                    "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                    "Amount": 42.00,
+                    "Method": 0,
+                    "Status": 1,
+                    "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+                  }
+                ],
+                "TotalAmount": 57.00,
+                "_orderDishes": [
+                  {
+                    "Order": null,
+                    "Name": "Margherita Order",
+                    "Dish": {
+                      "Name": "Margherita Pizza",
+                      "Cuisine": "Italian",
+                      "IsVegetarian": true,
+                      "IsVegan": false,
+                      "Price": 14.50,
+                      "Ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "Menu": null,
+                      "OrderDishes": [
+                        null
+                      ],
+                      "_ingredients": [
+                        "Dough",
+                        "Tomato",
+                        "Mozzarella",
+                        "Basil"
+                      ],
+                      "_menu": null,
+                      "_orderDishes": [
+                        null
+                      ]
+                    },
+                    "Quantity": 2,
+                    "TotalPrice": 29.00
+                  },
+                  null
+                ],
+                "_payments": [
+                  {
+                    "Id": "989584cb-42fd-4738-8bef-abf186f4c5bd",
+                    "Order": null,
+                    "OrderId": "a0e3c965-97e5-49b7-af32-c0746913b251",
+                    "Amount": 42.00,
+                    "Method": 0,
+                    "Status": 1,
+                    "ProcessedOn": "2025-12-14T16:46:29.331608Z"
+                  }
+                ]
+              },
+              "Name": "Steak Order",
+              "Dish": null,
+              "Quantity": 1,
+              "TotalPrice": 28.00
+            }
           ]
         }
       ]
     }
-  ]
+  ],
+  "_chefs": [],
+  "_managers": []
 }
