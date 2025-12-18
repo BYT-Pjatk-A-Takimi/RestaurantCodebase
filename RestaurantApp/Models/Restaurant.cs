@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using RestaurantApp;
+using RestaurantApp.Models.Roles.EmployeeTypes;
 
 namespace RestaurantApp.Models;
 
@@ -18,16 +18,16 @@ public class Restaurant
     [JsonInclude]
     private readonly List<Menu> _menus = new();
     [JsonInclude]
-    private readonly List<Chef> _chefs = new();
+    private readonly List<ChefType> _chefs = new();
     [JsonInclude]
-    private readonly List<Manager> _managers = new();
+    private readonly List<ManagerType> _managers = new();
 
     public Restaurant()
     {
         _tables = new List<Table>();
         _menus = new List<Menu>();
-        _chefs = new List<Chef>();
-        _managers = new List<Manager>();
+        _chefs = new List<ChefType>();
+        _managers = new List<ManagerType>();
     }
 
     [JsonConstructor]
@@ -70,10 +70,10 @@ public class Restaurant
     public IReadOnlyCollection<Menu> Menus => _menus;
 
     [JsonIgnore]
-    public IReadOnlyCollection<Chef> Chefs => _chefs;
+    public IReadOnlyCollection<ChefType> Chefs => _chefs;
 
     [JsonIgnore]
-    public IReadOnlyCollection<Manager> Managers => _managers;
+    public IReadOnlyCollection<ManagerType> Managers => _managers;
 
     private static void AddToExtent(Restaurant restaurant)
     {
@@ -186,7 +186,7 @@ public class Restaurant
         return removed;
     }
 
-    internal void AddChef(Chef chef)
+    public void AddChef(ChefType chef)
     {
         if (chef is null)
             throw new ArgumentNullException(nameof(chef));
@@ -201,7 +201,7 @@ public class Restaurant
         }
     }
 
-    internal void RemoveChef(Chef chef)
+    public void RemoveChef(ChefType chef)
     {
         if (chef is null)
             throw new ArgumentNullException(nameof(chef));
@@ -209,7 +209,7 @@ public class Restaurant
         _chefs.Remove(chef);
     }
 
-    internal void AddManager(Manager manager)
+    public void AddManager(ManagerType manager)
     {
         if (manager is null)
             throw new ArgumentNullException(nameof(manager));
@@ -224,7 +224,7 @@ public class Restaurant
         }
     }
 
-    internal void RemoveManager(Manager manager)
+    public void RemoveManager(ManagerType manager)
     {
         if (manager is null)
             throw new ArgumentNullException(nameof(manager));

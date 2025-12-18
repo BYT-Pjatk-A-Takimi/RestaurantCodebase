@@ -1,30 +1,24 @@
 using System;
 using System.Text.Json.Serialization;
+using RestaurantApp.Models.Roles.EmployeeTypes;
 
-namespace RestaurantApp.Models;
+namespace RestaurantApp.Models.Roles;
 
-[JsonPolymorphic]
-[JsonDerivedType(typeof(Manager), typeDiscriminator: "Manager")]
-[JsonDerivedType(typeof(Chef), typeDiscriminator: "Chef")]
-[JsonDerivedType(typeof(Waiter), typeDiscriminator: "Waiter")]
-[JsonDerivedType(typeof(Valet), typeDiscriminator: "Valet")]
-public abstract class Employee : Person
+public class EmployeeRole : PersonRole
 {
     private WorkDetails _workDetails = null!;
     private EmployeeExperienceProfile _experienceProfile = null!;
+    private EmployeeType? _employeeType;
 
     [JsonConstructor]
-    protected Employee(
-        string firstName,
-        string lastName,
-        DateOnly birthDate,
-        string phoneNumber,
+    public EmployeeRole(
         WorkDetails workDetails,
-        EmployeeExperienceProfile experienceProfile)
-        : base(firstName, lastName, birthDate, phoneNumber)
+        EmployeeExperienceProfile experienceProfile,
+        EmployeeType? employeeType = null)
     {
         WorkDetails = workDetails;
         ExperienceProfile = experienceProfile;
+        EmployeeType = employeeType;
     }
 
     public WorkDetails WorkDetails
@@ -49,8 +43,35 @@ public abstract class Employee : Person
         }
     }
 
+    public EmployeeType? EmployeeType
+    {
+        get => _employeeType;
+        private set
+        {
+            if (_employeeType != null)
+            {
+                _employeeType.ClearEmployeeRole();
+            }
+            _employeeType = value;
+            if (_employeeType != null)
+            {
+                _employeeType.SetEmployeeRole(this);
+            }
+        }
+    }
+
     public void UpdateExperienceProfile(EmployeeExperienceProfile profile)
     {
         ExperienceProfile = profile;
+    }
+
+    public void SetEmployeeType(EmployeeType type)
+    {
+        EmployeeType = type;
+    }
+
+    public void ClearEmployeeType()
+    {
+        EmployeeType = null;
     }
 }

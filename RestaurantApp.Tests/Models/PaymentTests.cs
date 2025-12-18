@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using NUnit.Framework;
 using RestaurantApp.Models;
+using RestaurantApp.Models.Roles;
+using RestaurantApp.Models.Roles.MembershipStatus;
 
 namespace RestaurantApp.Tests.Models;
 
@@ -15,7 +17,9 @@ public class PaymentTests
 
     private Order CreateOrder()
     {
-        var customer = new NonMember("Test", "User", new DateOnly(2000, 1, 1), "123456789", "test@example.com");
+        var nonMemberStatus = new NonMemberStatus();
+        var customerRole = new CustomerRole("test@example.com", nonMemberStatus);
+        var customer = new Person("Test", "User", new DateOnly(2000, 1, 1), "123456789", customerRole: customerRole);
         var restaurant = CreateRestaurant();
         var table = new Table(1, 4, "Standard", restaurant);
         return new Order(customer, table);

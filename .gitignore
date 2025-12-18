@@ -10,6 +10,9 @@
 current-doc.docx
 doc.md
 
+RestaurantApp/Models/Roles/MembershipStatus/
+RestaurantApp/Models/Roles/ChefRanks/
+RestaurantApp/Models/Roles/EmployeeTypes/
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

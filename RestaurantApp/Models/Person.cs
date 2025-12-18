@@ -1,25 +1,44 @@
 using System;
 using System.Text.Json.Serialization;
+using RestaurantApp.Models.Roles;
 
 namespace RestaurantApp.Models;
 
-[JsonPolymorphic]
-[JsonDerivedType(typeof(Customer), typeDiscriminator: "Customer")]
-[JsonDerivedType(typeof(Employee), typeDiscriminator: "Employee")]
-public abstract class Person
+public class Person
 {
     private string _firstName = string.Empty;
     private string _lastName = string.Empty;
     private DateOnly _birthDate;
     private string _phoneNumber = string.Empty;
 
+    [JsonInclude]
+    private EmployeeRole? _employeeRole;
+    [JsonInclude]
+    private CustomerRole? _customerRole;
+
     [JsonConstructor]
-    protected Person(string firstName, string lastName, DateOnly birthDate, string phoneNumber)
+    public Person(
+        string firstName,
+        string lastName,
+        DateOnly birthDate,
+        string phoneNumber,
+        EmployeeRole? employeeRole = null,
+        CustomerRole? customerRole = null)
     {
         FirstName = firstName;
         LastName = lastName;
         BirthDate = birthDate;
         PhoneNumber = phoneNumber;
+
+        if (employeeRole != null)
+        {
+            BecomeEmployee(employeeRole);
+        }
+
+        if (customerRole != null)
+        {
+            BecomeCustomer(customerRole);
+        }
     }
 
     public string FirstName
@@ -66,6 +85,60 @@ public abstract class Person
         }
     }
 
-    public virtual string GetFullName() => $"{FirstName} {LastName}";
-}
+    public EmployeeRole? EmployeeRole => _employeeRole;
+    public CustomerRole? CustomerRole => _customerRole;
 
+    [JsonIgnore]
+    public bool IsEmployee => _employeeRole != null;
+
+    [JsonIgnore]
+    public bool IsCustomer => _customerRole != null;
+
+    public string GetFullName() => $"{FirstName} {LastName}";
+
+    public void BecomeEmployee(EmployeeRole role)
+    {
+        if (role is null)
+            throw new ArgumentNullException(nameof(role));
+
+        if (_employeeRole != null)
+        {
+            _employeeRole.ClearPerson();
+        }
+
+        _employeeRole = role;
+        _employeeRole.SetPerson(this);
+    }
+
+    public void BecomeCustomer(CustomerRole role)
+    {
+        if (role is null)
+            throw new ArgumentNullException(nameof(role));
+
+        if (_customerRole != null)
+        {
+            _customerRole.ClearPerson();
+        }
+
+        _customerRole = role;
+        _customerRole.SetPerson(this);
+    }
+
+    public void StopBeingEmployee()
+    {
+        if (_employeeRole != null)
+        {
+            _employeeRole.ClearPerson();
+            _employeeRole = null;
+        }
+    }
+
+    public void StopBeingCustomer()
+    {
+        if (_customerRole != null)
+        {
+            _customerRole.ClearPerson();
+            _customerRole = null;
+        }
+    }
+}

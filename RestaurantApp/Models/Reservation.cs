@@ -24,7 +24,7 @@ public class Reservation
     [JsonInclude]
     private Table? _table;
     [JsonInclude]
-    private Customer? _customer;
+    private Person? _customer;
 
     public Guid Id
     {
@@ -70,7 +70,7 @@ public class Reservation
         }
     }
     public Table? Table => _table;
-    public Customer? Customer => _customer;
+    public Person? Customer => _customer;
     public ReservationStatus Status { get; private set; }
 
     internal void SetTable(Table? table)
@@ -78,7 +78,7 @@ public class Reservation
         _table = table;
     }
 
-    internal void SetCustomer(Customer? customer)
+    internal void SetCustomer(Person? customer)
     {
         _customer = customer;
     }

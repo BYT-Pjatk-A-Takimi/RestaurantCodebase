@@ -1,6 +1,9 @@
 using System;
 using NUnit.Framework;
 using RestaurantApp.Models;
+using RestaurantApp.Models.Roles;
+using RestaurantApp.Models.Roles.EmployeeTypes;
+using RestaurantApp.Models.Roles.MembershipStatus;
 
 namespace RestaurantApp.Tests.Models;
 
@@ -8,9 +11,11 @@ namespace RestaurantApp.Tests.Models;
 public class AssociationTests
 {
     // setup methods
-    private static NonMember CreateCustomer(string email = "test@example.com")
+    private static Person CreateCustomer(string email = "test@example.com")
     {
-        return new NonMember("Test", "User", new DateOnly(2000, 1, 1), "123456789", email);
+        var nonMemberStatus = new NonMemberStatus();
+        var customerRole = new CustomerRole(email, nonMemberStatus);
+        return new Person("Test", "User", new DateOnly(2000, 1, 1), "123456789", customerRole: customerRole);
     }
 
     private static Table CreateTable(int number = 1, int capacity = 4, Restaurant? restaurant = null)
@@ -44,44 +49,38 @@ public class AssociationTests
         return new ExperiencedProfile(5, "John Mentor");
     }
 
-    private static Manager CreateManager(string firstName = "John", int level = 1)
+    private static ManagerType CreateManagerType(int level = 1)
     {
-        var workDetails = CreateWorkDetails();
-        var experienceProfile = CreateExperienceProfile();
-        return new Manager(firstName, "Doe", new DateOnly(1980, 1, 1), "555-0001", workDetails, experienceProfile, level);
+        return new ManagerType(level);
     }
 
-    private static Chef CreateChef(string firstName = "Chef")
+    private static ChefType CreateChefType()
     {
-        var workDetails = CreateWorkDetails();
-        var experienceProfile = CreateExperienceProfile();
-        return new Chef(firstName, "Cook", new DateOnly(1985, 1, 1), "555-0002", workDetails, experienceProfile, "Italian");
+        return new ChefType("Italian");
     }
 
-    private static Waiter CreateWaiter()
+    private static WaiterType CreateWaiterType()
     {
-        var workDetails = CreateWorkDetails();
-        var experienceProfile = CreateExperienceProfile();
-        return new Waiter("Waiter", "Service", new DateOnly(1990, 1, 1), "555-0003", workDetails, experienceProfile);
+        return new WaiterType();
     }
 
     // Customer <-> Reservation Association Validations
 
     [Test]
-    public void Customer_MakeReservation_ThrowsWhenReservationIsNull()
+    public void CustomerRole_MakeReservation_ThrowsWhenReservationIsNull()
     {
         var customer = CreateCustomer();
-        Assert.Throws<ArgumentNullException>(() => customer.MakeReservation(null!));
+        Assert.Throws<ArgumentNullException>(() => customer.CustomerRole!.MakeReservation(null!));
     }
 
     [Test]
-    public void Customer_MakeReservation_ThrowsWhenDuplicate()
+    public void CustomerRole_MakeReservation_ThrowsWhenDuplicate()
     {
         var customer = CreateCustomer();
         var table = CreateTable();
         var reservation = new Reservation(Guid.NewGuid(), new DateOnly(2025, 6, 15), new TimeOnly(19, 0), 2, table);
         table.Reserve(customer, reservation);
-        Assert.Throws<ArgumentException>(() => customer.MakeReservation(reservation));
+        Assert.Throws<ArgumentException>(() => customer.CustomerRole!.MakeReservation(reservation));
     }
 
     [Test]
@@ -211,44 +210,44 @@ public class AssociationTests
         Assert.Throws<InvalidOperationException>(() => order.RemovePayment(payment));
     }
 
-    // Manager Reflex Association Validations
+    // ManagerType Reflex Association Validations
 
     [Test]
-    public void Manager_SetSupervisor_ThrowsWhenSelf()
+    public void ManagerType_SetSupervisor_ThrowsWhenSelf()
     {
-        var manager = CreateManager();
+        var manager = CreateManagerType();
         Assert.Throws<ArgumentException>(() => manager.SetSupervisor(manager));
     }
 
     [Test]
-    public void Manager_SetSupervisor_ThrowsWhenCircularReference()
+    public void ManagerType_SetSupervisor_ThrowsWhenCircularReference()
     {
-        var manager1 = CreateManager("Manager1", 1);
-        var manager2 = CreateManager("Manager2", 2);
-        var manager3 = CreateManager("Manager3", 3);
+        var manager1 = CreateManagerType(1);
+        var manager2 = CreateManagerType(2);
+        var manager3 = CreateManagerType(3);
         manager1.AddSubordinate(manager2);
         manager2.AddSubordinate(manager3);
         Assert.Throws<InvalidOperationException>(() => manager3.SetSupervisor(manager1));
     }
 
-    // Manager <-> Restaurant Association Validations
+    // ManagerType <-> Restaurant Association Validations
 
     [Test]
-    public void Manager_SetRestaurant_ThrowsWhenAlreadyAssigned()
+    public void ManagerType_SetRestaurant_ThrowsWhenAlreadyAssigned()
     {
-        var manager = CreateManager();
+        var manager = CreateManagerType();
         var restaurant1 = CreateRestaurant("Restaurant 1");
         var restaurant2 = CreateRestaurant("Restaurant 2");
         manager.SetRestaurant(restaurant1);
         Assert.Throws<InvalidOperationException>(() => manager.SetRestaurant(restaurant2));
     }
 
-    // Chef <-> Restaurant Association Validations
+    // ChefType <-> Restaurant Association Validations
 
     [Test]
-    public void Chef_SetRestaurant_ThrowsWhenAlreadyAssigned()
+    public void ChefType_SetRestaurant_ThrowsWhenAlreadyAssigned()
     {
-        var chef = CreateChef();
+        var chef = CreateChefType();
         var restaurant1 = CreateRestaurant("Restaurant 1");
         var restaurant2 = CreateRestaurant("Restaurant 2");
         chef.SetRestaurant(restaurant1);
@@ -305,12 +304,12 @@ public class AssociationTests
         Assert.Throws<InvalidOperationException>(() => menu.RemoveDish(dish));
     }
 
-    // Waiter <-> Table Association Validations
+    // WaiterType <-> Table Association Validations
 
     [Test]
-    public void Waiter_AssignTable_ThrowsWhenTableIsNull()
+    public void WaiterType_AssignTable_ThrowsWhenTableIsNull()
     {
-        var waiter = CreateWaiter();
+        var waiter = CreateWaiterType();
         Assert.Throws<ArgumentNullException>(() => waiter.AssignTable(null!));
     }
 }

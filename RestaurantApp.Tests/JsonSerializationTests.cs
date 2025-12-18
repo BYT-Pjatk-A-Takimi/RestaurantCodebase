@@ -5,6 +5,9 @@ using System.Text.Json.Serialization;
 using NUnit.Framework;
 using RestaurantApp;
 using RestaurantApp.Models;
+using RestaurantApp.Models.Roles;
+using RestaurantApp.Models.Roles.EmployeeTypes;
+using RestaurantApp.Models.Roles.MembershipStatus;
 
 namespace RestaurantApp.Tests;
 
@@ -142,10 +145,12 @@ public class JsonSerializationIntegrationTests
     public void SerializeDeserialize_PersonWithDateOnly_ShouldWork()
     {
         var options = JsonSerialization.GetDefaultOptions();
-        var person = new Member("John", "Doe", new DateOnly(1990, 5, 15), "555-1234", "john@example.com", 10, 2.5m);
+        var memberStatus = new MemberStatus(10, 2.5m);
+        var customerRole = new CustomerRole("john@example.com", memberStatus);
+        var person = new Person("John", "Doe", new DateOnly(1990, 5, 15), "555-1234", customerRole: customerRole);
 
         var json = JsonSerializer.Serialize(person, options);
-        var deserialized = JsonSerializer.Deserialize<Member>(json, options);
+        var deserialized = JsonSerializer.Deserialize<Person>(json, options);
 
         Assert.Multiple(() =>
         {
@@ -163,7 +168,9 @@ public class JsonSerializationIntegrationTests
         var restaurant = new Restaurant("Test Restaurant", 100);
         var table = new Table(1, 4, "Standard", restaurant);
 
-        var customer = new Member("Jane", "Smith", new DateOnly(1985, 8, 20), "555-5678", "jane@example.com", 5, 1.5m);
+        var memberStatus = new MemberStatus(5, 1.5m);
+        var customerRole = new CustomerRole("jane@example.com", memberStatus);
+        var customer = new Person("Jane", "Smith", new DateOnly(1985, 8, 20), "555-5678", customerRole: customerRole);
         var reservation = new Reservation(Guid.NewGuid(), new DateOnly(2024, 12, 25), new TimeOnly(19, 0), 2, table);
         table.Reserve(customer, reservation);
 
@@ -186,17 +193,19 @@ public class JsonSerializationIntegrationTests
         var options = JsonSerialization.GetDefaultOptions();
         var workDetails = new WorkDetails("Kitchen", "Day", new DateOnly(2020, 1, 10));
         var experienceProfile = new ExperiencedProfile(5, "Mentor Name");
-        var manager = new Manager("Alice", "Johnson", new DateOnly(1988, 3, 12), "555-9999", workDetails, experienceProfile, 3);
+        var managerType = new ManagerType(3);
+        var employeeRole = new EmployeeRole(workDetails, experienceProfile, managerType);
+        var person = new Person("Alice", "Johnson", new DateOnly(1988, 3, 12), "555-9999", employeeRole: employeeRole);
 
-        var json = JsonSerializer.Serialize(manager, options);
-        var deserialized = JsonSerializer.Deserialize<Manager>(json, options);
+        var json = JsonSerializer.Serialize(person, options);
+        var deserialized = JsonSerializer.Deserialize<Person>(json, options);
 
         Assert.Multiple(() =>
         {
             Assert.That(deserialized, Is.Not.Null);
             Assert.That(deserialized!.FirstName, Is.EqualTo("Alice"));
             Assert.That(deserialized.BirthDate, Is.EqualTo(new DateOnly(1988, 3, 12)));
-            Assert.That(deserialized.WorkDetails.DateOfHiring, Is.EqualTo(new DateOnly(2020, 1, 10)));
+            Assert.That(deserialized.EmployeeRole?.WorkDetails.DateOfHiring, Is.EqualTo(new DateOnly(2020, 1, 10)));
         });
     }
 
@@ -207,7 +216,9 @@ public class JsonSerializationIntegrationTests
         var restaurant = new Restaurant("Circular Test", 50);
         var table = new Table(1, 4, "Standard", restaurant);
 
-        var customer = new Member("Bob", "Wilson", new DateOnly(1992, 11, 5), "555-0000", "bob@example.com", 0, 1.0m);
+        var memberStatus = new MemberStatus(0, 1.0m);
+        var customerRole = new CustomerRole("bob@example.com", memberStatus);
+        var customer = new Person("Bob", "Wilson", new DateOnly(1992, 11, 5), "555-0000", customerRole: customerRole);
         var reservation = new Reservation(Guid.NewGuid(), new DateOnly(2024, 6, 1), new TimeOnly(20, 0), 2, table);
         table.Reserve(customer, reservation);
 
@@ -224,16 +235,19 @@ public class JsonSerializationIntegrationTests
     public void SerializeDeserialize_PolymorphicTypes_ShouldPreserveTypeInformation()
     {
         var options = JsonSerialization.GetDefaultOptions();
-        var member = new Member("Polly", "Morphic", new DateOnly(1995, 4, 10), "555-1111", "polly@example.com", 3, 2.0m);
+        var memberStatus = new MemberStatus(3, 2.0m);
+        var customerRole = new CustomerRole("polly@example.com", memberStatus);
+        var person = new Person("Polly", "Morphic", new DateOnly(1995, 4, 10), "555-1111", customerRole: customerRole);
 
-        var json = JsonSerializer.Serialize((Customer)member, options);
-        var deserialized = JsonSerializer.Deserialize<Customer>(json, options);
+        var json = JsonSerializer.Serialize(person, options);
+        var deserialized = JsonSerializer.Deserialize<Person>(json, options);
 
         Assert.Multiple(() =>
         {
             Assert.That(deserialized, Is.Not.Null);
-            Assert.That(deserialized, Is.InstanceOf<Member>());
-            Assert.That(((Member)deserialized!).Credits, Is.EqualTo(3));
+            Assert.That(deserialized!.IsCustomer, Is.True);
+            Assert.That(deserialized.CustomerRole?.MembershipStatus, Is.InstanceOf<MemberStatus>());
+            Assert.That(((MemberStatus)deserialized.CustomerRole!.MembershipStatus).Credits, Is.EqualTo(3));
         });
     }
 
@@ -241,10 +255,19 @@ public class JsonSerializationIntegrationTests
     public void SerializeDeserialize_ListOfPayments_ShouldWork()
     {
         var options = JsonSerialization.GetDefaultOptions();
+
+        var nonMemberStatus1 = new NonMemberStatus();
+        var customerRole1 = new CustomerRole("test@example.com", nonMemberStatus1);
+        var customer1 = new Person("Test", "User", new DateOnly(2000, 1, 1), "123", customerRole: customerRole1);
+
+        var nonMemberStatus2 = new NonMemberStatus();
+        var customerRole2 = new CustomerRole("test2@example.com", nonMemberStatus2);
+        var customer2 = new Person("Test2", "User2", new DateOnly(2000, 1, 1), "124", customerRole: customerRole2);
+
         var payments = new List<Payment>
         {
-            new Payment(new Order(new NonMember("Test", "User", new DateOnly(2000, 1, 1), "123", "test@example.com"), new Table(1, 4, "Standard", new Restaurant("Restaurant 1", 100))), 100m, PaymentMethod.Card),
-            new Payment(new Order(new NonMember("Test2", "User2", new DateOnly(2000, 1, 1), "124", "test2@example.com"), new Table(2, 4, "Standard", new Restaurant("Restaurant 2", 100))), 50m, PaymentMethod.Cash)
+            new Payment(new Order(customer1, new Table(1, 4, "Standard", new Restaurant("Restaurant 1", 100))), 100m, PaymentMethod.Card),
+            new Payment(new Order(customer2, new Table(2, 4, "Standard", new Restaurant("Restaurant 2", 100))), 50m, PaymentMethod.Cash)
         };
 
         var json = JsonSerializer.Serialize(payments, options);
@@ -260,4 +283,3 @@ public class JsonSerializationIntegrationTests
     }
 
 }
-

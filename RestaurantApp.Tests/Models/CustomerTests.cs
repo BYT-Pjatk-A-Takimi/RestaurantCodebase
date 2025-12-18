@@ -1,6 +1,8 @@
 using System;
 using NUnit.Framework;
 using RestaurantApp.Models;
+using RestaurantApp.Models.Roles;
+using RestaurantApp.Models.Roles.MembershipStatus;
 
 namespace RestaurantApp.Tests.Models;
 
@@ -8,41 +10,43 @@ namespace RestaurantApp.Tests.Models;
 public class CustomerTests
 {
     [Test]
-    public void Member_UseCredits_AppliesDiscountWhenCreditsAvailable()
+    public void MemberStatus_UseCredits_AppliesDiscountWhenCreditsAvailable()
     {
-        var member = new Member("Berkay", "Bayar", DateOnly.Parse("1999-03-12"), "111-1111", "berkay@example.com", credits: 5, creditPointsRate: 2.5m);
+        var memberStatus = new MemberStatus(credits: 5, creditPointsRate: 2.5m);
         var originalAmount = 100.00m;
         var expectedDiscount = 5 * 2.5m;
         var expectedFinalAmount = originalAmount - expectedDiscount;
 
-        var result = member.UseCredits(originalAmount);
+        var result = memberStatus.UseCredits(originalAmount);
 
         Assert.That(result, Is.EqualTo(expectedFinalAmount));
-        Assert.That(member.Credits, Is.EqualTo(0));
+        Assert.That(memberStatus.Credits, Is.EqualTo(0));
     }
 
     [Test]
-    public void NonMember_PromoteToMember_CreatesNewMember()
+    public void NonMemberStatus_PromoteToMember_CreatesNewMemberStatus()
     {
-        var firstName = "Berkay";
-        var lastName = "Bayar";
-        var birthDate = DateOnly.Parse("1999-03-12");
-        var phoneNumber = "111-1111";
-        var email = "berkay@example.com";
-        var nonMember = new NonMember(firstName, lastName, birthDate, phoneNumber, email);
+        var nonMemberStatus = new NonMemberStatus();
         var initialCreditRate = 3.0m;
 
-        var member = nonMember.beMember(initialCreditRate);
+        var memberStatus = nonMemberStatus.PromoteToMember(initialCreditRate);
 
-        Assert.That(member, Is.Not.Null);
-        Assert.That(member, Is.InstanceOf<Member>());
-        Assert.That(member.FirstName, Is.EqualTo(firstName));
-        Assert.That(member.LastName, Is.EqualTo(lastName));
-        Assert.That(member.BirthDate, Is.EqualTo(birthDate));
-        Assert.That(member.PhoneNumber, Is.EqualTo(phoneNumber));
-        Assert.That(member.Email, Is.EqualTo(email));
-        Assert.That(member.Credits, Is.EqualTo(0));
-        Assert.That(member.CreditPointsRate, Is.EqualTo(initialCreditRate));
+        Assert.That(memberStatus, Is.Not.Null);
+        Assert.That(memberStatus, Is.InstanceOf<MemberStatus>());
+        Assert.That(memberStatus.Credits, Is.EqualTo(0));
+        Assert.That(memberStatus.CreditPointsRate, Is.EqualTo(initialCreditRate));
+    }
+
+    [Test]
+    public void CustomerRole_CanChangeMembershipStatus()
+    {
+        var nonMemberStatus = new NonMemberStatus();
+        var customerRole = new CustomerRole("test@example.com", nonMemberStatus);
+        var person = new Person("Berkay", "Bayar", DateOnly.Parse("1999-03-12"), "111-1111", customerRole: customerRole);
+
+        var memberStatus = nonMemberStatus.PromoteToMember(2.5m);
+        customerRole.SetMembershipStatus(memberStatus);
+
+        Assert.That(customerRole.MembershipStatus, Is.InstanceOf<MemberStatus>());
     }
 }
-

@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Text.Json;
 using RestaurantApp;
 using RestaurantApp.Models;
+using RestaurantApp.Models.Roles;
+using RestaurantApp.Models.Roles.EmployeeTypes;
+using RestaurantApp.Models.Roles.MembershipStatus;
 
 try
 {
     var workDetails = new WorkDetails("Dining", "Evening", DateOnly.FromDateTime(DateTime.Today.AddYears(-2)));
     var experienceProfile = new ExperiencedProfile(5, "Chef Gomez");
-    var manager = new Manager("Mustafa", "Atalan", DateOnly.Parse("2002-05-14"), "555-0001", workDetails, experienceProfile, level: 2);
+    var managerType = new ManagerType(level: 2);
+    var employeeRole = new EmployeeRole(workDetails, experienceProfile, managerType);
+    var manager = new Person("Mustafa", "Atalan", DateOnly.Parse("2002-05-14"), "555-0001", employeeRole: employeeRole);
 
     var restaurant = new Restaurant("BYT Bistro", 120);
     var mainMenu = new Menu("Main Menu", "Dinner", new[] { "English", "Turkish" });
@@ -21,7 +26,10 @@ try
     var table1 = new Table(1, 4, "Standard", restaurant);
     var table2 = new Table(2, 2, "Window", restaurant);
 
-    var customer = new Member("Berkay", "Bayar", DateOnly.Parse("1999-03-12"), "555-2222", "berkay@example.com", 5, 2.5m);
+    var memberStatus = new MemberStatus(5, 2.5m);
+    var customerRole = new CustomerRole("berkay@example.com", memberStatus);
+    var customer = new Person("Berkay", "Bayar", DateOnly.Parse("1999-03-12"), "555-2222", customerRole: customerRole);
+    
     var reservation = new Reservation(Guid.NewGuid(), DateOnly.FromDateTime(DateTime.Today.AddDays(1)), new TimeOnly(19, 0), 2, table1);
     table1.Reserve(customer, reservation);
     reservation.Confirm();
@@ -32,13 +40,13 @@ try
         ("Steak Order", steak, 1)
     };
 
-    var order = customer.PlaceOrder(table1, orderDishes);
+    var order = customerRole.PlaceOrder(table1, orderDishes);
     order.CompleteOrder();
-    customer.AddCredits();
+    memberStatus.AddCredits();
 
     var total = order.CalculateTotal();
-    var discountedTotal = customer.UseCredits(total);
-    var payment = customer.MakePayment(order, PaymentMethod.Card, discountedTotal);
+    var discountedTotal = memberStatus.UseCredits(total);
+    var payment = customerRole.MakePayment(order, PaymentMethod.Card, discountedTotal);
 
     Console.WriteLine($"Manager on duty: {manager.GetFullName()}");
     Console.WriteLine($"Processed payment amount: {payment.Amount:C}");

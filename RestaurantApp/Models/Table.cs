@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using RestaurantApp.Models.Roles.EmployeeTypes;
 
 namespace RestaurantApp.Models;
 
@@ -13,7 +14,7 @@ public class Table
     [JsonInclude]
     private Restaurant _restaurant;
     [JsonInclude]
-    private Waiter? _waiter;
+    private WaiterType? _waiter;
 
     [JsonConstructor]
     public Table(int tableNumber, int numberOfChairs, string tableType, Restaurant restaurant, bool skipAutoAdd = false)
@@ -71,7 +72,7 @@ public class Table
 
     public Restaurant Restaurant => _restaurant;
 
-    public Waiter? Waiter => _waiter;
+    public WaiterType? Waiter => _waiter;
 
     public IReadOnlyCollection<Reservation> Reservations => _reservations;
 
@@ -83,7 +84,7 @@ public class Table
     public Reservation? GetReservation(DateOnly date) =>
         _reservations.Find(r => r.DateOfReservation == date);
 
-    public bool Reserve(Customer customer, Reservation reservation)
+    public bool Reserve(Person customer, Reservation reservation)
     {
         if (customer is null)
             throw new ArgumentNullException(nameof(customer));
@@ -91,11 +92,14 @@ public class Table
         if (reservation is null)
             throw new ArgumentNullException(nameof(reservation));
 
+        if (!customer.IsCustomer)
+            throw new InvalidOperationException("Person must have a CustomerRole to make a reservation.");
+
         if (_reservations.Contains(reservation))
         {
             try
             {
-                customer.MakeReservation(reservation);
+                customer.CustomerRole!.MakeReservation(reservation);
             }
             catch (ArgumentException)
             {
@@ -105,12 +109,11 @@ public class Table
 
         if (GetReservation(reservation.DateOfReservation, reservation.TimeOfReservation) is not null)
         {
-            // aynı tarih ve saatte zaten rezervasyon varsa reddet
             return false;
         }
 
         AddReservation(reservation);
-        customer.MakeReservation(reservation);
+        customer.CustomerRole!.MakeReservation(reservation);
         return true;
     }
 
@@ -145,7 +148,7 @@ public class Table
         _restaurant = restaurant;
     }
 
-    internal void SetWaiter(Waiter? waiter)
+    internal void SetWaiter(WaiterType? waiter)
     {
         _waiter = waiter;
     }

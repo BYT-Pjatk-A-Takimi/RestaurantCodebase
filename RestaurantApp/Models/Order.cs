@@ -12,7 +12,7 @@ public class Order
     [JsonInclude]
     private readonly List<Payment> _payments = new();
 
-    public Order(Customer customer, Table table, Guid? id = null, DateTime? timeStamp = null, OrderStatus? status = null)
+    public Order(Person customer, Table table, Guid? id = null, DateTime? timeStamp = null, OrderStatus? status = null)
     {
         Customer = customer ?? throw new ArgumentNullException(nameof(customer));
         Table = table ?? throw new ArgumentNullException(nameof(table));
@@ -45,7 +45,7 @@ public class Order
         }
     }
 
-    public Customer Customer { get; private set; } = null!;
+    public Person Customer { get; private set; } = null!;
 
     public Table Table { get; private set; } = null!;
 

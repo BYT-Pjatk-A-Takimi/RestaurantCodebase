@@ -1,16 +1,19 @@
 using System;
 using NUnit.Framework;
 using RestaurantApp.Models;
+using RestaurantApp.Models.Roles;
+using RestaurantApp.Models.Roles.MembershipStatus;
 
 namespace RestaurantApp.Tests.Models;
 
 [TestFixture]
 public class OrderTests
 {
-    private static NonMember CreateCustomer()
+    private static Person CreateCustomer()
     {
-        // NonMember sınıfın projede zaten var
-        return new NonMember("Test", "User", new DateOnly(2000, 1, 1), "123456789", "test@example.com");
+        var nonMemberStatus = new NonMemberStatus();
+        var customerRole = new CustomerRole("test@example.com", nonMemberStatus);
+        return new Person("Test", "User", new DateOnly(2000, 1, 1), "123456789", customerRole: customerRole);
     }
 
     private static Restaurant CreateRestaurant()
