@@ -5,17 +5,14 @@ namespace RestaurantApp.Models;
 
 public class OrderDish
 {
+    private string _name = string.Empty;
+    private int _quantity;
+
     [JsonConstructor]
     public OrderDish(Order order, string name, Dish dish, int quantity, bool skipAutoAdd = false)
     {
         if (order is null)
             throw new ArgumentNullException(nameof(order), "OrderDish cannot exist without an Order (composition).");
-
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name cannot be empty.", nameof(name));
-
-        if (quantity <= 0)
-            throw new ArgumentException("Quantity must be positive.", nameof(quantity));
 
         Dish = dish ?? throw new ArgumentNullException(nameof(dish));
 
@@ -38,11 +35,29 @@ public class OrderDish
 
     public Order Order { get; }
 
-    public string Name { get; }
+    public string Name
+    {
+        get => _name;
+        private set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Name cannot be empty.", nameof(Name));
+            _name = value;
+        }
+    }
 
     public Dish Dish { get; }
 
-    public int Quantity { get; }
+    public int Quantity
+    {
+        get => _quantity;
+        private set
+        {
+            if (value <= 0)
+                throw new ArgumentException("Quantity must be positive.", nameof(Quantity));
+            _quantity = value;
+        }
+    }
 
     // DERIVED (OrderDish seviyesinde de derived örneği)
     public decimal TotalPrice => Dish.Price * Quantity;

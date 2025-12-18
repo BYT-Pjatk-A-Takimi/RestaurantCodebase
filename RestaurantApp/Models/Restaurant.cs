@@ -33,20 +33,35 @@ public class Restaurant
     [JsonConstructor]
     public Restaurant(string name, int maxCapacity)
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Restaurant name cannot be empty.", nameof(name));
-
-        if (maxCapacity <= 0)
-            throw new ArgumentOutOfRangeException(nameof(maxCapacity), "Max capacity must be greater than 0.");
-
         Name = name;
         MaxCapacity = maxCapacity;
 
         AddToExtent(this);
     }
 
-    public string Name { get; private set; } = string.Empty;
-    public int MaxCapacity { get; private set; }
+    private string _name = string.Empty;
+    public string Name
+    {
+        get => _name;
+        private set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Restaurant name cannot be empty.", nameof(Name));
+            _name = value;
+        }
+    }
+
+    private int _maxCapacity;
+    public int MaxCapacity
+    {
+        get => _maxCapacity;
+        private set
+        {
+            if (value <= 0)
+                throw new ArgumentOutOfRangeException(nameof(MaxCapacity), "Max capacity must be greater than 0.");
+            _maxCapacity = value;
+        }
+    }
 
     [JsonIgnore]
     public IReadOnlyCollection<Table> Tables => _tables;

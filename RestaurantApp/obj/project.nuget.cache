@@ -1,18 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "PVPNlWgTfrs=",
+  "dgSpecHash": "RGQCDkEn3vA=",
   "success": true,
   "projectFilePath": "/home/berkay/Documents/Projects/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj",
   "expectedPackageFiles": [],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "message": "Problem reading the cache file /home/berkay/Documents/Projects/RestaurantCodebase/RestaurantApp/obj/project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0.",
-      "projectPath": "/home/berkay/Documents/Projects/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj",
-      "warningLevel": 1,
-      "filePath": "/home/berkay/Documents/Projects/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj",
-      "targetGraphs": []
-    }
-  ]
+  "logs": []
 }

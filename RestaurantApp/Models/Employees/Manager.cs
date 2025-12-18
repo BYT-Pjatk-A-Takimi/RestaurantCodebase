@@ -30,7 +30,17 @@ public class Manager : Employee
         }
     }
 
-    public int Level { get; }
+    private int _level;
+    public int Level
+    {
+        get => _level;
+        private set
+        {
+            if (value <= 0)
+                throw new ArgumentException("Level must be positive.", nameof(Level));
+            _level = value;
+        }
+    }
 
     public Manager? Supervisor { get; private set; }
 

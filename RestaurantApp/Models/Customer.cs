@@ -19,14 +19,25 @@ public abstract class Customer : Person
         string? email)
         : base(firstName, lastName, birthDate, phoneNumber)
     {
-        Email = email;
+        _email = email;
         _reservations = new List<Reservation>();
     }
 
     [JsonInclude]
     private readonly List<Reservation> _reservations;
 
-    public string? Email { get; }
+    [JsonInclude]
+    private string? _email;
+    public string? Email
+    {
+        get => _email;
+        private set
+        {
+            if (value != null && string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Email cannot be empty if provided.", nameof(Email));
+            _email = value;
+        }
+    }
 
     public IReadOnlyCollection<Reservation> Reservations => _reservations;
 
@@ -145,9 +156,29 @@ public sealed class Member : Customer
         CreditPointsRate = creditPointsRate;
     }
 
-    public int Credits { get; private set; }
+    private int _credits;
+    public int Credits
+    {
+        get => _credits;
+        private set
+        {
+            if (value < 0)
+                throw new ArgumentException("Credits cannot be negative.", nameof(Credits));
+            _credits = value;
+        }
+    }
 
-    public decimal CreditPointsRate { get; }
+    private decimal _creditPointsRate;
+    public decimal CreditPointsRate
+    {
+        get => _creditPointsRate;
+        private set
+        {
+            if (value <= 0)
+                throw new ArgumentException("Credit points rate must be positive.", nameof(CreditPointsRate));
+            _creditPointsRate = value;
+        }
+    }
 
     public decimal UseCredits(decimal amount)
     {

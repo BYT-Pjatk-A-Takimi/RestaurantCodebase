@@ -5,14 +5,22 @@ namespace RestaurantApp.Models;
 
 public sealed class SpecialistProfile : EmployeeExperienceProfile
 {
-    public string FieldOfExpertise { get; private set; }
+    private string _fieldOfExpertise = string.Empty;
+
+    public string FieldOfExpertise
+    {
+        get => _fieldOfExpertise;
+        private set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Field of expertise cannot be empty.", nameof(FieldOfExpertise));
+            _fieldOfExpertise = value;
+        }
+    }
 
     [JsonConstructor]
     public SpecialistProfile(string fieldOfExpertise)
     {
-        if (string.IsNullOrWhiteSpace(fieldOfExpertise))
-            throw new ArgumentException("Field of expertise cannot be empty.");
-
         FieldOfExpertise = fieldOfExpertise;
     }
 

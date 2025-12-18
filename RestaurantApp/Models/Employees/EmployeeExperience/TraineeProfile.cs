@@ -5,14 +5,22 @@ namespace RestaurantApp.Models;
 
 public sealed class TraineeProfile : EmployeeExperienceProfile
 {
-    public int TrainingDuration { get; private set; }
+    private int _trainingDuration;
+
+    public int TrainingDuration
+    {
+        get => _trainingDuration;
+        private set
+        {
+            if (value <= 0)
+                throw new ArgumentException("Training duration must be positive.", nameof(TrainingDuration));
+            _trainingDuration = value;
+        }
+    }
 
     [JsonConstructor]
     public TraineeProfile(int trainingDuration)
     {
-        if (trainingDuration <= 0)
-            throw new ArgumentException("Training duration must be positive.");
-
         TrainingDuration = trainingDuration;
     }
 

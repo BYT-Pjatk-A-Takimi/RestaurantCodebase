@@ -18,15 +18,6 @@ public class Table
     [JsonConstructor]
     public Table(int tableNumber, int numberOfChairs, string tableType, Restaurant restaurant, bool skipAutoAdd = false)
     {
-        if (tableNumber <= 0)
-            throw new ArgumentException("Table number must be positive.", nameof(tableNumber));
-
-        if (numberOfChairs <= 0)
-            throw new ArgumentException("Number of chairs must be positive.", nameof(numberOfChairs));
-
-        if (string.IsNullOrWhiteSpace(tableType))
-            throw new ArgumentException("Table type cannot be empty.", nameof(tableType));
-
         if (restaurant is null)
             throw new ArgumentNullException(nameof(restaurant), "Table cannot exist without a Restaurant (composition).");
 
@@ -42,11 +33,41 @@ public class Table
     }
 
     // BASIC ATTRIBUTES
-    public int TableNumber { get; }
+    private int _tableNumber;
+    public int TableNumber
+    {
+        get => _tableNumber;
+        private set
+        {
+            if (value <= 0)
+                throw new ArgumentException("Table number must be positive.", nameof(TableNumber));
+            _tableNumber = value;
+        }
+    }
 
-    public int NumberOfChairs { get; }
+    private int _numberOfChairs;
+    public int NumberOfChairs
+    {
+        get => _numberOfChairs;
+        private set
+        {
+            if (value <= 0)
+                throw new ArgumentException("Number of chairs must be positive.", nameof(NumberOfChairs));
+            _numberOfChairs = value;
+        }
+    }
 
-    public string TableType { get; }
+    private string _tableType = string.Empty;
+    public string TableType
+    {
+        get => _tableType;
+        private set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Table type cannot be empty.", nameof(TableType));
+            _tableType = value;
+        }
+    }
 
     public Restaurant Restaurant => _restaurant;
 

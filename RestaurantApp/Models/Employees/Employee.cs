@@ -10,6 +10,9 @@ namespace RestaurantApp.Models;
 [JsonDerivedType(typeof(Valet), typeDiscriminator: "Valet")]
 public abstract class Employee : Person
 {
+    private WorkDetails _workDetails = null!;
+    private EmployeeExperienceProfile _experienceProfile = null!;
+
     [JsonConstructor]
     protected Employee(
         string firstName,
@@ -24,9 +27,27 @@ public abstract class Employee : Person
         ExperienceProfile = experienceProfile;
     }
 
-    public WorkDetails WorkDetails { get; }
+    public WorkDetails WorkDetails
+    {
+        get => _workDetails;
+        private set
+        {
+            if (value is null)
+                throw new ArgumentNullException(nameof(WorkDetails), "Work details cannot be null.");
+            _workDetails = value;
+        }
+    }
 
-    public EmployeeExperienceProfile ExperienceProfile { get; private set; }
+    public EmployeeExperienceProfile ExperienceProfile
+    {
+        get => _experienceProfile;
+        private set
+        {
+            if (value is null)
+                throw new ArgumentNullException(nameof(ExperienceProfile), "Experience profile cannot be null.");
+            _experienceProfile = value;
+        }
+    }
 
     public void UpdateExperienceProfile(EmployeeExperienceProfile profile)
     {

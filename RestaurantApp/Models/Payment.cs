@@ -52,7 +52,17 @@ public class Payment
 
     public Guid OrderId { get; }
 
-    public decimal Amount { get; private set; }
+    private decimal _amount;
+    public decimal Amount
+    {
+        get => _amount;
+        private set
+        {
+            if (value <= 0)
+                throw new ArgumentException("Amount must be positive.", nameof(Amount));
+            _amount = value;
+        }
+    }
 
     public PaymentMethod Method { get; }
 

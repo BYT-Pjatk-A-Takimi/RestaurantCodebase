@@ -27,13 +27,23 @@ public class Order
     [JsonConstructor]
     private Order()
     {
-        Id = Guid.NewGuid();
+        _id = Guid.NewGuid();
         Status = OrderStatus.Pending;
-        TimeStamp = DateTime.UtcNow;
+        _timeStamp = DateTime.UtcNow;
     }
 
     // BASIC ATTRIBUTES
-    public Guid Id { get; private set; }
+    private Guid _id;
+    public Guid Id
+    {
+        get => _id;
+        private set
+        {
+            if (value == Guid.Empty)
+                throw new ArgumentException("Order id cannot be empty.", nameof(Id));
+            _id = value;
+        }
+    }
 
     public Customer Customer { get; private set; } = null!;
 
@@ -46,7 +56,17 @@ public class Order
         Table = table;
     }
 
-    public DateTime TimeStamp { get; private set; }
+    private DateTime _timeStamp;
+    public DateTime TimeStamp
+    {
+        get => _timeStamp;
+        private set
+        {
+            if (value == default)
+                throw new ArgumentException("Timestamp must be a valid date.", nameof(TimeStamp));
+            _timeStamp = value;
+        }
+    }
 
     public OrderStatus Status { get; private set; }
 

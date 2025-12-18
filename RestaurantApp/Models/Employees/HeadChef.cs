@@ -20,7 +20,17 @@ public class HeadChef : Chef
         KitchenExperienceYears = kitchenExperienceYears;
     }
 
-    public int KitchenExperienceYears { get; }
+    private int _kitchenExperienceYears;
+    public int KitchenExperienceYears
+    {
+        get => _kitchenExperienceYears;
+        private set
+        {
+            if (value < 0)
+                throw new ArgumentException("Kitchen experience years cannot be negative.", nameof(KitchenExperienceYears));
+            _kitchenExperienceYears = value;
+        }
+    }
 
     public void OverseeKitchen() { }
 

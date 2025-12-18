@@ -19,5 +19,15 @@ public class Valet : Employee
         AssignedLocation = assignedLocation;
     }
 
-    public string AssignedLocation { get; }
+    private string _assignedLocation = string.Empty;
+    public string AssignedLocation
+    {
+        get => _assignedLocation;
+        private set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Assigned location cannot be empty.", nameof(AssignedLocation));
+            _assignedLocation = value;
+        }
+    }
 }

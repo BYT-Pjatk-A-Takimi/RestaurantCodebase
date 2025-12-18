@@ -27,7 +27,17 @@ public class Chef : Employee
         CuisineType = cuisineType;
     }
 
-    public string CuisineType { get; }
+    private string _cuisineType = string.Empty;
+    public string CuisineType
+    {
+        get => _cuisineType;
+        private set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Cuisine type cannot be empty.", nameof(CuisineType));
+            _cuisineType = value;
+        }
+    }
 
     public Restaurant? Restaurant => _restaurant;
 

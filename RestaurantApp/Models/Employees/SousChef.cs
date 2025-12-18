@@ -7,7 +7,7 @@ namespace RestaurantApp.Models;
 public class SousChef : Chef
 {
     [JsonInclude]
-    private readonly List<string> _supervisedSections;
+    private readonly List<string> _supervisedSections = new();
 
     [JsonConstructor]
     public SousChef(
@@ -23,12 +23,31 @@ public class SousChef : Chef
         : base(firstName, lastName, birthDate, phoneNumber, workDetails, experienceProfile, cuisineType)
     {
         DayShift = dayShift;
-        _supervisedSections = new List<string>(supervisedSections);
+        SetSupervisedSections(supervisedSections);
     }
 
-    public bool DayShift { get; }
+    public bool DayShift { get; private set; }
 
     public IReadOnlyCollection<string> SupervisedSections => _supervisedSections.AsReadOnly();
+
+    private void SetSupervisedSections(IEnumerable<string> sections)
+    {
+        if (sections == null)
+            throw new ArgumentNullException(nameof(sections), "Supervised sections cannot be null.");
+
+        var list = new List<string>(sections);
+        if (list.Count == 0)
+            throw new ArgumentException("Supervised sections must contain at least one item.", nameof(sections));
+
+        foreach (var section in list)
+        {
+            if (string.IsNullOrWhiteSpace(section))
+                throw new ArgumentException("Supervised section cannot be empty.", nameof(sections));
+        }
+
+        _supervisedSections.Clear();
+        _supervisedSections.AddRange(list);
+    }
 
     public void prepareSpecialists(Dish dish) { }
 
