@@ -80,7 +80,10 @@ namespace RestaurantApp.Models
                 throw new ArgumentException("Dish is already in this menu.", nameof(dish));
 
             _dishes.Add(dish);
-            dish.SetMenu(this);
+            if (dish.Menu != this)
+            {
+                dish.SetMenu(this);
+            }
         }
 
         public bool RemoveDish(Dish dish)
@@ -142,7 +145,15 @@ namespace RestaurantApp.Models
 
         internal void SetRestaurant(Restaurant? restaurant)
         {
+            if (_restaurant == restaurant)
+                return;
+
             _restaurant = restaurant;
+            
+            if (restaurant != null && !restaurant.Menus.Contains(this))
+            {
+                restaurant.AddMenu(this);
+            }
         }
     }
 }

@@ -75,12 +75,31 @@ public class Reservation
 
     internal void SetTable(Table? table)
     {
+        if (_table == table)
+            return;
+
         _table = table;
+
+        if (table != null && !table.Reservations.Contains(this))
+        {
+            table.AddReservation(this);
+        }
     }
 
     internal void SetCustomer(Person? customer)
     {
+        if (_customer == customer)
+            return;
+
         _customer = customer;
+        
+        if (customer != null && customer.CustomerRole != null)
+        {
+            if (!customer.CustomerRole.Reservations.Contains(this))
+            {
+                customer.CustomerRole.MakeReservation(this);
+            }
+        }
     }
 
     public void Confirm() => Status = ReservationStatus.Confirmed;

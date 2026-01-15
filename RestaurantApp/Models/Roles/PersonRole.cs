@@ -14,7 +14,25 @@ public abstract class PersonRole
 
     internal void SetPerson(Person person)
     {
+        if (Person == person)
+            return;
+            
         Person = person;
+        
+        if (this is EmployeeRole employeeRole)
+        {
+            if (person.EmployeeRole != employeeRole)
+            {
+                person.BecomeEmployee(employeeRole);
+            }
+        }
+        else if (this is CustomerRole customerRole)
+        {
+            if (person.CustomerRole != customerRole)
+            {
+                person.BecomeCustomer(customerRole);
+            }
+        }
     }
 
     internal void ClearPerson()

@@ -66,19 +66,32 @@ public class ChefType : EmployeeType
             throw new ArgumentNullException(nameof(restaurant));
 
         if (_restaurant == restaurant)
-            throw new ArgumentException("This chef already works at this restaurant.", nameof(restaurant));
+            return;
 
         if (_restaurant != null)
             throw new InvalidOperationException("Chef already works at a restaurant. Remove the current restaurant first.");
 
         _restaurant = restaurant;
+        if (!restaurant.Chefs.Contains(this))
+        {
+            restaurant.AddChef(this);
+        }
     }
 
     internal void SetRestaurantInternal(Restaurant restaurant)
     {
         if (restaurant is null)
             throw new ArgumentNullException(nameof(restaurant));
+            
+        if (_restaurant == restaurant)
+            return;
+
         _restaurant = restaurant;
+        
+        if (!restaurant.Chefs.Contains(this))
+        {
+            restaurant.AddChef(this);
+        }
     }
 
     public void RemoveRestaurant()

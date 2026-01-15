@@ -131,7 +131,21 @@ namespace RestaurantApp.Models
 
         internal void SetMenu(Menu? menu)
         {
+            if (_menu == menu)
+                return;
+
+            var oldMenu = _menu;
             _menu = menu;
+
+            if (oldMenu != null && oldMenu.Dishes.Contains(this))
+            {
+                oldMenu.RemoveDish(this);
+            }
+
+            if (menu != null && !menu.Dishes.Contains(this))
+            {
+                menu.AddDish(this);
+            }
         }
 
         internal void AddOrderDish(OrderDish orderDish)
@@ -142,6 +156,12 @@ namespace RestaurantApp.Models
             if (!_orderDishes.Contains(orderDish))
             {
                 _orderDishes.Add(orderDish);
+                
+                // Ensure reverse connection to Order
+                if (orderDish.Order != null && !orderDish.Order.Dishes.Contains(orderDish))
+                {
+                    orderDish.Order.AddDish(orderDish);
+                }
             }
         }
 
@@ -150,7 +170,15 @@ namespace RestaurantApp.Models
             if (orderDish is null)
                 throw new ArgumentNullException(nameof(orderDish));
 
-            _orderDishes.Remove(orderDish);
+            if (_orderDishes.Contains(orderDish))
+            {
+                _orderDishes.Remove(orderDish);
+                // Reverse connection
+                if (orderDish.Order != null)
+                {
+                    orderDish.Order.RemoveDish(orderDish);
+                }
+            }
         }
     }
 }

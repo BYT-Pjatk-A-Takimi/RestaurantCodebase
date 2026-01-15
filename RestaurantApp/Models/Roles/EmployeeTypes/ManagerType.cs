@@ -52,6 +52,16 @@ public class ManagerType : EmployeeType
             throw new ArgumentException("A manager cannot supervise themselves.", nameof(supervisor));
 
         if (supervisor == Supervisor)
+        {
+            // Even if it's already the supervisor, ensure the reverse link exists
+            if (!supervisor.Subordinates.Contains(this))
+            {
+                supervisor.AddSubordinate(this);
+            }
+            return;
+        }
+
+        if (supervisor == Supervisor)
             throw new ArgumentException("This manager is already supervised by the specified supervisor.", nameof(supervisor));
 
         if (WouldCreateCircularReference(supervisor))
@@ -59,13 +69,13 @@ public class ManagerType : EmployeeType
 
         if (Supervisor != null)
         {
-            Supervisor._subordinates.Remove(this);
+            Supervisor.RemoveSubordinate(this);
         }
 
         Supervisor = supervisor;
-        if (!supervisor._subordinates.Contains(this))
+        if (!supervisor.Subordinates.Contains(this))
         {
-            supervisor._subordinates.Add(this);
+            supervisor.AddSubordinate(this);
         }
     }
 
@@ -78,16 +88,15 @@ public class ManagerType : EmployeeType
             throw new ArgumentException("A manager cannot be their own subordinate.", nameof(subordinate));
 
         if (_subordinates.Contains(subordinate))
-            throw new ArgumentException("This manager is already a subordinate.", nameof(subordinate));
+            return;
 
-        if (subordinate.WouldCreateCircularReference(this))
-            throw new InvalidOperationException("Adding this subordinate would create a circular reference.");
-
-        _subordinates.Add(subordinate);
         if (subordinate.Supervisor != this)
         {
-            subordinate.Supervisor = this;
+            subordinate.SetSupervisor(this);
+            return;
         }
+
+        _subordinates.Add(subordinate);
     }
 
     public bool RemoveSubordinate(ManagerType subordinate)
@@ -146,19 +155,33 @@ public class ManagerType : EmployeeType
     {
         if (restaurant is null)
             throw new ArgumentNullException(nameof(restaurant));
+        
         if (_restaurant == restaurant)
-            throw new ArgumentException("This manager already works at this restaurant.", nameof(restaurant));
+            return;
+            
         if (_restaurant != null)
             throw new InvalidOperationException("Manager already works at a restaurant. Remove the current restaurant first.");
 
         _restaurant = restaurant;
+        if (!restaurant.Managers.Contains(this))
+        {
+            restaurant.AddManager(this);
+        }
     }
 
     internal void SetRestaurantInternal(Restaurant restaurant)
     {
         if (restaurant is null)
             throw new ArgumentNullException(nameof(restaurant));
+            
+        if (_restaurant == restaurant)
+            return;
+
         _restaurant = restaurant;
+        if (!restaurant.Managers.Contains(this))
+        {
+            restaurant.AddManager(this);
+        }
     }
 
     public void RemoveRestaurant()

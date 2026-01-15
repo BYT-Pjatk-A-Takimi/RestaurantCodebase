@@ -12,15 +12,27 @@ public class CustomerTests
     [Test]
     public void MemberStatus_UseCredits_AppliesDiscountWhenCreditsAvailable()
     {
-        var memberStatus = new MemberStatus(credits: 5, creditPointsRate: 2.5m);
+        var memberStatus = new MemberStatus(credits: 10, creditPointsRate: 2.5m);
         var originalAmount = 100.00m;
-        var expectedDiscount = 5 * 2.5m;
+        var expectedDiscount = 10 * 2.5m;
         var expectedFinalAmount = originalAmount - expectedDiscount;
 
         var result = memberStatus.UseCredits(originalAmount);
 
         Assert.That(result, Is.EqualTo(expectedFinalAmount));
         Assert.That(memberStatus.Credits, Is.EqualTo(0));
+    }
+
+    [Test]
+    public void MemberStatus_UseCredits_DoesNotApplyDiscountWhenCreditsBelowThreshold()
+    {
+        var memberStatus = new MemberStatus(credits: 9, creditPointsRate: 2.5m);
+        var originalAmount = 100.00m;
+
+        var result = memberStatus.UseCredits(originalAmount);
+
+        Assert.That(result, Is.EqualTo(originalAmount));
+        Assert.That(memberStatus.Credits, Is.EqualTo(9));
     }
 
     [Test]

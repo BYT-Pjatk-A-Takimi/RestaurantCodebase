@@ -27,6 +27,10 @@ public class WaiterType : EmployeeType
         }
 
         _assignedTables.Add(table);
+        if (table.Waiter != this)
+        {
+            table.SetWaiter(this);
+        }
         return true;
     }
 
@@ -39,6 +43,10 @@ public class WaiterType : EmployeeType
             return false;
 
         _assignedTables.Remove(table);
+        if (table.Waiter == this)
+        {
+            table.SetWaiter(null);
+        }
         return true;
     }
 }

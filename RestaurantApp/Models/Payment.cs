@@ -116,6 +116,11 @@ public class Payment
             throw new InvalidOperationException("Payment cannot be reassigned to a different Order (composition).");
         
         Order = order;
+
+        if (!order.Payments.Contains(this))
+        {
+            order.AddPayment(this);
+        }
     }
 
     // ---------- CLASS EXTENT & PERSISTENCE (hocanın istediği kısım) ----------

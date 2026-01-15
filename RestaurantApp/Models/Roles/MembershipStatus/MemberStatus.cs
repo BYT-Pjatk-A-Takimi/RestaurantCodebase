@@ -41,7 +41,7 @@ public class MemberStatus : MembershipStatusBase
 
     public decimal UseCredits(decimal amount)
     {
-        if (Credits <= 0)
+        if (Credits < 10)
         {
             return amount;
         }

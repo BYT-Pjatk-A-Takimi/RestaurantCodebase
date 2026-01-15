@@ -125,9 +125,6 @@ public class Restaurant
         if (table is null)
             throw new ArgumentNullException(nameof(table));
 
-        if (table.Restaurant != this)
-            throw new ArgumentException("Table already belongs to another restaurant.", nameof(table));
-
         if (_tables.Contains(table))
             return;
 
@@ -137,6 +134,10 @@ public class Restaurant
                 nameof(table));
 
         _tables.Add(table);
+        if (table.Restaurant != this)
+        {
+            table.SetRestaurant(this);
+        }
     }
 
     public void RemoveTable(Table table)
@@ -157,13 +158,19 @@ public class Restaurant
         if (menu is null)
             throw new ArgumentNullException(nameof(menu));
 
+        if (_menus.Contains(menu))
+            return;
+
         if (_menus.Any(m => m.Name == menu.Name))
             throw new ArgumentException(
                 $"Menu with name '{menu.Name}' already exists in this restaurant.",
                 nameof(menu));
 
         _menus.Add(menu);
-        menu.SetRestaurant(this);
+        if (menu.Restaurant != this)
+        {
+            menu.SetRestaurant(this);
+        }
     }
 
     public bool RemoveMenu(Menu menu)
@@ -191,12 +198,15 @@ public class Restaurant
         if (chef is null)
             throw new ArgumentNullException(nameof(chef));
 
+        if (_chefs.Contains(chef))
+            return;
+
         if (chef.Restaurant != this && chef.Restaurant != null)
             throw new ArgumentException("Chef already belongs to another restaurant.", nameof(chef));
 
-        if (!_chefs.Contains(chef))
+        _chefs.Add(chef);
+        if (chef.Restaurant != this)
         {
-            _chefs.Add(chef);
             chef.SetRestaurantInternal(this);
         }
     }
@@ -206,7 +216,13 @@ public class Restaurant
         if (chef is null)
             throw new ArgumentNullException(nameof(chef));
 
-        _chefs.Remove(chef);
+        if (_chefs.Remove(chef))
+        {
+            if (chef.Restaurant == this)
+            {
+                chef.RemoveRestaurant();
+            }
+        }
     }
 
     public void AddManager(ManagerType manager)
@@ -214,12 +230,15 @@ public class Restaurant
         if (manager is null)
             throw new ArgumentNullException(nameof(manager));
 
+        if (_managers.Contains(manager))
+            return;
+
         if (manager.Restaurant != this && manager.Restaurant != null)
             throw new ArgumentException("Manager already belongs to another restaurant.", nameof(manager));
 
-        if (!_managers.Contains(manager))
+        _managers.Add(manager);
+        if (manager.Restaurant != this)
         {
-            _managers.Add(manager);
             manager.SetRestaurantInternal(this);
         }
     }
@@ -229,6 +248,12 @@ public class Restaurant
         if (manager is null)
             throw new ArgumentNullException(nameof(manager));
 
-        _managers.Remove(manager);
+        if (_managers.Remove(manager))
+        {
+            if (manager.Restaurant == this)
+            {
+                manager.RemoveRestaurant();
+            }
+        }
     }
 }

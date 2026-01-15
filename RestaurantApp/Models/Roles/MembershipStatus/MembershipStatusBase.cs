@@ -14,7 +14,15 @@ public abstract class MembershipStatusBase
 
     internal void SetCustomerRole(CustomerRole role)
     {
+        if (CustomerRole == role)
+            return;
+
         CustomerRole = role;
+        
+        if (role != null && role.MembershipStatus != this)
+        {
+            role.SetMembershipStatus(this);
+        }
     }
 
     internal void ClearCustomerRole()

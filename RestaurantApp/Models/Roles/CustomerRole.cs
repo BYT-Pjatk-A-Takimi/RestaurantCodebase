@@ -44,12 +44,20 @@ public class CustomerRole : PersonRole
         {
             if (value is null)
                 throw new ArgumentNullException(nameof(MembershipStatus), "Membership status cannot be null.");
+            
+            if (_membershipStatus == value)
+                return;
+
             if (_membershipStatus != null)
             {
                 _membershipStatus.ClearCustomerRole();
             }
             _membershipStatus = value;
-            _membershipStatus.SetCustomerRole(this);
+            
+            if (_membershipStatus.CustomerRole != this)
+            {
+                _membershipStatus.SetCustomerRole(this);
+            }
         }
     }
 
@@ -64,6 +72,12 @@ public class CustomerRole : PersonRole
             throw new ArgumentException("This reservation already exists for this customer.", nameof(reservation));
 
         _reservations.Add(reservation);
+        
+        if (Person != null && reservation.Customer != Person)
+        {
+            reservation.SetCustomer(Person);
+        }
+        
         return reservation;
     }
 
@@ -111,6 +125,12 @@ public class CustomerRole : PersonRole
 
         var payment = new Payment(order, amount, method);
         payment.ProcessPayment();
+
+        if (MembershipStatus is MemberStatus memberStatus)
+        {
+            memberStatus.AddCredits();
+        }
+
         return payment;
     }
 

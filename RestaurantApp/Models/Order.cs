@@ -53,7 +53,16 @@ public class Order
     {
         if (table is null)
             throw new ArgumentNullException(nameof(table));
+            
+        if (Table == table)
+            return;
+
         Table = table;
+        
+        if (!table.Orders.Contains(this))
+        {
+            table.AddOrder(this);
+        }
     }
 
     private DateTime _timeStamp;
@@ -90,6 +99,12 @@ public class Order
             throw new ArgumentException("This OrderDish is already in the order.", nameof(orderDish));
 
         _orderDishes.Add(orderDish);
+        
+        // Ensure reverse connection to Dish
+        if (orderDish.Dish != null && !orderDish.Dish.OrderDishes.Contains(orderDish))
+        {
+            orderDish.Dish.AddOrderDish(orderDish);
+        }
     }
 
     public void AddDishes(IEnumerable<OrderDish> dishes)
@@ -138,7 +153,13 @@ public class Order
         if (orderDish is null)
             throw new ArgumentNullException(nameof(orderDish));
 
-        return _orderDishes.Remove(orderDish);
+        bool removed = _orderDishes.Remove(orderDish);
+        if (removed)
+        {
+            // Reverse connection
+            orderDish.Dish?.RemoveOrderDish(orderDish);
+        }
+        return removed;
     }
 
     internal void AddPayment(Payment payment)

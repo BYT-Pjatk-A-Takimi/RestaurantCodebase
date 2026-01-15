@@ -39,7 +39,21 @@ public class EmployeeRole : PersonRole
         {
             if (value is null)
                 throw new ArgumentNullException(nameof(ExperienceProfile), "Experience profile cannot be null.");
+            
+            if (_experienceProfile == value)
+                return;
+
+            if (_experienceProfile != null)
+            {
+                _experienceProfile.ClearEmployeeRole();
+            }
+
             _experienceProfile = value;
+            
+            if (_experienceProfile.EmployeeRole != this)
+            {
+                _experienceProfile.SetEmployeeRole(this);
+            }
         }
     }
 

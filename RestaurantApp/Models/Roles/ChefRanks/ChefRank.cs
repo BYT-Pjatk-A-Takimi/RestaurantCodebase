@@ -16,11 +16,25 @@ public abstract class ChefRank
 
     internal void SetChefType(ChefType chefType)
     {
+        if (ChefType == chefType)
+            return;
+
         ChefType = chefType;
+        
+        if (chefType != null && chefType.ChefRank != this)
+        {
+            chefType.SetChefRank(this);
+        }
     }
 
     internal void ClearChefType()
     {
+        var oldChef = ChefType;
         ChefType = null;
+        
+        if (oldChef != null && oldChef.ChefRank == this)
+        {
+            oldChef.ClearChefRank();
+        }
     }
 }

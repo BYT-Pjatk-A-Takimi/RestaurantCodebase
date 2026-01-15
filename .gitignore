@@ -9,6 +9,8 @@
 *.sln.docstates
 current-doc.docx
 doc.md
+gui_mock
+gui_mock/*
 
 
 

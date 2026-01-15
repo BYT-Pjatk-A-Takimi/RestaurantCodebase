@@ -122,14 +122,23 @@ public class Table
         if (reservation is null)
             throw new ArgumentNullException(nameof(reservation));
 
-        if (reservation.Table != this && reservation.Table != null)
-            throw new ArgumentException("Reservation belongs to a different table.", nameof(reservation));
+        if (reservation.PartySize > NumberOfChairs)
+            throw new ArgumentException($"Party size {reservation.PartySize} exceeds table capacity of {NumberOfChairs}.", nameof(reservation));
 
         if (_reservations.Contains(reservation))
             return;
 
+        // If reservation is already assigned to another table, handle it?
+        // Current logic: throws.
+        if (reservation.Table != this && reservation.Table != null)
+            throw new ArgumentException("Reservation belongs to a different table.", nameof(reservation));
+
         _reservations.Add(reservation);
-        reservation.SetTable(this);
+        
+        if (reservation.Table != this)
+        {
+            reservation.SetTable(this);
+        }
     }
 
     internal void RemoveReservation(Reservation reservation)
@@ -145,12 +154,35 @@ public class Table
     {
         if (restaurant is null)
             throw new ArgumentNullException(nameof(restaurant), "Table cannot exist without a Restaurant (composition).");
+        
+        if (_restaurant == restaurant)
+            return;
+
         _restaurant = restaurant;
+        
+        if (!restaurant.Tables.Contains(this))
+        {
+            restaurant.AddTable(this);
+        }
     }
 
     internal void SetWaiter(WaiterType? waiter)
     {
+        if (_waiter == waiter)
+            return;
+
+        var oldWaiter = _waiter;
         _waiter = waiter;
+
+        if (oldWaiter != null && oldWaiter.AssignedTables.Contains(this))
+        {
+            oldWaiter.RemoveTable(this);
+        }
+
+        if (waiter != null && !waiter.AssignedTables.Contains(this))
+        {
+            waiter.AssignTable(this);
+        }
     }
 
     internal void AddOrder(Order order)
@@ -158,14 +190,17 @@ public class Table
         if (order is null)
             throw new ArgumentNullException(nameof(order));
 
-        if (order.Table != this && order.Table != null)
-            throw new ArgumentException("Order belongs to a different table.", nameof(order));
-
         if (_orders.Contains(order))
             return;
 
+        if (order.Table != this && order.Table != null)
+            throw new ArgumentException("Order belongs to a different table.", nameof(order));
+
         _orders.Add(order);
-        order.SetTable(this);
+        if (order.Table != this)
+        {
+            order.SetTable(this);
+        }
     }
 
     internal void RemoveOrder(Order order)
