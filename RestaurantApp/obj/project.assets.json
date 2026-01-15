@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/berkay/Documents/Projects/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj",
+      "projectUniqueName": "/home/berkay/Documents/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj",
       "projectName": "RestaurantApp",
-      "projectPath": "/home/berkay/Documents/Projects/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj",
+      "projectPath": "/home/berkay/Documents/RestaurantCodebase/RestaurantApp/RestaurantApp.csproj",
       "packagesPath": "/home/berkay/.nuget/packages/",
-      "outputPath": "/home/berkay/Documents/Projects/RestaurantCodebase/RestaurantApp/obj/",
+      "outputPath": "/home/berkay/Documents/RestaurantCodebase/RestaurantApp/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/berkay/.nuget/NuGet/NuGet.Config"
@@ -26,7 +26,7 @@
         "net10.0"
       ],
       "sources": {
-        "/nix/store/qjcwx5f3gbm9h3wnlqrqiyr8q8mic2yl-dotnet-sdk-10.0.101/share/dotnet/library-packs": {},
+        "/usr/lib/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -66,7 +66,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/nix/store/qjcwx5f3gbm9h3wnlqrqiyr8q8mic2yl-dotnet-sdk-10.0.101/share/dotnet/sdk/10.0.101/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

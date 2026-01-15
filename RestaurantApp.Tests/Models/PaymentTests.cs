@@ -154,4 +154,57 @@ public class PaymentTests
 
         Assert.That(Payment.Extent, Has.Count.EqualTo(2));
     }
+
+    [Test]
+    public void Constructor_WithNullOrder_ShouldThrowArgumentNullException()
+    {
+        Assert.Throws<ArgumentNullException>(() => new Payment(null!, 50m, PaymentMethod.Card));
+    }
+
+    [Test]
+    public void Constructor_WithZeroAmount_ShouldThrowArgumentException()
+    {
+        var order = CreateOrder();
+
+        Assert.Throws<ArgumentException>(() => new Payment(order, 0m, PaymentMethod.Card));
+    }
+
+    [Test]
+    public void Constructor_WithNegativeAmount_ShouldThrowArgumentException()
+    {
+        var order = CreateOrder();
+
+        Assert.Throws<ArgumentException>(() => new Payment(order, -10m, PaymentMethod.Cash));
+    }
+
+    [Test]
+    public void ProcessPayment_WhenAlreadyCompleted_ShouldThrowInvalidOperationException()
+    {
+        var order = CreateOrder();
+        var payment = new Payment(order, 100m, PaymentMethod.Card);
+
+        payment.ProcessPayment();
+
+        Assert.Throws<InvalidOperationException>(() => payment.ProcessPayment());
+    }
+
+    [Test]
+    public void ChangeTaxRate_ShouldUpdateStaticTaxRate()
+    {
+        Payment.ChangeTaxRate(0.20m);
+
+        Assert.That(Payment.TaxRate, Is.EqualTo(0.20m));
+
+        Payment.ChangeTaxRate(0.23m); // Reset to default
+    }
+
+    [Test]
+    public void Payment_ShouldBeAddedToOrder()
+    {
+        var order = CreateOrder();
+        var payment = new Payment(order, 100m, PaymentMethod.Card);
+
+        Assert.That(order.Payments, Has.Count.EqualTo(1));
+        Assert.That(order.Payments, Contains.Item(payment));
+    }
 }
